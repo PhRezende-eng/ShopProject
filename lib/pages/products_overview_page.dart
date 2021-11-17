@@ -1,6 +1,7 @@
-// ignore_for_file: file_names, prefer_const_constructors, non_constant_identifier_names, unused_import, prefer_const_literals_to_create_immutables
+// ignore_for_file: file_names, prefer_const_constructors, non_constant_identifier_names, unused_import, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:shop/components/product_item.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
 
@@ -28,14 +29,16 @@ class ProductsOverviewPage extends StatelessWidget {
           itemCount: loadedProducts.length,
           itemBuilder: (context, index) => Column(
             children: [
-              Text(loadedProducts[index].title),
-              Text(loadedProducts[index].id),
-              Text(loadedProducts[index].description),
+              Expanded(
+                child: ProductItem(
+                  product: loadedProducts[index],
+                ),
+              ),
             ],
           ),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, //quantidade de itens por linha
-            childAspectRatio: 2 / 3, //dimensãao do item
+            childAspectRatio: 1.2, //dimensãao do item
             crossAxisSpacing: 10, //espaçamento vertical
             mainAxisSpacing: 10, //espaçamento horizontal
           ),
