@@ -1,27 +1,45 @@
-// ignore_for_file: file_names, prefer_const_constructors
+// ignore_for_file: file_names, prefer_const_constructors, non_constant_identifier_names, unused_import, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:shop/data/dummy_data.dart';
+import 'package:shop/models/product.dart';
 
-class ProductsOverviewPage extends StatefulWidget {
+class ProductsOverviewPage extends StatelessWidget {
   final String title;
-  const ProductsOverviewPage({required this.title, Key? key}) : super(key: key);
+  ProductsOverviewPage({
+    required this.title,
+    Key? key,
+  }) : super(key: key);
 
-  @override
-  _ProductsOverviewPageState createState() => _ProductsOverviewPageState();
-}
+  final List<Product> loadedProducts = dummyProducts;
 
-class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          widget.title,
+          title,
         ),
       ),
-      body: Center(
-        child: Text('data'),
+      body: Padding(
+        padding: EdgeInsets.all(10),
+        child: GridView.builder(
+          itemCount: loadedProducts.length,
+          itemBuilder: (context, index) => Column(
+            children: [
+              Text(loadedProducts[index].title),
+              Text(loadedProducts[index].id),
+              Text(loadedProducts[index].description),
+            ],
+          ),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, //quantidade de itens por linha
+            childAspectRatio: 2 / 3, //dimensãao do item
+            crossAxisSpacing: 10, //espaçamento vertical
+            mainAxisSpacing: 10, //espaçamento horizontal
+          ),
+        ),
       ),
     );
   }
