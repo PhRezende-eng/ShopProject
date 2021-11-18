@@ -18,4 +18,14 @@ class Product {
   void toggleFavorite() {
     isFavorite = !isFavorite;
   }
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      price: json['price'],
+      imageUrl: json['imageUrl'],
+    );
+  }
 }

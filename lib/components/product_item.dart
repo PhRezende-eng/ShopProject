@@ -29,6 +29,9 @@ class ProductItem extends StatelessWidget {
           ),
           title: Text(
             product.title,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.surface,
+            ),
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
@@ -38,7 +41,7 @@ class ProductItem extends StatelessWidget {
             ),
             onPressed: () {},
           ),
-          backgroundColor: Colors.black87,
+          backgroundColor: Theme.of(context).colorScheme.background,
         ),
       ),
     );
