@@ -1,17 +1,17 @@
 // ignore_for_file: prefer_conditional_assignment
-
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
-class RequestService extends ChangeNotifier {
-  final _domain = 'https://shop-coder-bccc3-default-rtdb.firebaseio.com/';
+class RequestService {
+  final _domain = 'https://shop-coder-bccc3-default-rtdb.firebaseio.com';
 
   late Dio dio = Dio();
 
-  RequestService();
-
   String _createUrl(String endpoint, String? args) {
-    // if (args.isNotEmpty && args[0] != '?') args = '?$args';
+    if (args == null) args = '';
+
+    if (endpoint[0] != '/') endpoint = '/$endpoint';
+
+    if (args.isNotEmpty && args[0] != '?') args = '?$args';
 
     return _domain + endpoint;
   }
