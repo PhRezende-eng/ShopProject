@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: 'Poppins',
       ),
-      home: ProductsOverviewPage(title: 'Shop'),
+      home: const ProductsOverviewPage(title: 'Shop'),
       debugShowCheckedModeBanner: false,
     );
   }

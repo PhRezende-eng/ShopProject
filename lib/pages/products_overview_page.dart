@@ -4,15 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:shop/components/product_item.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
+import 'package:shop/services/requestProduct.dart';
 
-class ProductsOverviewPage extends StatelessWidget {
+class ProductsOverviewPage extends StatefulWidget {
   final String title;
-  ProductsOverviewPage({
+  const ProductsOverviewPage({
     required this.title,
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<ProductsOverviewPage> createState() => _ProductsOverviewPageState();
+}
+
+class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   final List<Product> loadedProducts = dummyProducts;
+  late RequestProduct requestProduct = RequestProduct();
+
+  @override
+  void initState() {
+    super.initState();
+    requestProduct.getProducts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +33,7 @@ class ProductsOverviewPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          title,
+          widget.title,
         ),
       ),
       body: Padding(

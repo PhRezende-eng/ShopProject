@@ -4,20 +4,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 class RequestService extends ChangeNotifier {
-  final _domain = 'https://flutter-test-coder-default-rtdb.firebaseio.com/';
+  final _domain = 'https://shop-coder-bccc3-default-rtdb.firebaseio.com/';
 
   late Dio dio = Dio();
 
   RequestService();
 
   String _createUrl(String endpoint, String? args) {
-    if (args == null) args = '';
+    // if (args.isNotEmpty && args[0] != '?') args = '?$args';
 
-    if (endpoint[0] != '/') endpoint = '/$endpoint';
-
-    if (args.isNotEmpty && args[0] != '?') args = '?$args';
-
-    return _domain + endpoint + args;
+    return _domain + endpoint;
   }
 
   Future<Response> getRequest(String endpoint,
