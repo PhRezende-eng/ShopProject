@@ -18,13 +18,17 @@ class ProductsOverviewPage extends StatefulWidget {
 }
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
-  final List<Product> loadedProducts = dummyProducts;
-  late RequestProduct requestProduct = RequestProduct();
+  List<Product> loadedProducts = [];
+  late RequestProduct requestProduct;
 
   @override
   void initState() {
     super.initState();
-    requestProduct.getProducts();
+    loadedProducts.clear();
+  }
+
+  Future<void> getItems() async {
+    loadedProducts = await RequestProduct().getProducts();
   }
 
   @override
@@ -38,23 +42,37 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       ),
       body: Padding(
         padding: EdgeInsets.all(10),
-        child: GridView.builder(
-          itemCount: loadedProducts.length,
-          itemBuilder: (context, index) => Column(
-            children: [
-              Expanded(
-                child: ProductItem(
-                  product: loadedProducts[index],
-                ),
+        child: FutureBuilder(
+          future: getItems(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Ocorreu um erro'),
+              );
+            }
+            return GridView.builder(
+              itemCount: loadedProducts.length,
+              itemBuilder: (context, index) => Column(
+                children: [
+                  Expanded(
+                    child: ProductItem(
+                      product: loadedProducts[index],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, //quantidade de itens por linha
-            childAspectRatio: 1.2, //dimensãao do item
-            crossAxisSpacing: 10, //espaçamento vertical
-            mainAxisSpacing: 10, //espaçamento horizontal
-          ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, //quantidade de itens por linha
+                childAspectRatio: 1.2, //dimensãao do item
+                crossAxisSpacing: 10, //espaçamento vertical
+                mainAxisSpacing: 10, //espaçamento horizontal
+              ),
+            );
+          },
         ),
       ),
     );
