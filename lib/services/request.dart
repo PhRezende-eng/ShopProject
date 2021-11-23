@@ -27,7 +27,7 @@ class RequestService {
         ),
       );
     } on DioError catch (error) {
-      throw 'Não foi possível concluir sua requisição.\n$error';
+      throw 'Não foi possível concluir sua requisição.\n Confira a sua conexão com a internet.';
     }
   }
 
@@ -43,7 +43,7 @@ class RequestService {
         ),
       );
     } on DioError catch (error) {
-      throw 'Não foi possível concluir sua requisição.\n$error';
+      throw 'Não foi possível concluir sua requisição.\n Confira a sua conexão com a internet.';
     }
   }
 
@@ -59,7 +59,7 @@ class RequestService {
         ),
       );
     } on DioError catch (error) {
-      throw 'Não foi possível concluir sua requisição.\n$error';
+      throw 'Não foi possível concluir sua requisição.\n Confira a sua conexão com a internet.';
     }
   }
 
@@ -75,7 +75,7 @@ class RequestService {
         ),
       );
     } on DioError catch (error) {
-      throw 'Não foi possível concluir sua requisição.\n$error';
+      throw 'Não foi possível concluir sua requisição.\n Confira a sua conexão com a internet.';
     }
   }
 }

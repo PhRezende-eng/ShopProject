@@ -16,8 +16,22 @@ class RequestProduct extends RequestService {
       }
 
       return productList;
+
+      // data.forEach((productId, productData) {
+      //   _items.add(
+      //     Product(
+      //       id: productId,      // aqui neste caso a gente pega Id da KEY
+      //       title: productData['title'],
+      //       description: productData['description'],
+      //       price: productData['price'],
+      //       imageUrl: productData['imageUrl'],
+      //     ),
+      //   );
+      // });
+
+      // return _items;
     } else {
-      throw 'Erro de conexão ao firebase.';
+      throw 'Erro de conexão ao firebase.\nTente novamente mais tarde.';
     }
   }
 }

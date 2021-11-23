@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
       title: 'Shop',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepPurple,
+          primarySwatch: Colors.purple,
         ).copyWith(
           secondary: Colors.deepOrangeAccent,
-          background: Colors.grey[700],
+          background: Colors.orange[200],
           surface: Colors.grey[100],
         ),
         fontFamily: 'Poppins',
