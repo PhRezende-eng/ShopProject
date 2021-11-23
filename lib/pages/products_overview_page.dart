@@ -21,12 +21,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   List<Product> loadedProducts = [];
   late RequestProduct requestProduct;
 
-  @override
-  void initState() {
-    super.initState();
-    loadedProducts.clear();
-  }
-
   Future<void> getItems() async {
     loadedProducts = await RequestProduct().getProducts();
   }
@@ -51,7 +45,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               );
             } else if (snapshot.hasError) {
               return Center(
-                child: Text('Ocorreu um erro'),
+                child: Text('${snapshot.error}'),
               );
             }
             return GridView.builder(

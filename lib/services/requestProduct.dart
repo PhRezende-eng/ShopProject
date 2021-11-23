@@ -7,20 +7,15 @@ class RequestProduct extends RequestService {
 
   Future<List<Product>> getProducts() async {
     final dioResponse = await getRequest('products.json');
-    var data = dioResponse.data;
+    Map<String, dynamic> data = dioResponse.data;
     if (dioResponse.statusMessage == 'OK') {
-      data.forEach((productId, productData) {
-        _items.add(
-          Product(
-            id: productId,
-            title: productData['title'],
-            description: productData['description'],
-            price: productData['price'],
-            imageUrl: productData['imageUrl'],
-          ),
-        );
-      });
-      return _items;
+      List<Product> productList = [];
+      for (var dict in data.values) {
+        var modelProduct = Product.fromJson(dict);
+        productList.add(modelProduct);
+      }
+
+      return productList;
     } else {
       throw 'Erro de conexão ao firebase.';
     }
