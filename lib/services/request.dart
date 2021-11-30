@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_conditional_assignment
+// ignore_for_file: prefer_conditional_assignment, unused_catch_clause
 import 'package:dio/dio.dart';
 
 class RequestService {

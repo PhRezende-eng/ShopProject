@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_field
 import 'package:shop/models/product.dart';
 import 'package:shop/services/request.dart';
 
