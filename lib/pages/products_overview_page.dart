@@ -53,12 +53,12 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               );
             }
             return GridView.builder(
-              itemCount: loadedProductProvider.length,
+              itemCount: loadedProducts.length,
               itemBuilder: (context, index) => Column(
                 children: [
                   Expanded(
                     child: ProductItem(
-                      product: loadedProductProvider[index],
+                      product: loadedProducts[index],
                     ),
                   ),
                 ],
