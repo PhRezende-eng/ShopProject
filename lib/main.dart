@@ -14,26 +14,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ProductList(),
-      child: MaterialApp(
-        title: 'Shop',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.purple,
-          ).copyWith(
-            secondary: Colors.deepOrangeAccent,
-            background: Colors.orange[200],
-            surface: Colors.grey[100], //cores de strings
-          ),
-          fontFamily: 'Poppins',
+    return MaterialApp(
+      title: 'Shop',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.purple,
+        ).copyWith(
+          secondary: Colors.deepOrangeAccent,
+          background: Colors.orange[200],
+          surface: Colors.grey[100], //cores de strings
         ),
-        home: const ProductsOverviewPage(title: 'Shop'),
-        routes: {
-          AppRooutes.PRODUCT_DETAIL: (context) => const ProductDetailPage(),
-        },
-        debugShowCheckedModeBanner: false,
+        fontFamily: 'Poppins',
       ),
+      home: const ProductsOverviewPage(title: 'Shop'),
+      routes: {
+        AppRooutes.PRODUCT_DETAIL: (context) => const ProductDetailPage(),
+      },
+      debugShowCheckedModeBanner: false,
     );
   }
 }

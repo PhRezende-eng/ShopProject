@@ -29,8 +29,8 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Product> loadedProductProvider =
-        Provider.of<ProductList>(context).items;
+    // List<Product> loadedProductProvider =
+    //     Provider.of<ProductList>(context).items;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
