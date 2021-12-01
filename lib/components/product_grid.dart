@@ -7,13 +7,12 @@ import 'package:shop/models/product.dart';
 import 'package:shop/models/product_list.dart';
 
 class ProductGrid extends StatelessWidget {
-  ProductGrid({Key? key}) : super(key: key);
-
-  List<Product> loadedProductProvider = [];
+  const ProductGrid({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    loadedProductProvider = Provider.of<ProductList>(context).items;
+    List<Product> loadedProductProvider =
+        Provider.of<ProductList>(context).items;
     return GridView.builder(
       itemCount: loadedProductProvider.length,
       itemBuilder: (context, index) => Column(
