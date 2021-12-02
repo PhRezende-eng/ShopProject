@@ -13,9 +13,9 @@ class ProductGrid extends StatelessWidget {
     final loadedProductProvider = Provider.of<ProductList>(context).items;
     return GridView.builder(
       itemCount: loadedProductProvider.length,
-      itemBuilder: (context, index) => ChangeNotifierProvider(
-        create: (_) => loadedProductProvider[index],
-        child: ProductItem(),
+      itemBuilder: (context, index) => ChangeNotifierProvider.value(
+        value: loadedProductProvider[index],
+        child: const ProductItem(),
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, //quantidade de itens por linha
