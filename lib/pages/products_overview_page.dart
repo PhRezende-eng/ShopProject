@@ -20,10 +20,14 @@ class ProductsOverviewPage extends StatefulWidget {
   State<ProductsOverviewPage> createState() => _ProductsOverviewPageState();
 }
 
+enum MenuValue { favorite, all }
+
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   Future<void> getItems() async {
     await Provider.of<ProductList>(context, listen: false).getProduct();
   }
+
+  bool filterFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +37,30 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
         title: Text(
           widget.title,
         ),
+        actions: [
+          PopupMenuButton(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                value: MenuValue.favorite,
+                child: Text('Filtrar por favorito'),
+              ),
+              PopupMenuItem(
+                value: MenuValue.all,
+                child: Text('Filtrar todos'),
+              ),
+            ],
+            onSelected: (filterSelect) {
+              setState(() {
+                if (filterSelect == MenuValue.favorite) {
+                  filterFavorite = true;
+                } else {
+                  filterFavorite = false;
+                }
+              });
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(10),
@@ -48,7 +76,9 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 child: Text('${snapshot.error}'),
               );
             }
-            return ProductGrid();
+            return ProductGrid(
+              filterFavorite: filterFavorite,
+            );
           },
         ),
       ),

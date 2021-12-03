@@ -31,6 +31,7 @@ class Product with ChangeNotifier {
       description: json['description'],
       price: json['price'],
       imageUrl: json['imageUrl'],
+      isFavorite: json['isFavorite'] ?? false,
     );
   }
 }

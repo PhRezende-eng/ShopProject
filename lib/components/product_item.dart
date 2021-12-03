@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/product.dart';
+import 'package:shop/services/requestProduct.dart';
 import 'package:shop/utils/app_routes.dart';
 
 class ProductItem extends StatelessWidget {
@@ -39,6 +40,7 @@ class ProductItem extends StatelessWidget {
             ),
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
+              favoriteAProduct(context, product);
               product.toggleFavorite();
             },
           ),
@@ -59,5 +61,9 @@ class ProductItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void favoriteAProduct(BuildContext context, Product prodcut) async {
+    await RequestProduct().putFavoriteRequest(prodcut);
   }
 }
