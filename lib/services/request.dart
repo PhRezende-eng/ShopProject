@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_conditional_assignment, unused_catch_clause
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 
-class RequestService {
+class RequestService with ChangeNotifier {
   final _domain = 'https://shop-coder-bccc3-default-rtdb.firebaseio.com';
 
   late Dio dio = Dio();

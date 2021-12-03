@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
-import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
+import 'package:shop/services/requestProduct.dart';
 
 class ProductList with ChangeNotifier {
-  final _items = dummyProducts;
+  var _items = <Product>[];
   List<Product> get items => _items;
 
-  void addProduct(Product product) {
-    _items.add(product);
-    notifyListeners();
+  Future<void> getProduct() async {
+    //assim ele não instancia duas listas
+    final items = await RequestProduct().getProducts();
+    _items = items;
   }
 }

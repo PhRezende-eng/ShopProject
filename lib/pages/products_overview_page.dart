@@ -21,19 +21,8 @@ class ProductsOverviewPage extends StatefulWidget {
 }
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
-  List<Product> loadedProducts = [];
-
   Future<void> getItems() async {
-    loadedProducts = await RequestProduct().getProducts();
-    //assim ele não instância duas listas
-  }
-
-  Future<void> futureAwait() {
-    return Future.delayed(
-      Duration(
-        seconds: 3,
-      ),
-    );
+    await Provider.of<ProductList>(context, listen: false).getProduct();
   }
 
   @override
@@ -48,7 +37,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       body: Padding(
         padding: EdgeInsets.all(10),
         child: FutureBuilder(
-          future: futureAwait(),
+          future: getItems(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(

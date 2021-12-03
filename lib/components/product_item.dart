@@ -10,6 +10,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // com o listen false, ele não escutará a mudança de estado
     final product = Provider.of<Product>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -27,11 +28,14 @@ class ProductItem extends StatelessWidget {
           ),
         ),
         footer: GridTileBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
           leading: IconButton(
-            icon: Icon(
-              product.isFavorite //caso seja true
-                  ? Icons.favorite
-                  : Icons.favorite_border_outlined,
+            icon: Consumer<Product>(
+              builder: (context, product, child) => Icon(
+                product.isFavorite //caso seja true
+                    ? Icons.favorite
+                    : Icons.favorite_border_outlined,
+              ),
             ),
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
@@ -52,7 +56,6 @@ class ProductItem extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () {},
           ),
-          backgroundColor: Theme.of(context).colorScheme.background,
         ),
       ),
     );
