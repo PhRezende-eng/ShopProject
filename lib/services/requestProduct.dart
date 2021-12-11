@@ -41,7 +41,6 @@ class RequestProduct extends RequestService {
       'isFavorite': isFavorite,
     };
 
-    // patch faz com que adicione apenas um atributo
     final dioResponse = await patchRequest(
       'products/${product.title}.json',
       body: dict,
