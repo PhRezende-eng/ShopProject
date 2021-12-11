@@ -1,5 +1,4 @@
 // ignore_for_file: file_names, unused_field
-import 'dart:math';
 
 import 'package:shop/models/product.dart';
 import 'package:shop/services/request.dart';
@@ -11,23 +10,22 @@ class RequestProduct extends RequestService {
     final dioResponse = await getRequest('products.json');
     Map<String, dynamic> data = dioResponse.data;
     if (dioResponse.statusMessage == 'OK') {
-      List<Product> productList = [];
       for (var dict in data.values) {
         var modelProduct = Product.fromJson(dict);
-        productList.add(modelProduct);
+        _items.add(modelProduct);
       }
 
-      return productList;
+      return _items;
 
       // data.forEach((productId, productData) {
       //   _items.add(
       //     Product(
-      //       id: productId,      // aqui neste caso a gente pega Id da KEY
-      //       title: productData['title'],
-      //       description: productData['description'],
-      //       price: productData['price'],
-      //       imageUrl: productData['imageUrl'],
-      //     ),
+      //         id: productId, // aqui neste caso a gente pega Id da KEY
+      //         title: productData['title'],
+      //         description: productData['description'],
+      //         price: productData['price'],
+      //         imageUrl: productData['imageUrl'],
+      //         isFavorite: productData['isFavorite'] ?? false),
       //   );
       // });
 
@@ -37,17 +35,21 @@ class RequestProduct extends RequestService {
     }
   }
 
-  Future<void> putFavoriteRequest(Product product) async {
+  Future<bool> putFavoriteRequest(Product product,
+      {required bool isFavorite}) async {
     final dict = {
-      'isFavorite': !product.isFavorite,
+      'isFavorite': isFavorite,
     };
-    final dioResponse =
-        await putRequest('products/${product.title}.json', body: dict);
-    var data = dioResponse.data;
-    // if (dioResponse.statusMessage == 'OK') {
-    //   return Product.fromJson(data);
-    // } else {
-    //   throw 'Erro ao tentar favoritar um produto.\nTente novamente mais tarde.';
-    // }
+
+    // patch faz com que adicione apenas um atributo
+    final dioResponse = await patchRequest(
+      'products/${product.title}.json',
+      body: dict,
+    );
+    if (dioResponse.statusMessage == 'OK') {
+      return true;
+    } else {
+      throw 'Erro ao tentar favoritar um produto.\nTente novamente mais tarde.';
+    }
   }
 }

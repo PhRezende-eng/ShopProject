@@ -40,8 +40,12 @@ class ProductItem extends StatelessWidget {
             ),
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
-              favoriteAProduct(context, product);
               product.toggleFavorite();
+              favoriteAProduct(
+                context,
+                product,
+                isFavorite: product.isFavorite,
+              );
             },
           ),
           title: Text(
@@ -63,7 +67,8 @@ class ProductItem extends StatelessWidget {
     );
   }
 
-  void favoriteAProduct(BuildContext context, Product prodcut) async {
-    await RequestProduct().putFavoriteRequest(prodcut);
+  void favoriteAProduct(BuildContext context, Product prodcut,
+      {required bool isFavorite}) async {
+    await RequestProduct().putFavoriteRequest(prodcut, isFavorite: isFavorite);
   }
 }

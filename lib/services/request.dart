@@ -17,6 +17,7 @@ class RequestService with ChangeNotifier {
     return _domain + endpoint;
   }
 
+  //GET retorna os dados da api
   Future<Response> getRequest(String endpoint,
       {String? args, int timeoutSeconds = 10}) async {
     try {
@@ -32,6 +33,7 @@ class RequestService with ChangeNotifier {
     }
   }
 
+  //POST cria um novo "objeto" no banco
   Future<Response> postRequest(String endpoint,
       {String? args, int timeSeconds = 10, dynamic body}) async {
     try {
@@ -48,6 +50,7 @@ class RequestService with ChangeNotifier {
     }
   }
 
+  //DELETE exclui algum dado do banco
   Future<Response> deleteRequest(String endpoint,
       {String? args, int timeSeconds = 10, dynamic body}) async {
     try {
@@ -64,10 +67,28 @@ class RequestService with ChangeNotifier {
     }
   }
 
+  //PUT faz com que altere algum atributo, porém precisa ser passado todos os outros dados do objeto
   Future<Response> putRequest(String endpoint,
       {String? args, int timeSeconds = 10, dynamic body}) async {
     try {
       return await dio.post(
+        _createUrl(endpoint, args),
+        data: body,
+        options: Options(
+          sendTimeout: timeSeconds * 100,
+          responseType: ResponseType.json,
+        ),
+      );
+    } on DioError catch (error) {
+      throw 'Não foi possível concluir sua requisição.\n Confira a sua conexão com a internet.';
+    }
+  }
+
+  //PATCH faz com que adicione/altere apenas um atributo do objeto no banco
+  Future<Response> patchRequest(String endpoint,
+      {String? args, int timeSeconds = 10, dynamic body}) async {
+    try {
+      return await dio.patch(
         _createUrl(endpoint, args),
         data: body,
         options: Options(
