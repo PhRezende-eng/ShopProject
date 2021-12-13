@@ -2,16 +2,44 @@
 
 import 'dart:io';
 
+double calculaMedia(double nota1, double nota2, double notaOp) {
+  return ((nota1 + nota2 + notaOp) / 3);
+}
+
+void calculaOptativa(double nota1, double nota2, double notaOp) {
+  if (nota1 < nota2) {
+    nota1 = notaOp;
+  } else {
+    nota2 = notaOp;
+  }
+}
+
+void calculaResultado(double nota1, double nota2, double notaOp) {
+  double media = calculaMedia(nota1, nota2, notaOp);
+  if (media >= 6) {
+    print('Aprovado');
+  } else if (media < 3) {
+    print('Reprovado');
+  } else {
+    print('Exame');
+  }
+}
+
+double calculaOp0(double notaOp) {
+  if (notaOp == 0) {
+    return -1;
+  }
+  return notaOp;
+}
+
 main() {
-  int notaAvaliacao1 = 0;
-  int notaAvaliacao2 = 0;
-  int notaAvaliacaoOptativa = 0;
+  double notaAvaliacao1 = double.parse(stdin.readLineSync()!);
+  double notaAvaliacao2 = double.parse(stdin.readLineSync()!);
+  double notaAvaliacaoOptativa = double.parse(stdin.readLineSync()!);
 
-  notaAvaliacao1 = int.parse(stdin.readLineSync()!);
-  notaAvaliacao2 = int.parse(stdin.readLineSync()!);
-  notaAvaliacaoOptativa = int.parse(stdin.readLineSync()!);
+  notaAvaliacaoOptativa = calculaOp0(notaAvaliacaoOptativa);
 
-  print(notaAvaliacao1.runtimeType);
-  print(notaAvaliacao2);
-  print(notaAvaliacaoOptativa);
+  calculaOptativa(notaAvaliacao1, notaAvaliacao2, notaAvaliacaoOptativa);
+
+  calculaResultado(notaAvaliacao1, notaAvaliacao2, notaAvaliacaoOptativa);
 }
