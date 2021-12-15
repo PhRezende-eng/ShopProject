@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_adjacent_string_concatenation
+
 Map flavors = {
   "alecrimorganicos": {
     "id": "br.com.alecrimorganicos",
@@ -331,10 +333,39 @@ Map flavors = {
   "yallahabibi": {"id": "br.com.yallahabibi", "name": "Yalla Habibi"},
 };
 
+class Flavors {
+  String title;
+  String id;
+  String name;
+
+  Flavors(this.title, this.id, this.name);
+}
+
 main() {
-  String name = flavors.toString().replaceAll("}", ",}");
+  flavors.toString().replaceAll("}", ",}");
+  'name name name name name'.replaceFirst('name', 'AAAAAAA', 14);
+  //print name name name AAAAAAA name
+
+  List<Flavors> listFlavors = [];
 
   flavors.forEach((key, value) {
-    print(value['name']);
+    listFlavors.add(
+      Flavors(key, value['id'], value['id']),
+    );
+    print('\n');
+    print('Key(objeto): $key');
+    print(
+      'Value(atributo) na posição "name": ${value['name']}' +
+          '\n' +
+          'Value(atributo) na posição "id": ${value['id']}',
+    );
   });
+
+  for (var dict in listFlavors) {
+    print('\n');
+    print('Objeto: ${dict.title}');
+    print(
+      'Atributo "name": ${dict.name}' + '\n' + 'Atributo "id": ${dict.id}',
+    );
+  }
 }
