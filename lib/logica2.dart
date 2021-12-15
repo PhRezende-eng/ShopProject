@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_adjacent_string_concatenation
+// ignore_for_file: prefer_adjacent_string_concatenation, avoid_print
 
 Map flavors = {
   "alecrimorganicos": {
