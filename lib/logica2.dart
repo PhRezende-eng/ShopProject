@@ -33,10 +33,10 @@ Map flavors = {
     "id": "br.com.despensadobasilio",
     "name": "Despensa do Basilio"
   },
-  "emporiojuca": {
-    "id": "br.com.emporiojuca",
-    "name": "Juca - Empório e Mercearia"
-  },
+  //  "emporiojuca": {
+  //  "id": "br.com.emporiojuca",
+  //  "name": "Juca - Empório e Mercearia"
+  //  },
   "emporioqueijocompanhia": {
     "id": "br.com.emporioqueijocompanhia",
     "name": "Queijo e Companhia Delivery"
@@ -68,10 +68,10 @@ Map flavors = {
     "name": "Fradhe Orgânicos"
   },
   "freguesia": {"id": "br.com.freguesia", "name": "Supermercado da Freguesia"},
-  "grafinosrestaurante": {
-    "id": "br.com.grafinosrestaurante",
-    "name": "Grã-Finos Restaurante"
-  },
+  //  "grafinosrestaurante": {
+  //  "id": "br.com.grafinosrestaurante",
+  //  "name": "Grã-Finos Restaurante"
+  //  },
   "guarapari": {"id": "br.com.guarapari", "name": "Supermercado Guarapari"},
   "hiperaraguaia": {"id": "br.com.hiperaraguaia", "name": "Hiper Araguaia"},
   "hortimais": {"id": "br.com.hortimais", "name": "Rede Hortimais"},
@@ -85,10 +85,10 @@ Map flavors = {
   "korinmoema": {"id": "br.com.korinmoema", "name": "Korin Delivery SP"},
   "lapalmaasasul": {"id": "br.com.lapalmaasasul", "name": "La Palma"},
   "loveorganicos": {"id": "br.com.loveorganicos", "name": "Love Organicos"},
-  "melhoratacadista": {
-    "id": "br.com.melhoratacadista",
-    "name": "Melhor Atacadista"
-  },
+  //  "melhoratacadista": {
+  //  "id": "br.com.melhoratacadista",
+  //  "name": "Melhor Atacadista"
+  //  },
   "menegussi": {"id": "br.com.menegussi", "name": "Supermercado Menegussi"},
   "meucantodaroca": {
     "id": "br.com.meucantodaroca",
@@ -107,10 +107,10 @@ Map flavors = {
     "id": "br.com.organicodochico",
     "name": "Orgânico do Chico"
   },
-  "paesevinhos": {
-    "id": "br.com.paesevinhos",
-    "name": "Supermercado Pães e Vinhos"
-  },
+  //  "paesevinhos": {
+  //  "id": "br.com.paesevinhos",
+  //  "name": "Supermercado Pães e Vinhos"
+  //  },
   "pedralli": {"id": "br.com.pedralli", "name": "Supermercado Pedralli"},
   "piante": {"id": "br.com.piante", "name": "Piante Hortifruti"},
   "precobomplus": {"id": "br.com.precobomplus", "name": "Super Preco Bom Plus"},
@@ -121,7 +121,10 @@ Map flavors = {
   "quitandatomio": {"id": "br.com.quitandatomio", "name": "Quitanda Tomio"},
   "regente": {"id": "br.com.regente", "name": "Supermercado Regente"},
   "rotadecasa": {"id": "br.com.rotadecasa", "name": "Rota de casa"},
-  "sitiodubin": {"id": "br.com.sitiodubin", "name": "Sitio Dubin"},
+  //  "sitiodubin": {
+  //  "id": "br.com.sitiodubin",
+  //  "name": "Sitio Dubin"
+  //  },
   "solovivo": {"id": "br.com.solovivo", "name": "Organicos Solo Vivo"},
   "superbigbom": {"id": "br.com.superbigbom", "name": "Super BIGBOM"},
   "superbombsb": {"id": "br.com.superbombsb", "name": "Superbom"},
@@ -191,16 +194,19 @@ Map flavors = {
   //  "name": "VilaBox Supermercado"
   //  },
   "vitaliaemporio": {"id": "br.com.vitaliaemporio", "name": "Vitalia Emporio"},
-  "webrewshop": {"id": "br.com.webrewshop", "name": "WE Brew Shop"},
+  //  "webrewshop": {
+  //  "id": "br.com.webrewshop",
+  //  "name": "WE Brew Shop"
+  //  },
   "wesz": {"id": "br.com.wesz", "name": "Mercado e Açougue Wesz"},
   "mikami": {"id": "br.com.mikami", "name": "Mikami"},
   "super2000": {"id": "br.com.super2000", "name": "Super 2000"},
   "ricardofrutas": {"id": "br.com.ricardofrutas", "name": "Ricardo Frutas"},
   "seuverdurao": {"id": "br.com.seuverdurao", "name": "O Seu Verdurão"},
-  'mercadobrasilia': {
-    'id': 'br.com.mercadobrasilia',
-    'name': 'Mercado Brasília'
-  },
+  //  'mercadobrasilia': {
+  //  'id': 'br.com.mercadobrasilia',
+  //  'name': 'Mercado Brasília'
+  //  },
   "happysupermarket": {
     "id": "br.com.happysupermarket",
     "name": "Happy Supermarket"
@@ -274,9 +280,12 @@ Map flavors = {
     "name": "Mercadinho Unicompras"
   },
   "martmag": {"id": "br.com.martmag", "name": "Supermercados MartMag"},
-  "kuroda": {"id": "br.com.kuroda", "name": "Kuroda em casa"},
+  "kuroda": {"id": "br.com.kuroda", "name": "Kuroda em Casa"},
   "maayway": {"id": "br.com.maayway", "name": "MaayWay"},
-  "cajarana": {"id": "br.com.cajarana", "name": "Mini Mercado Cajarana"},
+  //  "cajarana": {
+  //  "id": "br.com.cajarana",
+  //  "name": "Mini Mercado Cajarana"
+  //  },
   "villaverdepicadinhos": {
     "id": "br.com.villaverdepicadinhos",
     "name": "Villa Verde Picadinhos"
@@ -342,9 +351,9 @@ class Flavors {
 }
 
 main() {
-  flavors.toString().replaceAll("}", ",}");
-  'name name name name name'.replaceFirst('name', 'AAAAAAA', 14);
-  //print name name name AAAAAAA name
+  // flavors.toString().replaceAll("}", ",}");
+  // 'name name name name name'.replaceFirst('name', 'AAAAAAA', 14);
+  // //print name name name AAAAAAA name
 
   List<Flavors> listFlavors = [];
 
@@ -352,20 +361,17 @@ main() {
     listFlavors.add(
       Flavors(key, value['id'], value['id']),
     );
-    print('\n');
-    print('Key(objeto): $key');
-    print(
-      'Value(atributo) na posição "name": ${value['name']}' +
-          '\n' +
-          'Value(atributo) na posição "id": ${value['id']}',
-    );
+    // print('\n');
+    // print('Key(objeto): $key');
+    print(' ${value['name']}');
   });
+  print(flavors.length);
 
-  for (var dict in listFlavors) {
-    print('\n');
-    print('Objeto: ${dict.title}');
-    print(
-      'Atributo "name": ${dict.name}' + '\n' + 'Atributo "id": ${dict.id}',
-    );
-  }
+  // for (var dict in listFlavors) {
+  //   print('\n');
+  //   print('Objeto: ${dict.title}');
+  //   print(
+  //     'Atributo "name": ${dict.name}' + '\n' + 'Atributo "id": ${dict.id}',
+  //   );
+  // }
 }
