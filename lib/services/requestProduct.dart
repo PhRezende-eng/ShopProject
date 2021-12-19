@@ -35,7 +35,7 @@ class RequestProduct extends RequestService {
     }
   }
 
-  Future<bool> putFavoriteRequest(Product product,
+  Future<bool> patchFavoriteRequest(Product product,
       {required bool isFavorite}) async {
     final dict = {
       'isFavorite': isFavorite,

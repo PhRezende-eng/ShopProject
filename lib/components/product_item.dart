@@ -42,7 +42,7 @@ class ProductItem extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () async {
               product.toggleFavorite();
-              await requestPRoduct.putFavoriteRequest(product,
+              await requestPRoduct.patchFavoriteRequest(product,
                   isFavorite: product.isFavorite);
             },
           ),
