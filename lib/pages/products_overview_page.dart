@@ -76,11 +76,8 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 child: Text('${snapshot.error}'),
               );
             }
-            return ChangeNotifierProvider(
-              create: (context) => RequestProduct(),
-              child: ProductGrid(
-                filterFavorite: filterFavorite,
-              ),
+            return ProductGrid(
+              filterFavorite: filterFavorite,
             );
           },
         ),
