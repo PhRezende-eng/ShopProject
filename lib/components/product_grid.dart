@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/product_item.dart';
-import 'package:shop/models/product_list.dart';
+import 'package:shop/providers/product_list.dart';
 
 class ProductGrid extends StatelessWidget {
   final bool filterFavorite;
@@ -11,7 +11,7 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productList = Provider.of<ProductList>(context);
+    final productList = Provider.of<ProductListProvider>(context);
     final loadedProductProvider =
         filterFavorite ? productList.favoriteItem : productList.items;
 

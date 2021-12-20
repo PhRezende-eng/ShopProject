@@ -6,7 +6,7 @@ import 'package:shop/components/product_grid.dart';
 import 'package:shop/components/product_item.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
-import 'package:shop/models/product_list.dart';
+import 'package:shop/providers/product_list.dart';
 import 'package:shop/services/requestProduct.dart';
 
 class ProductsOverviewPage extends StatefulWidget {
@@ -24,7 +24,7 @@ enum MenuValue { favorite, all }
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   Future<void> getItems() async {
-    await Provider.of<ProductList>(context, listen: false).getProduct();
+    await Provider.of<ProductListProvider>(context, listen: false).getProduct();
   }
 
   bool filterFavorite = false;

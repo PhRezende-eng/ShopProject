@@ -13,7 +13,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // com o listen false, ele não escutará a mudança de estado
     final product = Provider.of<Product>(context);
-    final requestPRoduct = Provider.of<RequestProduct>(context);
+    final requestPRoduct = Provider.of<RequestProductProvider>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(

@@ -3,7 +3,7 @@
 import 'package:shop/models/product.dart';
 import 'package:shop/services/request.dart';
 
-class RequestProduct extends RequestService {
+class RequestProductProvider extends RequestService {
   final List<Product> _items = [];
 
   Future<List<Product>> getProducts() async {
