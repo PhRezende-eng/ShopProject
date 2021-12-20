@@ -42,7 +42,7 @@ class RequestProduct extends RequestService {
     };
 
     final dioResponse = await patchRequest(
-      'products/${product.title}.json',
+      'products/${product.name}.json',
       body: dict,
     );
     if (dioResponse.statusMessage == 'OK') {

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class Product with ChangeNotifier {
   final String id;
-  final String title;
+  final String name;
   final String description;
   final num price;
   final String imageUrl;
@@ -12,7 +12,7 @@ class Product with ChangeNotifier {
 
   Product({
     required this.id,
-    required this.title,
+    required this.name,
     required this.description,
     required this.price,
     required this.imageUrl,
@@ -27,7 +27,7 @@ class Product with ChangeNotifier {
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
-      title: json['title'],
+      name: json['title'],
       description: json['description'],
       price: json['price'],
       imageUrl: json['imageUrl'],
