@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/providers/cart.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -10,12 +12,52 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Carrinho'),
         centerTitle: true,
       ),
-      body: Container(),
+      body: Column(
+        children: [
+          Card(
+            margin: const EdgeInsets.all(15),
+            child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8),
+                    child: Text('Total'),
+                  ),
+                  const SizedBox(width: 5),
+                  Chip(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    label: Text(
+                      'R\$${cart.totalPrice.toString()}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        // Theme.of(context).primaryTextTheme.headline6?.color,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    child: const Text('COMPRAR'),
+                    style: TextButton.styleFrom(
+                      textStyle: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
