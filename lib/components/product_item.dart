@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/product.dart';
+import 'package:shop/providers/cart.dart';
 import 'package:shop/services/requestProduct.dart';
 import 'package:shop/utils/app_routes.dart';
 
@@ -14,6 +15,7 @@ class ProductItem extends StatelessWidget {
     // com o listen false, ele não escutará a mudança de estado
     final product = Provider.of<Product>(context);
     final requestPRoduct = Provider.of<RequestProductProvider>(context);
+    final cart = Provider.of<CartProvider>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -33,6 +35,7 @@ class ProductItem extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.background,
           leading: IconButton(
             icon: Consumer<Product>(
+              //O consumer tem a mesma função do Provider.of<Product>(context )
               builder: (context, product, child) => Icon(
                 product.isFavorite //caso seja true
                     ? Icons.favorite
@@ -58,7 +61,9 @@ class ProductItem extends StatelessWidget {
               Icons.shopping_cart,
             ),
             color: Theme.of(context).colorScheme.secondary,
-            onPressed: () {},
+            onPressed: () {
+              cart.addItem(product);
+            },
           ),
         ),
       ),

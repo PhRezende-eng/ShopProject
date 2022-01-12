@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/components/badge.dart';
 import 'package:shop/components/product_grid.dart';
 import 'package:shop/components/product_item.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
+import 'package:shop/providers/cart.dart';
 import 'package:shop/providers/product_list.dart';
 import 'package:shop/services/requestProduct.dart';
 
@@ -31,6 +33,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -59,6 +62,15 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 }
               });
             },
+          ),
+          Badge(
+            value: cart.itemsCount.toString(),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.shopping_cart,
+              ),
+            ),
           ),
         ],
       ),
