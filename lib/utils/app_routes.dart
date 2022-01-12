@@ -2,4 +2,5 @@
 
 class AppRooutes {
   static const PRODUCT_DETAIL = '/product_detail';
+  static const CART = '/cart';
 }

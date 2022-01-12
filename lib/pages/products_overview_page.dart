@@ -7,9 +7,11 @@ import 'package:shop/components/product_grid.dart';
 import 'package:shop/components/product_item.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
+import 'package:shop/pages/cart_page.dart';
 import 'package:shop/providers/cart.dart';
 import 'package:shop/providers/product_list.dart';
 import 'package:shop/services/requestProduct.dart';
+import 'package:shop/utils/app_routes.dart';
 
 class ProductsOverviewPage extends StatefulWidget {
   final String title;
@@ -66,7 +68,11 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           Badge(
             value: cart.itemsCount.toString(),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRooutes.CART);
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(builder: (context) => const CartPage()));
+              },
               icon: Icon(
                 Icons.shopping_cart,
               ),
