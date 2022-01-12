@@ -12,8 +12,7 @@ A few resources to get you started if this is your first Flutter project:
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
 ## App ScreenShot
-
-![app screenshot](/home/paulo/Downloads/screenshot.png)
+![image](https://user-images.githubusercontent.com/63085711/149052003-b0aa5973-a0c6-4603-8554-de6d4a94eac1.png)
 
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
