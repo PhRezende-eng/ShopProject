@@ -35,7 +35,7 @@ class _CartPageState extends State<CartPage> {
                   Chip(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     label: Text(
-                      'R\$${cart.totalPrice.toString()}',
+                      'R\$${cart.totalPrice.toStringAsFixed(2)}',
                       style: const TextStyle(
                         color: Colors.white,
                         // Theme.of(context).primaryTextTheme.headline6?.color,
