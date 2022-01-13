@@ -12,4 +12,14 @@ class CartItem {
     required this.price,
     required this.quantity,
   });
+
+  factory CartItem.fromJson(Map<String, dynamic> json) {
+    return CartItem(
+      id: json['id'],
+      productId: json['productId'],
+      name: json['name'],
+      price: json['price'],
+      quantity: json['quantity'],
+    );
+  }
 }
