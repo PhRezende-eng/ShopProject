@@ -1,11 +1,11 @@
-class CartItem {
+class CartItemModel {
   final String id;
   final String productId;
   final String name;
   final num price;
   final int quantity;
 
-  CartItem({
+  CartItemModel({
     required this.id,
     required this.productId,
     required this.name,
@@ -13,8 +13,8 @@ class CartItem {
     required this.quantity,
   });
 
-  factory CartItem.fromJson(Map<String, dynamic> json) {
-    return CartItem(
+  factory CartItemModel.fromJson(Map<String, dynamic> json) {
+    return CartItemModel(
       id: json['id'],
       productId: json['productId'],
       name: json['name'],

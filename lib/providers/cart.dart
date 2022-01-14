@@ -5,15 +5,15 @@ import 'package:shop/models/cart_item.dart';
 import 'package:shop/models/product.dart';
 
 class CartProvider with ChangeNotifier {
-  final Map<String, CartItem> _items = {};
+  final Map<String, CartItemModel> _items = {};
 
-  Map<String, CartItem> get items => {..._items};
+  Map<String, CartItemModel> get items => {..._items};
   int get itemsCount => _items.length;
 
   double get totalPrice {
     double totalPrice = 0;
     _items.forEach((key, cartItemValue) {
-      totalPrice = (cartItemValue.price * cartItemValue.quantity).toDouble();
+      totalPrice += (cartItemValue.price * cartItemValue.quantity).toDouble();
     });
     return totalPrice;
   }
@@ -22,7 +22,7 @@ class CartProvider with ChangeNotifier {
     if (_items.containsKey(product.id)) {
       _items.update(
         product.id,
-        (cartItemValue) => CartItem(
+        (cartItemValue) => CartItemModel(
           id: cartItemValue.id,
           productId: cartItemValue.productId,
           name: cartItemValue.name,
@@ -33,7 +33,7 @@ class CartProvider with ChangeNotifier {
     } else {
       _items.putIfAbsent(
         product.id,
-        () => CartItem(
+        () => CartItemModel(
           id: Random().nextDouble().toString(),
           productId: product.id,
           name: product.name,

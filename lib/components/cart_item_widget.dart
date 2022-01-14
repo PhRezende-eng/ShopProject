@@ -6,7 +6,7 @@ import 'package:shop/models/cart_item.dart';
 import 'package:shop/providers/cart.dart';
 
 class CartItemWidget extends StatelessWidget {
-  final CartItem cartItem;
+  final CartItemModel cartItem;
   const CartItemWidget(
     this.cartItem, {
     Key? key,
@@ -19,14 +19,14 @@ class CartItemWidget extends StatelessWidget {
       direction: DismissDirection.endToStart,
       background: Container(
         color: Theme.of(context).errorColor,
+        padding: EdgeInsets.only(right: 20),
+        alignment: Alignment.centerRight,
+        margin: EdgeInsets.fromLTRB(12, 8, 12, 8),
         child: Icon(
           Icons.delete,
           color: Colors.white,
           size: 32,
         ),
-        padding: EdgeInsets.only(right: 20),
-        alignment: Alignment.centerRight,
-        margin: EdgeInsets.fromLTRB(12, 8, 12, 8),
       ),
       onDismissed: (_) {
         Provider.of<CartProvider>(context, listen: false)
@@ -51,7 +51,8 @@ class CartItemWidget extends StatelessWidget {
             ),
           ),
           title: Text(cartItem.name),
-          subtitle: Text('Total: R\$${cartItem.price * cartItem.quantity}'),
+          subtitle: Text(
+              'Total: R\$${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}'),
           trailing: Text('${cartItem.quantity}x'),
         ),
       ),
