@@ -37,6 +37,7 @@ class _CartPageState extends State<CartPage> {
                     child: Text('Total'),
                   ),
                   SizedBox(width: 5),
+                  //Container com borda arredonda
                   Chip(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     label: Text(
