@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/cart_item_widget.dart';
@@ -18,36 +20,36 @@ class _CartPageState extends State<CartPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Carrinho'),
+        title: Text('Carrinho'),
         centerTitle: true,
       ),
       body: Column(
         children: [
           Card(
-            margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            margin: EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Padding(
-              padding: const EdgeInsets.all(5),
+              padding: EdgeInsets.all(5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 8),
                     child: Text('Total'),
                   ),
-                  const SizedBox(width: 5),
+                  SizedBox(width: 5),
                   Chip(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     label: Text(
                       'R\$${cart.totalPrice.toStringAsFixed(2)}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                         // Theme.of(context).primaryTextTheme.headline6?.color,
                       ),
                     ),
                   ),
-                  const Spacer(),
+                  Spacer(),
                   TextButton(
-                    child: const Text('COMPRAR'),
+                    child: Text('COMPRAR'),
                     style: TextButton.styleFrom(
                       textStyle: TextStyle(
                         color: Theme.of(context).primaryColor,
