@@ -17,10 +17,10 @@ class _CartItemWidgetState extends State<CartItemWidget> {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: ListTile(
         leading: CircleAvatar(
-          //server para encaixar o texto dentro do componente
+          //serve para encaixar o texto dentro do componente
           backgroundColor: Theme.of(context).colorScheme.primary,
           child: Padding(
             padding: const EdgeInsets.all(3),

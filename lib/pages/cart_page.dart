@@ -24,7 +24,7 @@ class _CartPageState extends State<CartPage> {
       body: Column(
         children: [
           Card(
-            margin: const EdgeInsets.all(16),
+            margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: Row(
