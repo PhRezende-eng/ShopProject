@@ -26,9 +26,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Shop',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.purple,
-          ).copyWith(
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: Colors.purple,
             secondary: Colors.deepOrangeAccent,
             background: Colors.orange[200],
             surface: Colors.grey[100], //cores de strings

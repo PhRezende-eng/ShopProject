@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/cart_item_widget.dart';
-import 'package:shop/models/cart_item.dart';
 import 'package:shop/providers/cart.dart';
 
 class CartPage extends StatefulWidget {
@@ -25,7 +24,7 @@ class _CartPageState extends State<CartPage> {
       body: Column(
         children: [
           Card(
-            margin: const EdgeInsets.all(15),
+            margin: const EdgeInsets.all(16),
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: Row(
