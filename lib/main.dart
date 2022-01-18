@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/order.dart';
 import 'package:shop/pages/cart_page.dart';
+import 'package:shop/pages/oders_page.dart';
 import 'package:shop/providers/cart_map.dart';
 import 'package:shop/providers/order_list.dart';
 import 'package:shop/providers/product_list.dart';
@@ -39,10 +40,16 @@ class MyApp extends StatelessWidget {
           ),
           fontFamily: 'Poppins',
         ),
+        // Exemplo de sem ou com navegação por rotas
         home: const ProductsOverviewPage(title: 'Shop'),
+        initialRoute: AppRooutes.Home,
+        //
         routes: {
           AppRooutes.PRODUCT_DETAIL: (context) => const ProductDetailPage(),
           AppRooutes.CART: (context) => const CartPage(),
+          AppRooutes.ORDERS: (context) => const OrdersPage(),
+          AppRooutes.Home: (context) =>
+              const ProductsOverviewPage(title: 'Shop'),
         },
         debugShowCheckedModeBanner: false,
       ),
