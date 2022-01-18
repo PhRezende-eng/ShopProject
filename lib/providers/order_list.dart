@@ -1,12 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-import 'package:shop/models/cart_item.dart';
 import 'package:shop/models/order.dart';
 import 'package:shop/providers/cart_map.dart';
 
 class OrderListProvider with ChangeNotifier {
-  List<OrderModel> _item = [];
+  final List<OrderModel> _item = [];
 
   List<OrderModel> get items => [..._item];
 
