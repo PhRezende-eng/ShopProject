@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Poppins',
         ),
         // Exemplo de sem ou com navegação por rotas
-        home: const ProductsOverviewPage(title: 'Shop'),
+        // home: const ProductsOverviewPage(title: 'Shop'),
         initialRoute: AppRooutes.Home,
         //
         routes: {
