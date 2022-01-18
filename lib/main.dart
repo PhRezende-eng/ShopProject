@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/models/order.dart';
 import 'package:shop/pages/cart_page.dart';
 import 'package:shop/providers/cart_map.dart';
+import 'package:shop/providers/order_list.dart';
 import 'package:shop/providers/product_list.dart';
 import 'package:shop/pages/product_datail_page.dart';
 import 'package:shop/pages/products_overview_page.dart';
@@ -21,12 +23,15 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: RequestProductProvider()),
         ChangeNotifierProvider.value(value: ProductListProvider()),
+        ChangeNotifierProvider.value(value: OrderListProvider()),
         ChangeNotifierProvider.value(value: CartProvider()),
       ],
       child: MaterialApp(
         title: 'Shop',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch().copyWith(
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.purple,
+          ).copyWith(
             primary: Colors.purple,
             secondary: Colors.deepOrangeAccent,
             background: Colors.orange[200],

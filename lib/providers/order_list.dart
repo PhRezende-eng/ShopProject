@@ -22,5 +22,6 @@ class OrderListProvider with ChangeNotifier {
         date: DateTime.now(),
       ),
     );
+    notifyListeners();
   }
 }
