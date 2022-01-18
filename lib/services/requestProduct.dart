@@ -4,14 +4,14 @@ import 'package:shop/models/product.dart';
 import 'package:shop/services/request.dart';
 
 class RequestProductProvider extends RequestService {
-  final List<Product> _items = [];
+  final List<ProductModal> _items = [];
 
-  Future<List<Product>> getProducts() async {
+  Future<List<ProductModal>> getProducts() async {
     final dioResponse = await getRequest('products.json');
     Map<String, dynamic> data = dioResponse.data;
     if (dioResponse.statusMessage == 'OK') {
       for (var dict in data.values) {
-        var modelProduct = Product.fromJson(dict);
+        var modelProduct = ProductModal.fromJson(dict);
         _items.add(modelProduct);
       }
 
@@ -35,7 +35,7 @@ class RequestProductProvider extends RequestService {
     }
   }
 
-  Future<bool> patchFavoriteRequest(Product product,
+  Future<bool> patchFavoriteRequest(ProductModal product,
       {required bool isFavorite}) async {
     final dict = {
       'isFavorite': isFavorite,

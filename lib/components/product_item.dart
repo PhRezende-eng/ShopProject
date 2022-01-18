@@ -13,7 +13,7 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // com o listen false, ele não escutará a mudança de estado
-    final product = Provider.of<Product>(context);
+    final product = Provider.of<ProductModal>(context);
     final requestPRoduct = Provider.of<RequestProductProvider>(context);
     final cart = Provider.of<CartProvider>(context);
     return ClipRRect(
@@ -34,7 +34,7 @@ class ProductItem extends StatelessWidget {
         footer: GridTileBar(
           backgroundColor: Theme.of(context).colorScheme.background,
           leading: IconButton(
-            icon: Consumer<Product>(
+            icon: Consumer<ProductModal>(
               //O consumer tem a mesma função do Provider.of<Product>(context )
               builder: (context, product, child) => Icon(
                 product.isFavorite //caso seja true

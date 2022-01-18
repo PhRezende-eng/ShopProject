@@ -13,7 +13,7 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
-    final product = ModalRoute.of(context)?.settings.arguments as Product;
+    final product = ModalRoute.of(context)?.settings.arguments as ProductModal;
     return Scaffold(
       appBar: AppBar(
         title: Text(product.name),

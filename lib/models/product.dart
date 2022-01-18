@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 
-class Product with ChangeNotifier {
+class ProductModal with ChangeNotifier {
   final String id;
   final String name;
   final String description;
@@ -10,7 +10,7 @@ class Product with ChangeNotifier {
   final String imageUrl;
   bool isFavorite;
 
-  Product({
+  ProductModal({
     required this.id,
     required this.name,
     required this.description,
@@ -24,8 +24,8 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
+  factory ProductModal.fromJson(Map<String, dynamic> json) {
+    return ProductModal(
       id: json['id'],
       name: json['title'],
       description: json['description'],

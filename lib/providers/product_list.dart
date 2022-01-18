@@ -3,9 +3,9 @@ import 'package:shop/models/product.dart';
 import 'package:shop/services/requestProduct.dart';
 
 class ProductListProvider with ChangeNotifier {
-  var _items = <Product>[];
-  List<Product> get items => [..._items];
-  List<Product> get favoriteItem =>
+  var _items = <ProductModal>[];
+  List<ProductModal> get items => [..._items];
+  List<ProductModal> get favoriteItem =>
       [..._items.where((product) => product.isFavorite)];
 
   Future<void> getProduct() async {

@@ -18,7 +18,7 @@ class CartProvider with ChangeNotifier {
     return totalPrice;
   }
 
-  void addItem(Product product) {
+  void addItem(ProductModal product) {
     if (_items.containsKey(product.id)) {
       _items.update(
         product.id,
