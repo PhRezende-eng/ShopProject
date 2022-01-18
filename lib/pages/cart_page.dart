@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/cart_item_widget.dart';
 import 'package:shop/providers/cart_map.dart';
+import 'package:shop/providers/order_list.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -56,7 +57,11 @@ class _CartPageState extends State<CartPage> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<OrderListProvider>(context, listen: false)
+                          .addOrder(cart);
+                      cart.clearItems();
+                    },
                   ),
                 ],
               ),
