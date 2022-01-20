@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         ),
         // Exemplo de sem ou com navegação por rotas
         // home: const ProductsOverviewPage(title: 'Shop'),
-        initialRoute: AppRooutes.Home,
+        // initialRoute: AppRooutes.Home,
         //
         routes: {
           AppRooutes.PRODUCT_DETAIL: (context) => const ProductDetailPage(),
