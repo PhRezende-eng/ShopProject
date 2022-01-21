@@ -2,7 +2,7 @@ import 'package:shop/models/cart_item.dart';
 
 class OrderModel {
   final String id;
-  final double total;
+  final num total;
   final List<CartItemModel> products;
   final DateTime date;
 

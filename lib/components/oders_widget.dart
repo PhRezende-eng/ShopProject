@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shop/models/order.dart';
+import 'package:shop/utils/util_functions.dart';
 
 class OrderWidget extends StatelessWidget {
   final OrderModel order;
@@ -14,9 +15,10 @@ class OrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String data = DateFormat('dd/MM/yyyy hh:mm').format(order.date);
+    String total = Utils.formatPrice(order.total.toDouble());
     return Card(
       child: ListTile(
-        title: Text('R\$ ${order.total.toStringAsFixed(2)}'),
+        title: Text('$total'),
         subtitle: Text('$data'),
         trailing: IconButton(
           onPressed: () {},

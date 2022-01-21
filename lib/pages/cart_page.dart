@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/cart_item_widget.dart';
 import 'package:shop/providers/cart_map.dart';
 import 'package:shop/providers/order_list.dart';
+import 'package:shop/utils/util_functions.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -14,11 +15,20 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  late CartProvider cart;
+  late String total;
+  late List items;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    cart = Provider.of<CartProvider>(context);
+    total = Utils.formatPrice(cart.totalPrice);
+    items = cart.items.values.toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartProvider>(context);
-    final items = cart.items.values.toList();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Carrinho'),
@@ -42,7 +52,7 @@ class _CartPageState extends State<CartPage> {
                   Chip(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     label: Text(
-                      'R\$${cart.totalPrice.toStringAsFixed(2)}',
+                      '$total',
                       style: TextStyle(
                         color: Colors.white,
                         // Theme.of(context).primaryTextTheme.headline6?.color,
