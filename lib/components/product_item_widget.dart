@@ -7,8 +7,8 @@ import 'package:shop/providers/cart_map.dart';
 import 'package:shop/services/requestProduct.dart';
 import 'package:shop/utils/app_routes.dart';
 
-class ProductItem extends StatelessWidget {
-  const ProductItem({Key? key}) : super(key: key);
+class ProductItemWidget extends StatelessWidget {
+  const ProductItemWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -3,20 +3,21 @@
 import 'package:flutter/material.dart';
 import 'package:shop/utils/app_routes.dart';
 
-class AppDrawer extends StatefulWidget {
-  const AppDrawer({Key? key}) : super(key: key);
+class AppDrawerWidget extends StatefulWidget {
+  const AppDrawerWidget({Key? key}) : super(key: key);
 
   @override
-  _AppDrawerState createState() => _AppDrawerState();
+  _AppDrawerWidgetState createState() => _AppDrawerWidgetState();
 }
 
-class _AppDrawerState extends State<AppDrawer> {
+class _AppDrawerWidgetState extends State<AppDrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
           AppBar(
+            automaticallyImplyLeading: false,
             title: Text('Bem vindo, usuário!'),
           ),
           Divider(),
@@ -39,6 +40,7 @@ class _AppDrawerState extends State<AppDrawer> {
               );
             },
           ),
+          Divider(),
         ],
       ),
     );

@@ -2,12 +2,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/components/product_item.dart';
+import 'package:shop/components/product_item_widget.dart';
 import 'package:shop/providers/product_list.dart';
 
-class ProductGrid extends StatelessWidget {
+class ProductGridWidget extends StatelessWidget {
   final bool filterFavorite;
-  const ProductGrid({required this.filterFavorite, Key? key}) : super(key: key);
+  const ProductGridWidget({required this.filterFavorite, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class ProductGrid extends StatelessWidget {
       itemBuilder: (context, index) => ChangeNotifierProvider.value(
         //quando há um um Provider já criado, no caso tem na main.
         value: loadedProductProvider[index],
-        child: const ProductItem(),
+        child: const ProductItemWidget(),
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, //quantidade de itens por linha
