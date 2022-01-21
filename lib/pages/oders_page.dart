@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer_widget.dart';
+import 'package:shop/components/empty_list_widget.dart';
 import 'package:shop/components/oders_widget.dart';
 import 'package:shop/providers/order_list.dart';
 
@@ -17,11 +18,18 @@ class OrdersPage extends StatelessWidget {
         title: Text('Meus pedidos'),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (ctx, index) => OrderWidget(
-          items[index],
-        ),
+      body: Center(
+        child: items.isEmpty
+            ? EmptyListWidget(
+                'Não há pedidos.',
+                'Você ainda não fez nenhum pedido, vá até o shop e faça alguma compra.',
+              )
+            : ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (ctx, index) => OrderWidget(
+                  items[index],
+                ),
+              ),
       ),
       drawer: AppDrawerWidget(),
     );

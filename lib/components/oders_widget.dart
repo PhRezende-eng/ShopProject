@@ -23,7 +23,7 @@ class OrderWidget extends StatelessWidget {
         trailing: IconButton(
           onPressed: () {},
           icon: Icon(
-            Icons.more,
+            Icons.expand_more,
           ),
         ),
       ),
