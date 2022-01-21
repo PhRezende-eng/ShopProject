@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/components/app_drawer.dart';
-import 'package:shop/components/badge.dart';
-import 'package:shop/components/product_grid.dart';
-import 'package:shop/components/product_item.dart';
+import 'package:shop/components/app_drawer_widget.dart';
+import 'package:shop/components/badge_widget.dart';
+import 'package:shop/components/product_grid_widget.dart';
+import 'package:shop/components/product_item_widget.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/pages/cart_page.dart';
@@ -66,7 +66,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               });
             },
           ),
-          Badge(
+          BadgeWidget(
             value: cart.itemsCount.toString(),
             child: IconButton(
               onPressed: () {
@@ -95,13 +95,13 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 child: Text('${snapshot.error}'),
               );
             }
-            return ProductGrid(
+            return ProductGridWidget(
               filterFavorite: filterFavorite,
             );
           },
         ),
       ),
-      drawer: AppDrawer(),
+      drawer: AppDrawerWidget(),
     );
   }
 }

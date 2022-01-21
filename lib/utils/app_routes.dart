@@ -3,6 +3,6 @@
 class AppRooutes {
   static const Home = '/';
   static const CART = '/cart';
-  static const ORDERS = '/oders';
+  static const ORDERS = '/orders';
   static const PRODUCT_DETAIL = '/product_detail';
 }
