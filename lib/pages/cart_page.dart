@@ -83,7 +83,7 @@ class _CartPageState extends State<CartPage> {
           ),
           cart.items.isEmpty
               ? Padding(
-                  padding: EdgeInsets.only(top: size.height * 0.3),
+                  padding: EdgeInsets.only(top: size.height * 0.25),
                   child: EmptyListWidget(
                     'Carrinho vazio',
                     'Você ainda não adicionou nenhum produto no carrinho, vá até o shop e escolha algum produto.',
