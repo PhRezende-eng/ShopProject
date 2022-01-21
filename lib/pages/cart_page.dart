@@ -68,9 +68,11 @@ class _CartPageState extends State<CartPage> {
                       ),
                     ),
                     onPressed: () {
-                      Provider.of<OrderListProvider>(context, listen: false)
-                          .addOrder(cart);
-                      cart.clearItems();
+                      if (cart.totalPrice > 0) {
+                        Provider.of<OrderListProvider>(context, listen: false)
+                            .addOrder(cart);
+                        cart.clearItems();
+                      }
                     },
                   ),
                 ],
