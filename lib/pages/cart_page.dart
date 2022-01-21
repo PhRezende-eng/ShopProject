@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/cart_item_widget.dart';
+import 'package:shop/components/empty_list_widget.dart';
 import 'package:shop/providers/cart_map.dart';
 import 'package:shop/providers/order_list.dart';
 import 'package:shop/utils/util_functions.dart';
@@ -18,6 +19,7 @@ class _CartPageState extends State<CartPage> {
   late CartProvider cart;
   late String total;
   late List items;
+  late Size size;
 
   @override
   void didChangeDependencies() {
@@ -25,6 +27,7 @@ class _CartPageState extends State<CartPage> {
     cart = Provider.of<CartProvider>(context);
     total = Utils.formatPrice(cart.totalPrice);
     items = cart.items.values.toList();
+    size = MediaQuery.of(context).size;
   }
 
   @override
@@ -60,33 +63,40 @@ class _CartPageState extends State<CartPage> {
                     ),
                   ),
                   Spacer(),
-                  TextButton(
-                    child: Text('COMPRAR'),
-                    style: TextButton.styleFrom(
-                      textStyle: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                  if (cart.totalPrice > 0)
+                    TextButton(
+                      child: Text('COMPRAR'),
+                      style: TextButton.styleFrom(
+                        textStyle: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      if (cart.totalPrice > 0) {
+                      onPressed: () {
                         Provider.of<OrderListProvider>(context, listen: false)
                             .addOrder(cart);
                         cart.clearItems();
-                      }
-                    },
-                  ),
+                      },
+                    ),
                 ],
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (ctx, i) {
-                return CartItemWidget(items[i]);
-              },
-            ),
-          ),
+          cart.items.isEmpty
+              ? Padding(
+                  padding: EdgeInsets.only(top: size.height * 0.3),
+                  child: EmptyListWidget(
+                    'Carrinho vazio',
+                    'Você ainda não adicionou nenhum produto no carrinho, vá até o shop e escolha algum produto.',
+                  ),
+                )
+              : Expanded(
+                  child: ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (ctx, i) {
+                      return CartItemWidget(items[i]);
+                    },
+                  ),
+                ),
         ],
       ),
     );

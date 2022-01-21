@@ -21,7 +21,7 @@ class OrdersPage extends StatelessWidget {
       body: Center(
         child: items.isEmpty
             ? EmptyListWidget(
-                'Não há pedidos.',
+                'Não há pedidos',
                 'Você ainda não fez nenhum pedido, vá até o shop e faça alguma compra.',
               )
             : ListView.builder(
