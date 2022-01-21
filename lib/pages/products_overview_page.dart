@@ -37,6 +37,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -66,16 +67,15 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               });
             },
           ),
-          BadgeWidget(
-            value: cart.itemsCount.toString(),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRooutes.CART);
-                // Navigator.of(context).push(
-                //     MaterialPageRoute(builder: (context) => const CartPage()));
-              },
-              icon: Icon(
-                Icons.shopping_cart,
+          GestureDetector(
+            onTap: () => navigate(),
+            child: BadgeWidget(
+              value: cart.itemsCount.toString(),
+              child: IconButton(
+                onPressed: () => navigate(),
+                icon: Icon(
+                  Icons.shopping_cart,
+                ),
               ),
             ),
           ),
@@ -103,5 +103,11 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       ),
       drawer: AppDrawerWidget(),
     );
+  }
+
+  void navigate() {
+    Navigator.of(context).pushNamed(AppRooutes.CART);
+    // Navigator.of(context).push(
+    //     MaterialPageRoute(builder: (context) => const CartPage()));
   }
 }
