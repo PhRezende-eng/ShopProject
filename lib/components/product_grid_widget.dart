@@ -16,23 +16,18 @@ class ProductGridWidget extends StatelessWidget {
     final loadedProductProvider =
         filterFavorite ? productList.favoriteItem : productList.items;
 
-    return RefreshIndicator(
-      onRefresh: () {
-        return productList.getProduct();
-      },
-      child: GridView.builder(
-        itemCount: loadedProductProvider.length,
-        itemBuilder: (context, index) => ChangeNotifierProvider.value(
-          //quando há um um Provider já criado, no caso tem na main.
-          value: loadedProductProvider[index],
-          child: const ProductItemWidget(),
-        ),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, //quantidade de itens por linha
-          childAspectRatio: 1.2, //dimensão do item
-          crossAxisSpacing: 10, //espaçamento vertical
-          mainAxisSpacing: 10, //espaçamento horizontal
-        ),
+    return GridView.builder(
+      itemCount: loadedProductProvider.length,
+      itemBuilder: (context, index) => ChangeNotifierProvider.value(
+        //quando há um um Provider já criado, no caso tem na main.
+        value: loadedProductProvider[index],
+        child: const ProductItemWidget(),
+      ),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, //quantidade de itens por linha
+        childAspectRatio: 1.2, //dimensão do item
+        crossAxisSpacing: 10, //espaçamento vertical
+        mainAxisSpacing: 10, //espaçamento horizontal
       ),
     );
   }

@@ -28,18 +28,19 @@ class ProductsOverviewPage extends StatefulWidget {
 enum MenuValue { favorite, all }
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
+  late ProductListProvider listProvider;
+  late CartProvider cart;
   bool filterFavorite = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    getItems(context);
+    listProvider = Provider.of<ProductListProvider>(context, listen: false);
+    cart = Provider.of<CartProvider>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -83,24 +84,30 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: FutureBuilder(
-          future: getItems(context),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
+      body: RefreshIndicator(
+        onRefresh: () {
+          listProvider.clearListItems();
+          return getItems(context);
+        },
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: FutureBuilder(
+            future: getItems(context),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('${snapshot.error}'),
+                );
+              }
+              return ProductGridWidget(
+                filterFavorite: filterFavorite,
               );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('${snapshot.error}'),
-              );
-            }
-            return ProductGridWidget(
-              filterFavorite: filterFavorite,
-            );
-          },
+            },
+          ),
         ),
       ),
       drawer: AppDrawerWidget(),
@@ -108,7 +115,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   }
 
   Future getItems(BuildContext context) async {
-    await Provider.of<ProductListProvider>(context, listen: false).getProduct();
+    await listProvider.getProduct();
   }
 
   void navigate() {

@@ -8,13 +8,12 @@ class ProductListProvider with ChangeNotifier {
   List<ProductModal> get favoriteItem =>
       [..._items.where((product) => product.isFavorite)];
 
-  void clearItems() {
+  void clearListItems() {
     _items.clear();
     notifyListeners();
   }
 
   Future getProduct() async {
-    clearItems();
     final items = await RequestProductProvider().getProducts();
     _items = items;
     notifyListeners();
