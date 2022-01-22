@@ -54,33 +54,35 @@ class _OrderWidgetState extends State<OrderWidget> {
                 horizontal: 15,
               ),
               margin: EdgeInsets.only(
-                bottom: 4,
+                bottom: widget.order.products.length * 2,
               ),
               height: widget.order.products.length * 26,
-              child: ListView(
-                children: widget.order.products
-                    .map(
-                      (product) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            product.name,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
+              child: Scrollbar(
+                child: ListView(
+                  children: widget.order.products
+                      .map(
+                        (product) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              product.name,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '${product.quantity}x ${Utils.formatPrice(product.price.toDouble())}',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.grey,
+                            Text(
+                              '${product.quantity}x ${Utils.formatPrice(product.price.toDouble())}',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                    .toList(),
+                          ],
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
             ),
         ],
