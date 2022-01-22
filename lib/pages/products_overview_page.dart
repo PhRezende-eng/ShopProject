@@ -28,11 +28,13 @@ class ProductsOverviewPage extends StatefulWidget {
 enum MenuValue { favorite, all }
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
-  Future<void> getItems() async {
-    await Provider.of<ProductListProvider>(context, listen: false).getProduct();
-  }
-
   bool filterFavorite = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    getItems(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +86,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       body: Padding(
         padding: EdgeInsets.all(10),
         child: FutureBuilder(
-          future: getItems(),
+          future: getItems(context),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -103,6 +105,10 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       ),
       drawer: AppDrawerWidget(),
     );
+  }
+
+  Future getItems(BuildContext context) async {
+    await Provider.of<ProductListProvider>(context, listen: false).getProduct();
   }
 
   void navigate() {

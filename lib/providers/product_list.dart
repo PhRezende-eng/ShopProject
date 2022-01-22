@@ -8,9 +8,15 @@ class ProductListProvider with ChangeNotifier {
   List<ProductModal> get favoriteItem =>
       [..._items.where((product) => product.isFavorite)];
 
-  Future<void> getProduct() async {
-    //assim ele não instancia duas listas
+  void clearItems() {
+    _items.clear();
+    notifyListeners();
+  }
+
+  Future getProduct() async {
+    clearItems();
     final items = await RequestProductProvider().getProducts();
     _items = items;
+    notifyListeners();
   }
 }
