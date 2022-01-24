@@ -7,7 +7,8 @@ import 'package:shop/providers/order_list.dart';
 import 'package:shop/providers/product_list.dart';
 import 'package:shop/pages/product_datail_page.dart';
 import 'package:shop/pages/products_overview_page.dart';
-import 'package:shop/services/requestProduct.dart';
+import 'package:shop/services/request_order.dart';
+import 'package:shop/services/request_product.dart';
 import 'package:shop/utils/app_routes.dart';
 
 void main() {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: RequestProductProvider()),
+        ChangeNotifierProvider.value(value: RequestOrderProvider()),
         ChangeNotifierProvider.value(value: ProductListProvider()),
         ChangeNotifierProvider.value(value: OrderListProvider()),
         ChangeNotifierProvider.value(value: CartProvider()),

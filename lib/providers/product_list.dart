@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shop/models/product.dart';
-import 'package:shop/services/requestProduct.dart';
+import 'package:shop/services/request_product.dart';
 
 class ProductListProvider with ChangeNotifier {
   var _items = <ProductModal>[];

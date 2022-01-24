@@ -11,7 +11,7 @@ import 'package:shop/models/product.dart';
 import 'package:shop/pages/cart_page.dart';
 import 'package:shop/providers/cart_map.dart';
 import 'package:shop/providers/product_list.dart';
-import 'package:shop/services/requestProduct.dart';
+import 'package:shop/services/request_product.dart';
 import 'package:shop/utils/app_routes.dart';
 
 class ProductsOverviewPage extends StatefulWidget {

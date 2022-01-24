@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/cart_item_widget.dart';
 import 'package:shop/components/empty_list_widget.dart';
+import 'package:shop/models/cart_item.dart';
 import 'package:shop/providers/cart_map.dart';
 import 'package:shop/providers/order_list.dart';
+import 'package:shop/services/request_order.dart';
 import 'package:shop/utils/util_functions.dart';
 
 class CartPage extends StatefulWidget {
@@ -16,18 +18,20 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  late OrderListProvider order;
   late CartProvider cart;
   late String total;
-  late List items;
+  late List<CartItemModel> items;
   late Size size;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    order = Provider.of<OrderListProvider>(context);
     cart = Provider.of<CartProvider>(context);
+    size = MediaQuery.of(context).size;
     total = Utils.formatPrice(cart.totalPrice);
     items = cart.items.values.toList();
-    size = MediaQuery.of(context).size;
   }
 
   @override
@@ -72,8 +76,8 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
                       onPressed: () {
-                        Provider.of<OrderListProvider>(context, listen: false)
-                            .addOrder(cart);
+                        saveOrder();
+                        order.addOrder(cart);
                         cart.clearItems();
                       },
                     ),
@@ -100,5 +104,10 @@ class _CartPageState extends State<CartPage> {
         ],
       ),
     );
+  }
+
+  void saveOrder() async {
+    await Provider.of<RequestOrderProvider>(context, listen: false)
+        .postOrder(order.items, cart);
   }
 }

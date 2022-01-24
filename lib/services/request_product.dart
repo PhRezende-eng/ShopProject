@@ -8,28 +8,13 @@ class RequestProductProvider extends RequestService {
 
   Future<List<ProductModal>> getProducts() async {
     final dioResponse = await getRequest('products.json');
-    Map<String, dynamic> data = dioResponse.data;
+    final data = dioResponse.data;
     if (dioResponse.statusMessage == 'OK') {
       for (var dict in data.values) {
         var modelProduct = ProductModal.fromJson(dict);
         _items.add(modelProduct);
       }
-
       return _items;
-
-      // data.forEach((productId, productData) {
-      //   _items.add(
-      //     Product(
-      //         id: productId, // aqui neste caso a gente pega Id da KEY
-      //         title: productData['title'],
-      //         description: productData['description'],
-      //         price: productData['price'],
-      //         imageUrl: productData['imageUrl'],
-      //         isFavorite: productData['isFavorite'] ?? false),
-      //   );
-      // });
-
-      // return _items;
     } else {
       throw 'Erro de conexão ao firebase.\nTente novamente mais tarde.';
     }
@@ -52,3 +37,25 @@ class RequestProductProvider extends RequestService {
     }
   }
 }
+
+
+// Future<List<ProductModal>> getProducts() async {
+//     final dioResponse = await getRequest('products.json');
+//     Map<String, dynamic> data = dioResponse.data;
+//     if (dioResponse.statusMessage == 'OK') {
+//       data.forEach((productId, productData) {
+//         _items.add(
+//           ProductModal(
+//               id: productId, // aqui neste caso a gente pega Id da KEY
+//               title: productData['title'],
+//               description: productData['description'],
+//               price: productData['price'],
+//               imageUrl: productData['imageUrl'],
+//               isFavorite: productData['isFavorite'] ?? false),
+//         );
+//       });
+//       return _items;
+//     } else {
+//       throw 'Erro de conexão ao firebase.\nTente novamente mais tarde.';
+//     }
+//   }

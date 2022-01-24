@@ -13,6 +13,13 @@ class OrderModel {
     required this.date,
   });
 
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'total': total,
+        'products': products,
+        'date': date,
+      };
+
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
       id: json['id'],
