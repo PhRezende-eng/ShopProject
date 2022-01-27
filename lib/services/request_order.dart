@@ -19,19 +19,17 @@ class RequestOrderProvider extends RequestService {
     }
   }
 
-  Future postOrder(List<OrderModel> order, CartProvider cart) async {
+  Future postOrder(OrderModel order, CartProvider cart) async {
     var dict = {};
 
-    for (var item in order) {
-      dict['id'] = item.id;
-      dict['date'] = item.date;
-      dict['products'] = cart.items.values.toList();
-      dict['total'] = item.total;
-    }
+    dict['id'] = order.id;
+    dict['date'] = order.date.millisecondsSinceEpoch;
+    dict['products'] = cart.items.values.toList();
+    dict['total'] = order.total;
 
     final dioResponse = await postRequest(
       'orders.json',
-      body: dict,
+      body: {'${order.hashCode}': order},
     );
     if (dioResponse.statusMessage == 'OK') {
       return 'Pedido feito com sucesso!';

@@ -76,8 +76,8 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
                       onPressed: () {
-                        saveOrder();
                         order.addOrder(cart);
+                        saveOrder();
                         cart.clearItems();
                       },
                     ),
@@ -108,6 +108,6 @@ class _CartPageState extends State<CartPage> {
 
   void saveOrder() async {
     await Provider.of<RequestOrderProvider>(context, listen: false)
-        .postOrder(order.items, cart);
+        .postOrder(order.items[0], cart);
   }
 }
