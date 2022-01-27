@@ -7,11 +7,18 @@ import 'package:shop/services/request.dart';
 class RequestOrderProvider extends RequestService {
   Future<List<OrderModel>> getOrder() async {
     final dioResponse = await getRequest('orders.json');
-    final data = dioResponse.data;
+    var data = dioResponse.data;
     if (dioResponse.statusMessage == 'OK') {
-      var orderList = <OrderModel>[];
-      for (var order in data.values) {
-        orderList.add(OrderModel.fromJson(order));
+      List<OrderModel> orderList = [];
+      for (var orderModel in data.values.toList()) {
+        orderList.add(
+          OrderModel(
+            id: orderModel.id,
+            date: orderModel.date.toUtc(),
+            products: orderModel.products,
+            total: orderModel.total,
+          ),
+        );
       }
       return orderList;
     } else {
@@ -24,7 +31,7 @@ class RequestOrderProvider extends RequestService {
 
     dict['id'] = order.id;
     dict['date'] = order.date.millisecondsSinceEpoch;
-    dict['products'] = cart.items.values.toList();
+    dict['products'] = cart.items.values.toList() as List<CartProvider>;
     dict['total'] = order.total;
 
     final dioResponse = await postRequest(

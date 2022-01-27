@@ -5,14 +5,26 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer_widget.dart';
 import 'package:shop/components/empty_list_widget.dart';
 import 'package:shop/components/oders_widget.dart';
-import 'package:shop/providers/order_list.dart';
+import 'package:shop/models/order.dart';
+import 'package:shop/services/request_order.dart';
 
-class OrdersPage extends StatelessWidget {
+class OrdersPage extends StatefulWidget {
   const OrdersPage({Key? key}) : super(key: key);
 
   @override
+  State<OrdersPage> createState() => _OrdersPageState();
+}
+
+class _OrdersPageState extends State<OrdersPage> {
+  var items = <OrderModel>[];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    getItems();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final items = Provider.of<OrderListProvider>(context).items;
     return Scaffold(
       appBar: AppBar(
         title: Text('Meus pedidos'),
@@ -33,5 +45,9 @@ class OrdersPage extends StatelessWidget {
       ),
       drawer: AppDrawerWidget(),
     );
+  }
+
+  Future getItems() async {
+    items = await Provider.of<RequestOrderProvider>(context).getOrder();
   }
 }
