@@ -29,7 +29,7 @@ class RequestOrderProvider extends RequestService {
 
     final dioResponse = await postRequest(
       'orders.json',
-      body: {'${order.hashCode}': order},
+      body: dict,
     );
     if (dioResponse.statusMessage == 'OK') {
       return 'Pedido feito com sucesso!';
