@@ -13,6 +13,14 @@ class RequestOrderProvider extends RequestService {
       for (var order in data.values) {
         orderList.add(OrderModel.fromJson(order));
       }
+      // data.values.forEach((order) {
+      //   orderList.add(OrderModel(
+      //     id: order['id'],
+      //     date: order['date'],
+      //     products: order['products'],
+      //     total: order['total'],
+      //   ));
+      //  });
       return orderList;
     } else {
       throw 'Erro ao tentar listar os pedidos.\nTente novamente mais tarde.';
