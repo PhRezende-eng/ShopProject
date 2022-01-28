@@ -1,24 +1,17 @@
 // ignore_for_file: unnecessary_string_interpolations
 
+import 'package:shop/models/cart_item.dart';
 import 'package:shop/models/order.dart';
-import 'package:shop/providers/cart_map.dart';
 import 'package:shop/services/request.dart';
 
 class RequestOrderProvider extends RequestService {
   Future<List<OrderModel>> getOrder() async {
     final dioResponse = await getRequest('orders.json');
-    var data = dioResponse.data;
+    Map data = dioResponse.data;
     if (dioResponse.statusMessage == 'OK') {
       List<OrderModel> orderList = [];
-      for (var orderModel in data.values.toList()) {
-        orderList.add(
-          OrderModel(
-            id: orderModel.id,
-            date: orderModel.date.toUtc(),
-            products: orderModel.products,
-            total: orderModel.total,
-          ),
-        );
+      for (var order in data.values) {
+        orderList.add(OrderModel.fromJson(order));
       }
       return orderList;
     } else {
@@ -26,14 +19,15 @@ class RequestOrderProvider extends RequestService {
     }
   }
 
-  Future postOrder(OrderModel order, CartProvider cart) async {
-    var dict = {};
-
-    dict['id'] = order.id;
-    dict['date'] = order.date.millisecondsSinceEpoch;
-    dict['products'] = cart.items.values.toList() as List<CartProvider>;
-    dict['total'] = order.total;
-
+  Future postOrder(OrderModel order, List<CartItemModel> cartItems) async {
+    Map dict = order.toJson(); // metódo me retorna um map
+    // Map dict = {};
+    // print('$newOrder ToJson');
+    // dict['id'] = order.id;
+    // dict['total'] = order.total;
+    // dict['products'] = cartItems;
+    // dict['date'] = order.date.millisecondsSinceEpoch;
+    // print('$dict Map');
     final dioResponse = await postRequest(
       'orders.json',
       body: dict,

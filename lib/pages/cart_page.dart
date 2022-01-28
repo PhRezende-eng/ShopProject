@@ -108,6 +108,6 @@ class _CartPageState extends State<CartPage> {
 
   void saveOrder() async {
     await Provider.of<RequestOrderProvider>(context, listen: false)
-        .postOrder(order.items[0], cart);
+        .postOrder(order.items[0], items);
   }
 }

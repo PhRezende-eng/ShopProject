@@ -17,15 +17,19 @@ class OrderModel {
         'id': id,
         'total': total,
         'products': products,
-        'date': date,
+        'date': date.millisecondsSinceEpoch,
       };
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
+    List<CartItemModel> cartItems = [];
+    for (var cart in json['products']) {
+      cartItems.add(CartItemModel.fromJson(cart));
+    }
     return OrderModel(
       id: json['id'],
       total: json['total'],
-      products: json['products'],
-      date: json['date'],
+      products: cartItems,
+      date: DateTime.fromMillisecondsSinceEpoch(json['date']),
     );
   }
 }

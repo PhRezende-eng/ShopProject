@@ -17,6 +17,7 @@ class OrdersPage extends StatefulWidget {
 
 class _OrdersPageState extends State<OrdersPage> {
   var items = <OrderModel>[];
+  bool isLoaded = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -30,24 +31,31 @@ class _OrdersPageState extends State<OrdersPage> {
         title: Text('Meus pedidos'),
         centerTitle: true,
       ),
-      body: Center(
-        child: items.isEmpty
-            ? EmptyListWidget(
-                'Não há pedidos',
-                'Você ainda não fez nenhum pedido, vá até o shop e faça alguma compra.',
-              )
-            : ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (ctx, index) => OrderWidget(
-                  items[index],
-                ),
-              ),
-      ),
+      body: isLoaded
+          ? Center(
+              child: items.isEmpty
+                  ? EmptyListWidget(
+                      'Não há pedidos',
+                      'Você ainda não fez nenhum pedido, vá até o shop e faça alguma compra.',
+                    )
+                  : ListView.builder(
+                      itemCount: items.length,
+                      itemBuilder: (ctx, index) => OrderWidget(
+                        items[index],
+                      ),
+                    ),
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
       drawer: AppDrawerWidget(),
     );
   }
 
   Future getItems() async {
     items = await Provider.of<RequestOrderProvider>(context).getOrder();
+    setState(() {
+      isLoaded = true;
+    });
   }
 }
