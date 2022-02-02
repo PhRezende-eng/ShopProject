@@ -38,7 +38,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
     super.didChangeDependencies();
     listProvider = Provider.of<ProductListProvider>(context, listen: false);
     cart = Provider.of<CartProvider>(context);
-    getItems(context);
+    getItems();
   }
 
   @override
@@ -75,7 +75,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           GestureDetector(
             onTap: () => navigate(),
             child: BadgeWidget(
-              value: cart.itemsCount.toString(),
+              value: cart.itemCountCart.toString(),
               child: IconButton(
                 onPressed: () => navigate(),
                 icon: Icon(
@@ -92,7 +92,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           setState(() {
             isLoading = true;
           });
-          return getItems(context);
+          return getItems();
         },
         child: Padding(
           padding: EdgeInsets.all(10),
@@ -109,7 +109,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
     );
   }
 
-  Future getItems(BuildContext context) async {
+  Future getItems() async {
     await listProvider.getProduct();
     setState(() {
       isLoading = false;

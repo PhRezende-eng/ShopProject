@@ -8,7 +8,8 @@ class CartProvider with ChangeNotifier {
   final Map<String, CartItemModel> _items = {};
 
   Map<String, CartItemModel> get items => {..._items};
-  int get itemsCount => _items.length;
+
+  int itemCountCart = 0;
 
   double get totalPrice {
     double totalPrice = 0;
@@ -42,6 +43,7 @@ class CartProvider with ChangeNotifier {
         ),
       );
     }
+    itemCountCart++;
     notifyListeners();
   }
 
@@ -49,6 +51,10 @@ class CartProvider with ChangeNotifier {
     _items.remove(productId);
     notifyListeners();
   }
+
+  // void removeLastItem(ProductModal product) {
+  //   _items.removeWhere((key, item) => product == item);
+  // }
 
   void clearItems() {
     _items.clear();

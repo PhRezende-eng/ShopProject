@@ -63,7 +63,7 @@ class ProductGridItemWidget extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
               cart.addItem(product);
-              callSnackBar(context);
+              callSnackBar(context, product);
             },
           ),
         ),
@@ -71,7 +71,7 @@ class ProductGridItemWidget extends StatelessWidget {
     );
   }
 
-  void callSnackBar(BuildContext context) {
+  void callSnackBar(BuildContext context, ProductModal productModal) {
     final cart = Provider.of<CartProvider>(context);
     //Pecorre a arvore de components e procura o scaffold raiza que é o da tela inicial, pois toda tela há um scaffold
     ScaffoldMessenger.of(context).showSnackBar(
