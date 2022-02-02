@@ -32,9 +32,9 @@ class MyApp extends StatelessWidget {
         title: 'Shop',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.purple,
+            primarySwatch: Colors.green,
           ).copyWith(
-            primary: Colors.purple,
+            primary: Colors.purple[400],
             secondary: Colors.deepOrangeAccent,
             background: Colors.orange[200],
             surface: Colors.grey[100], //cores de strings

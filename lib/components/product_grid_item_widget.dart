@@ -63,9 +63,22 @@ class ProductGridItemWidget extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
               cart.addItem(product);
+              callSnackBar(context);
             },
           ),
         ),
+      ),
+    );
+  }
+
+  void callSnackBar(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
+    //Pecorre a arvore de components e procura o scaffold raiza que é o da tela inicial, pois toda tela há um scaffold
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Adicionado'),
+        duration: Duration(seconds: 2),
+        action: SnackBarAction(label: 'DESFAZER', onPressed: () {}),
       ),
     );
   }
