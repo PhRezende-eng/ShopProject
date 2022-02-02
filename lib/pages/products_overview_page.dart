@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer_widget.dart';
 import 'package:shop/components/badge_widget.dart';
 import 'package:shop/components/product_grid_widget.dart';
-import 'package:shop/components/product_item_widget.dart';
+import 'package:shop/components/product_grid_item_widget.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/pages/cart_page.dart';
@@ -31,12 +31,14 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   late ProductListProvider listProvider;
   late CartProvider cart;
   bool filterFavorite = false;
+  bool isLoading = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     listProvider = Provider.of<ProductListProvider>(context, listen: false);
     cart = Provider.of<CartProvider>(context);
+    getItems(context);
   }
 
   @override
@@ -87,27 +89,20 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       body: RefreshIndicator(
         onRefresh: () {
           listProvider.clearListItems();
+          setState(() {
+            isLoading = true;
+          });
           return getItems(context);
         },
         child: Padding(
           padding: EdgeInsets.all(10),
-          child: FutureBuilder(
-            future: getItems(context),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
+          child: isLoading
+              ? Center(
                   child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('${snapshot.error}'),
-                );
-              }
-              return ProductGridWidget(
-                filterFavorite: filterFavorite,
-              );
-            },
-          ),
+                )
+              : ProductGridWidget(
+                  filterFavorite: filterFavorite,
+                ),
         ),
       ),
       drawer: AppDrawerWidget(),
@@ -116,6 +111,9 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
 
   Future getItems(BuildContext context) async {
     await listProvider.getProduct();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void navigate() {
