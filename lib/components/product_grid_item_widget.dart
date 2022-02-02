@@ -13,8 +13,8 @@ class ProductGridItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // com o listen false, ele não escutará a mudança de estado
-    final product = Provider.of<ProductModal>(context);
     final requestPRoduct = Provider.of<RequestProductProvider>(context);
+    final product = Provider.of<ProductModal>(context);
     final cart = Provider.of<CartProvider>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -72,13 +72,20 @@ class ProductGridItemWidget extends StatelessWidget {
   }
 
   void callSnackBar(BuildContext context, ProductModal productModal) {
-    final cart = Provider.of<CartProvider>(context);
+    final product = Provider.of<ProductModal>(context, listen: false);
+    final cart = Provider.of<CartProvider>(context, listen: false);
     //Pecorre a arvore de components e procura o scaffold raiza que é o da tela inicial, pois toda tela há um scaffold
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Adicionado'),
         duration: Duration(seconds: 2),
-        action: SnackBarAction(label: 'DESFAZER', onPressed: () {}),
+        action: SnackBarAction(
+            label: 'DESFAZER',
+            onPressed: () {
+              cart.removeLastAddItem(
+                  cart.items.values.toList()[cart.items.values.length - 1],
+                  product.id);
+            }),
       ),
     );
   }

@@ -52,9 +52,22 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // void removeLastItem(ProductModal product) {
-  //   _items.removeWhere((key, item) => product == item);
-  // }
+  void removeLastAddItem(CartItemModel cartItem, String productId) {
+    if (cartItem.quantity == 1) {
+      _items.removeWhere((key, cartItem) => cartItem.productId == productId);
+    } else {
+      _items.update(
+        productId,
+        (cartItem) => CartItemModel(
+          id: cartItem.id,
+          productId: cartItem.productId,
+          name: cartItem.name,
+          price: cartItem.price,
+          quantity: cartItem.quantity - 1,
+        ),
+      );
+    }
+  }
 
   void clearItems() {
     _items.clear();
