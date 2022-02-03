@@ -70,6 +70,7 @@ class CartProvider with ChangeNotifier {
   }
 
   void clearItems() {
+    itemCountCart = 0;
     _items.clear();
     notifyListeners();
   }

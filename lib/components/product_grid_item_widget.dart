@@ -83,8 +83,9 @@ class ProductGridItemWidget extends StatelessWidget {
             label: 'DESFAZER',
             onPressed: () {
               cart.removeLastAddItem(
-                  cart.items.values.toList()[cart.items.values.length - 1],
-                  product.id);
+                cart.items.values.toList()[cart.items.values.length - 1],
+                product.id,
+              );
             }),
       ),
     );
