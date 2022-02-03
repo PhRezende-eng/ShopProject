@@ -74,6 +74,7 @@ class ProductGridItemWidget extends StatelessWidget {
   void callSnackBar(BuildContext context, ProductModal productModal) {
     final product = Provider.of<ProductModal>(context, listen: false);
     final cart = Provider.of<CartProvider>(context, listen: false);
+    var values = cart.items.values.toList();
     //Pecorre a arvore de components e procura o scaffold raiza que é o da tela inicial, pois toda tela há um scaffold
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -83,7 +84,7 @@ class ProductGridItemWidget extends StatelessWidget {
             label: 'DESFAZER',
             onPressed: () {
               cart.removeLastAddItem(
-                cart.items.values.toList()[cart.items.values.length - 1],
+                values[values.length - 1],
                 product.id,
               );
             }),
