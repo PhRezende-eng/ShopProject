@@ -63,7 +63,7 @@ class ProductGridItemWidget extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
               cart.addItem(product);
-              callSnackBar(context, product);
+              callSnackBar(context);
             },
           ),
         ),
@@ -71,7 +71,7 @@ class ProductGridItemWidget extends StatelessWidget {
     );
   }
 
-  void callSnackBar(BuildContext context, ProductModal productModal) {
+  void callSnackBar(BuildContext context) {
     final product = Provider.of<ProductModal>(context, listen: false);
     final cart = Provider.of<CartProvider>(context, listen: false);
     var values = cart.items.values.toList();
