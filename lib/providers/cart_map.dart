@@ -48,6 +48,11 @@ class CartProvider with ChangeNotifier {
   }
 
   void removeItem(String productId) {
+    for (var cartItem in _items.values) {
+      if (cartItem.productId == productId) {
+        itemCountCart -= cartItem.quantity;
+      }
+    }
     _items.remove(productId);
     notifyListeners();
   }
@@ -67,11 +72,13 @@ class CartProvider with ChangeNotifier {
         ),
       );
     }
+    itemCountCart--;
+    notifyListeners();
   }
 
   void clearItems() {
-    itemCountCart = 0;
     _items.clear();
+    itemCountCart = 0;
     notifyListeners();
   }
 }
