@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
             primary: Colors.purple[400],
             secondary: Colors.deepOrangeAccent,
             background: Colors.orange[200],
-            surface: Colors.grey[100], //cores de strings
+            primaryVariant: Colors.grey[100],
+            secondaryVariant: Colors.grey[400],
           ),
           fontFamily: 'Poppins',
         ),
