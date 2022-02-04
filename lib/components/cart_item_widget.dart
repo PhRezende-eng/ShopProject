@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,9 +33,12 @@ class CartItemWidget extends StatelessWidget {
           size: 32,
         ),
       ),
-      onDismissed: (_) {
-        Provider.of<CartProvider>(context, listen: false)
-            .removeItem(cartItem.productId);
+      confirmDismiss: (_) async {
+        var shouldRemoveProduct = await showConfirmDialog(context);
+        if (shouldRemoveProduct == 'remove') {
+          Provider.of<CartProvider>(context, listen: false)
+              .removeItem(cartItem.productId);
+        }
       },
       child: Card(
         margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -59,6 +62,35 @@ class CartItemWidget extends StatelessWidget {
           subtitle: Text('Total: $total'),
           trailing: Text('${cartItem.quantity}x'),
         ),
+      ),
+    );
+  }
+
+  Future<String?> showConfirmDialog(BuildContext context) async {
+    return await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Remover Produto'),
+        content: Text('Você remover este produto do seu pedido?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop('cancel');
+            },
+            child: Text(
+              'Cancelar',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondaryVariant,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop('remove');
+            },
+            child: Text('Remover'),
+          ),
+        ],
       ),
     );
   }
