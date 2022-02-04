@@ -34,8 +34,8 @@ class CartItemWidget extends StatelessWidget {
         ),
       ),
       confirmDismiss: (_) async {
-        var shouldRemoveProduct = await showConfirmDialog(context);
-        if (shouldRemoveProduct == 'remove') {
+        bool shouldRemoveProduct = await showConfirmDialog(context) ?? false;
+        if (shouldRemoveProduct) {
           Provider.of<CartProvider>(context, listen: false)
               .removeItem(cartItem.productId);
         }
@@ -66,8 +66,8 @@ class CartItemWidget extends StatelessWidget {
     );
   }
 
-  Future<String?> showConfirmDialog(BuildContext context) async {
-    return await showDialog(
+  Future<bool?> showConfirmDialog(BuildContext context) {
+    return showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Remover Produto'),
@@ -75,7 +75,7 @@ class CartItemWidget extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop('cancel');
+              Navigator.of(context).pop(false);
             },
             child: Text(
               'Cancelar',
@@ -86,7 +86,7 @@ class CartItemWidget extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop('remove');
+              Navigator.of(context).pop(true);
             },
             child: Text('Remover'),
           ),
