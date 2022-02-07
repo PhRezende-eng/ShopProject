@@ -47,6 +47,7 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
             onTap: () {
               Navigator.of(context).pushNamed(
                 AppRooutes.PRODUCT_PAGE,
+                arguments: 'Gerenciar produtos',
               );
             },
           ),
