@@ -1,7 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/pages/cart_page.dart';
 import 'package:shop/pages/oders_page.dart';
+import 'package:shop/pages/product_page.dart';
 import 'package:shop/providers/cart_map.dart';
 import 'package:shop/providers/order_list.dart';
 import 'package:shop/providers/product_list.dart';
@@ -47,11 +50,11 @@ class MyApp extends StatelessWidget {
         // initialRoute: AppRooutes.Home,
         //
         routes: {
-          AppRooutes.PRODUCT_DETAIL: (context) => const ProductDetailPage(),
-          AppRooutes.CART: (context) => const CartPage(),
-          AppRooutes.ORDERS: (context) => const OrdersPage(),
-          AppRooutes.Home: (context) =>
-              const ProductsOverviewPage(title: 'Shop'),
+          AppRooutes.PRODUCT_DETAIL: (context) => ProductDetailPage(),
+          AppRooutes.PRODUCT_PAGE: (context) => ProductPage(),
+          AppRooutes.ORDERS: (context) => OrdersPage(),
+          AppRooutes.Home: (context) => ProductsOverviewPage(title: 'Shop'),
+          AppRooutes.CART: (context) => CartPage(),
         },
         debugShowCheckedModeBanner: false,
       ),
