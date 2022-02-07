@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/cart_item.dart';
 import 'package:shop/providers/cart_map.dart';
-import 'package:shop/utils/app_routes.dart';
 import 'package:shop/utils/util_functions.dart';
 
 class CartItemWidget extends StatelessWidget {
