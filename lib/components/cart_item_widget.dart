@@ -41,35 +41,27 @@ class CartItemWidget extends StatelessWidget {
               .removeItem(cartItem.productId);
         }
       },
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            AppRooutes.PRODUCT_PAGE,
-            arguments: 'Gerenciar produto',
-          );
-        },
-        child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: ListTile(
-            //serve para encaixar o texto dentro do componente
-            leading: CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              child: Padding(
-                padding: EdgeInsets.all(3),
-                child: FittedBox(
-                  child: Text(
-                    price,
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+      child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: ListTile(
+          //serve para encaixar o texto dentro do componente
+          leading: CircleAvatar(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            child: Padding(
+              padding: EdgeInsets.all(3),
+              child: FittedBox(
+                child: Text(
+                  price,
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
-            title: Text(cartItem.name),
-            subtitle: Text('Total: $total'),
-            trailing: Text('${cartItem.quantity}x'),
           ),
+          title: Text(cartItem.name),
+          subtitle: Text('Total: $total'),
+          trailing: Text('${cartItem.quantity}x'),
         ),
       ),
     );

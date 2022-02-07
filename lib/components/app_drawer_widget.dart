@@ -41,6 +41,15 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
             },
           ),
           Divider(),
+          ListTile(
+            leading: Icon(Icons.edit),
+            title: Text('Gerenciar produtos'),
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                AppRooutes.PRODUCT_PAGE,
+              );
+            },
+          ),
         ],
       ),
     );
