@@ -104,7 +104,7 @@ class _RegideterPageState extends State<RegisterPage> {
               cpf: cpfController.text,
               email: emailController.text,
               password: passwordController.text,
-              id: Random().nextBool().toString(),
+              id: Random().nextDouble().toString(),
             );
 
             userProvider.registerUser(user!).then((response) {
