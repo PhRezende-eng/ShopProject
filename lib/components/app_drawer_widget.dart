@@ -1,16 +1,24 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/services/request_user.dart';
 import 'package:shop/utils/app_routes.dart';
 
 class AppDrawerWidget extends StatefulWidget {
-  const AppDrawerWidget({Key? key}) : super(key: key);
+  final Map? user;
+  const AppDrawerWidget({this.user, Key? key}) : super(key: key);
 
   @override
   _AppDrawerWidgetState createState() => _AppDrawerWidgetState();
 }
 
 class _AppDrawerWidgetState extends State<AppDrawerWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -51,7 +59,17 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
               );
             },
           ),
+          Spacer(),
           Divider(),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Perfil'),
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                AppRooutes.PROFILE,
+              );
+            },
+          ),
         ],
       ),
     );
