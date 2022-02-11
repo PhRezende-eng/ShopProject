@@ -6,17 +6,29 @@ import 'package:shop/services/request_user.dart';
 import 'package:shop/utils/app_routes.dart';
 
 class AppDrawerWidget extends StatefulWidget {
-  final Map? user;
-  const AppDrawerWidget({this.user, Key? key}) : super(key: key);
+  const AppDrawerWidget({Key? key}) : super(key: key);
 
   @override
   _AppDrawerWidgetState createState() => _AppDrawerWidgetState();
 }
 
 class _AppDrawerWidgetState extends State<AppDrawerWidget> {
+  late RequestUserProvider userProvider;
+  late bool isLogin;
+
   @override
   void initState() {
+    userProvider = Provider.of<RequestUserProvider>(context, listen: false);
+    getUser();
     super.initState();
+  }
+
+  void getUser() {
+    if (userProvider.user != null) {
+      isLogin = true;
+    } else {
+      isLogin = false;
+    }
   }
 
   @override
@@ -66,7 +78,7 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
             title: Text('Perfil'),
             onTap: () {
               Navigator.of(context).pushNamed(
-                AppRooutes.PROFILE,
+                isLogin ? AppRooutes.PROFILE : AppRooutes.REGISTER,
               );
             },
           ),

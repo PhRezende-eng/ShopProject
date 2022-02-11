@@ -2,13 +2,14 @@ import 'package:shop/models/user.dart';
 import 'package:shop/services/request.dart';
 
 class RequestUserProvider extends RequestService {
-  Future getUser(Map user) async {
+  UserModel? _user;
+  UserModel? get user => _user;
+
+  Future getUser() async {
     final dioResponse = await getRequest('/login.json');
     Map<String, UserModel> data = dioResponse.data;
     if (dioResponse.statusMessage == 'OK') {
-      final foundUser =
-          data.values.any((userModel) => userModel.cpf == user['cpf']);
-      return foundUser ? true : false;
+      _user = UserModel.fromJson(data);
     } else {
       throw 'Não foi possível verificar se o usuário já está logado.';
     }
