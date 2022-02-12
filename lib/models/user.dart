@@ -21,7 +21,7 @@ class UserModel {
       };
 
   String generateId() {
-    return Random().nextBool().toString();
+    return Random().nextDouble().toString();
   }
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

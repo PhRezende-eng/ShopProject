@@ -19,6 +19,12 @@ class CartProvider with ChangeNotifier {
     return totalPrice;
   }
 
+  int get getLength => valuesList().length;
+
+  List<CartItemModel> valuesList() {
+    return items.values.toList();
+  }
+
   void addItem(ProductModal product) {
     if (_items.containsKey(product.id)) {
       _items.update(
