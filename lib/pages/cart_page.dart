@@ -31,7 +31,7 @@ class _CartPageState extends State<CartPage> {
     cart = Provider.of<CartProvider>(context);
     size = MediaQuery.of(context).size;
     total = Utils.formatPrice(cart.totalPrice);
-    items = cart.items.values.toList();
+    items = cart.valuesList();
   }
 
   @override
