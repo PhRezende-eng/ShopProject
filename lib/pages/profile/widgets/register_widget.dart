@@ -1,87 +1,113 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer_widget.dart';
 import 'package:shop/components/confirm_button_widget.dart';
+import 'package:shop/models/user.dart';
 import 'package:shop/services/request_user.dart';
 
-class LogInPage extends StatefulWidget {
-  const LogInPage({Key? key}) : super(key: key);
+class RegisterWidget extends StatefulWidget {
+  const RegisterWidget({Key? key}) : super(key: key);
 
   @override
-  _LogInPageState createState() => _LogInPageState();
+  _RegideterPageState createState() => _RegideterPageState();
 }
 
-class _LogInPageState extends State<LogInPage> {
+class _RegideterPageState extends State<RegisterWidget> {
   late RequestUserProvider userProvider;
-  late Map user;
-  final _key = GlobalKey<FormState>();
-  late TextEditingController emailController = TextEditingController(),
+  UserModel? user;
+  TextEditingController cpfController = TextEditingController(),
+      emailController = TextEditingController(),
       passwordController = TextEditingController();
-
+  bool autoValidateForm = false;
   bool isLoading = false;
-  bool validate = false;
+  final _key = GlobalKey<FormState>();
 
   @override
   void initState() {
-    userProvider = Provider.of<RequestUserProvider>(context, listen: false);
     super.initState();
+    userProvider = Provider.of<RequestUserProvider>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
-    var forms = <Widget>[];
+    final forms = <Widget>[];
 
     forms.add(
       TextFormField(
+        controller: cpfController,
         decoration: InputDecoration(
-          labelText: 'Email',
-          hintText: 'email@exemplo.com',
+          labelText: 'CPF',
+          hintText: '123.456.789-01',
         ),
-        controller: emailController,
-        validator: (email) {
-          if (!email!.contains('@') && !email.contains('.com')) {
-            return 'Email inválido.';
+        validator: (cpf) {
+          if (cpf!.length < 14) {
+            return 'CPF inválido.';
+          } else {
+            return null;
           }
-          return null;
         },
       ),
     );
-
     forms.add(returnSizedBox(8));
 
     forms.add(
       TextFormField(
+        controller: emailController,
+        decoration: InputDecoration(
+          labelText: 'Email',
+          hintText: 'email@exemplo.com',
+        ),
+        validator: (email) {
+          if (!email!.contains('@') || !email.contains('.com')) {
+            return 'Email inválido.';
+          } else {
+            return null;
+          }
+        },
+      ),
+    );
+    forms.add(returnSizedBox(8));
+
+    forms.add(
+      TextFormField(
+        controller: passwordController,
         decoration: InputDecoration(
           labelText: 'Senha',
           hintText: '*******',
         ),
-        controller: passwordController,
         validator: (password) {
           if (password!.length < 6) {
             return 'A está muito curta.';
+          } else {
+            return null;
           }
-          return null;
         },
       ),
     );
-
     forms.add(returnSizedBox(16));
 
     forms.add(
       ConfirmButtonWidget(
         onPress: () {
-          validate = true;
-          if (_key.currentState?.validate() ?? false) {
+          autoValidateForm = true;
+          if (_key.currentState!.validate()) {
             setState(() {
               isLoading = true;
             });
-            user = {
-              'email': emailController.text,
-              'password': passwordController.text,
-            };
-            userProvider.loginUser(user).then((response) {
+
+            _key.currentState!.save();
+            user = UserModel(
+              cpf: cpfController.text,
+              email: emailController.text,
+              password: passwordController.text,
+              id: Random().nextDouble().toString(),
+            );
+
+            userProvider.registerUser(user!).then((response) {
               setState(() {
                 isLoading = false;
               });
@@ -102,22 +128,22 @@ class _LogInPageState extends State<LogInPage> {
             });
           }
         },
-        title: 'Acessar conta',
+        title: 'Criar conta',
       ),
     );
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('Registre-se'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Center(
-          child: isLoading
-              ? CircularProgressIndicator()
-              : Form(
+      body: Center(
+        child: isLoading
+            ? CircularProgressIndicator()
+            : Padding(
+                padding: EdgeInsets.all(16),
+                child: Form(
                   key: _key,
-                  autovalidateMode: validate
+                  autovalidateMode: autoValidateForm
                       ? AutovalidateMode.always
                       : AutovalidateMode.disabled,
                   child: Column(
@@ -125,7 +151,7 @@ class _LogInPageState extends State<LogInPage> {
                     children: forms,
                   ),
                 ),
-        ),
+              ),
       ),
       drawer: AppDrawerWidget(),
     );

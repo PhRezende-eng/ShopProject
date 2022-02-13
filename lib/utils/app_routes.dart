@@ -7,5 +7,7 @@ class AppRooutes {
   static const PRODUCT_PAGE = '/product_page';
   static const PRODUCT_DETAIL = '/product_detail';
   static const PROFILE = '/profile';
+  static const LOGIN = '/login';
+
   static const REGISTER = '/register';
 }
