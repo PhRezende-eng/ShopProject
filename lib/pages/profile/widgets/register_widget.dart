@@ -125,6 +125,7 @@ class _RegideterPageState extends State<RegisterWidget> {
                   isLoading = false;
                 });
                 returnScaffoldMassage(error, context);
+                //TODO: navigator to home
               });
             } else {
               setState(() {
@@ -170,6 +171,7 @@ class _RegideterPageState extends State<RegisterWidget> {
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
       returnScaffoldMassage(String message, BuildContext context) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),

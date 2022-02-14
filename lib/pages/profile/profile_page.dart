@@ -25,6 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              //TODO: dont show dont do "FAZER LOGN", if already
               TextButtonWidget(
                 onPress: () {
                   Navigator.of(context).pushNamed(AppRooutes.LOGIN);

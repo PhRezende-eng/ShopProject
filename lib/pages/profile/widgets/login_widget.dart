@@ -99,6 +99,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   isLoading = false;
                 });
                 returnScaffoldMassage(error, context);
+                //TODO: navigator to home
               });
             } else {
               setState(() {
@@ -144,6 +145,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
       returnScaffoldMassage(String message, BuildContext context) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
