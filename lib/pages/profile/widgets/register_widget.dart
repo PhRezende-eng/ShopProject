@@ -1,12 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/components/app_drawer_widget.dart';
-import 'package:shop/components/confirm_button_widget.dart';
+import 'package:shop/components/text_buttom_widget.dart';
 import 'package:shop/models/user.dart';
+import 'package:shop/providers/user.dart';
 import 'package:shop/services/request_user.dart';
 
 class RegisterWidget extends StatefulWidget {
@@ -17,11 +15,13 @@ class RegisterWidget extends StatefulWidget {
 }
 
 class _RegideterPageState extends State<RegisterWidget> {
-  late RequestUserProvider userProvider;
-  UserModel? user;
+  late RequestUserProvider userRequestProvider;
+  late UserProvider userProvider;
+
   TextEditingController cpfController = TextEditingController(),
       emailController = TextEditingController(),
       passwordController = TextEditingController();
+  late UserModel user;
   bool autoValidateForm = false;
   bool isLoading = false;
   final _key = GlobalKey<FormState>();
@@ -29,7 +29,14 @@ class _RegideterPageState extends State<RegisterWidget> {
   @override
   void initState() {
     super.initState();
-    userProvider = Provider.of<RequestUserProvider>(context, listen: false);
+    userRequestProvider =
+        Provider.of<RequestUserProvider>(context, listen: false);
+    userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    user = UserModel(
+      email: '',
+      password: '',
+    );
   }
 
   @override
@@ -91,7 +98,7 @@ class _RegideterPageState extends State<RegisterWidget> {
     forms.add(returnSizedBox(16));
 
     forms.add(
-      ConfirmButtonWidget(
+      TextButtonWidget(
         onPress: () {
           autoValidateForm = true;
           if (_key.currentState!.validate()) {
@@ -100,35 +107,34 @@ class _RegideterPageState extends State<RegisterWidget> {
             });
 
             _key.currentState!.save();
+
             user = UserModel(
               cpf: cpfController.text,
               email: emailController.text,
               password: passwordController.text,
-              id: Random().nextDouble().toString(),
+              id: user.generateId(),
             );
-
-            userProvider.registerUser(user!).then((response) {
+            if (userProvider.addRegisterUser(user)) {
+              userRequestProvider.registerUser(user).then((response) {
+                setState(() {
+                  isLoading = false;
+                });
+                returnScaffoldMassage(response, context);
+              }).catchError((error) {
+                setState(() {
+                  isLoading = false;
+                });
+                returnScaffoldMassage(error, context);
+              });
+            } else {
               setState(() {
                 isLoading = false;
               });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(response),
-                ),
-              );
-            }).catchError((error) {
-              setState(() {
-                isLoading = false;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(error),
-                ),
-              );
-            });
+              returnScaffoldMassage('Usuário já cadastrado!', context);
+            }
           }
         },
-        title: 'Criar conta',
+        text: 'Criar conta',
       ),
     );
 
@@ -153,13 +159,21 @@ class _RegideterPageState extends State<RegisterWidget> {
                 ),
               ),
       ),
-      drawer: AppDrawerWidget(),
     );
   }
 
   Widget returnSizedBox(double height) {
     return SizedBox(
       height: height,
+    );
+  }
+
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
+      returnScaffoldMassage(String message, BuildContext context) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
     );
   }
 }

@@ -18,9 +18,15 @@ import 'package:shop/services/request_user.dart';
 import 'package:shop/utils/app_routes.dart';
 
 import 'pages/profile/profile_page.dart';
+import 'providers/user.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+Future getUser(BuildContext context) async {
+  await Provider.of<UserProvider>(context, listen: false)
+      .getUsersFromDB(context);
 }
 
 class MyApp extends StatelessWidget {
@@ -28,6 +34,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    getUser(context);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: RequestProductProvider()),
@@ -35,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: RequestUserProvider()),
         ChangeNotifierProvider.value(value: ProductListProvider()),
         ChangeNotifierProvider.value(value: OrderListProvider()),
+        ChangeNotifierProvider.value(value: UserProvider()),
         ChangeNotifierProvider.value(value: CartProvider()),
       ],
       child: MaterialApp(

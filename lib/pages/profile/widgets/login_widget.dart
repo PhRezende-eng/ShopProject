@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/components/app_drawer_widget.dart';
-import 'package:shop/components/confirm_button_widget.dart';
+import 'package:shop/components/text_buttom_widget.dart';
+import 'package:shop/models/user.dart';
+import 'package:shop/providers/user.dart';
 import 'package:shop/services/request_user.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -14,8 +15,9 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  late RequestUserProvider userProvider;
-  late Map user;
+  late RequestUserProvider userRequestProvider;
+  late UserProvider userProvider;
+  late UserModel user;
   final _key = GlobalKey<FormState>();
   late TextEditingController emailController = TextEditingController(),
       passwordController = TextEditingController();
@@ -25,7 +27,9 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   void initState() {
-    userProvider = Provider.of<RequestUserProvider>(context, listen: false);
+    userRequestProvider =
+        Provider.of<RequestUserProvider>(context, listen: false);
+    userProvider = Provider.of<UserProvider>(context, listen: false);
     super.initState();
   }
 
@@ -70,39 +74,41 @@ class _LoginWidgetState extends State<LoginWidget> {
     forms.add(returnSizedBox(16));
 
     forms.add(
-      ConfirmButtonWidget(
+      TextButtonWidget(
         onPress: () {
           validate = true;
           if (_key.currentState?.validate() ?? false) {
             setState(() {
               isLoading = true;
             });
-            user = {
-              'email': emailController.text,
-              'password': passwordController.text,
-            };
-            userProvider.loginUser(user).then((response) {
+
+            _key.currentState!.save();
+
+            user = UserModel(
+              email: emailController.text,
+              password: passwordController.text,
+            );
+            if (userProvider.addLoginUser(user)) {
+              userRequestProvider.loginUser(user).then((response) {
+                setState(() {
+                  isLoading = false;
+                });
+                returnScaffoldMassage(response, context);
+              }).catchError((error) {
+                setState(() {
+                  isLoading = false;
+                });
+                returnScaffoldMassage(error, context);
+              });
+            } else {
               setState(() {
                 isLoading = false;
               });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(response),
-                ),
-              );
-            }).catchError((error) {
-              setState(() {
-                isLoading = false;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(error),
-                ),
-              );
-            });
+              returnScaffoldMassage('Você já está logado!', context);
+            }
           }
         },
-        title: 'Acessar conta',
+        text: 'Acessar conta',
       ),
     );
 
@@ -127,13 +133,21 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
         ),
       ),
-      drawer: AppDrawerWidget(),
     );
   }
 
   Widget returnSizedBox(double height) {
     return SizedBox(
       height: height,
+    );
+  }
+
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
+      returnScaffoldMassage(String message, BuildContext context) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
     );
   }
 }

@@ -2,23 +2,42 @@ import 'package:shop/models/user.dart';
 import 'package:shop/services/request.dart';
 
 class RequestUserProvider extends RequestService {
-  UserModel? _user;
-  UserModel? get user => _user;
-
-  Future getUser() async {
+  Future getLoginUser() async {
     final dioResponse = await getRequest('/login.json');
     Map<String, UserModel> data = dioResponse.data;
     if (dioResponse.statusMessage == 'OK') {
-      _user = UserModel.fromJson(data);
+      List<UserModel> listLoginUser = [];
+      for (var user in data.values) {
+        user = UserModel.fromJson(user as Map<String, UserModel>);
+        listLoginUser.add(user);
+      }
+      return listLoginUser;
     } else {
       throw 'Não foi possível verificar se o usuário já está logado.';
     }
   }
 
-  Future loginUser(Map user) async {
+  Future getRegisterUser() async {
+    final dioResponse = await getRequest('/register.json');
+    Map<String, UserModel> data = dioResponse.data;
+    if (dioResponse.statusMessage == 'OK') {
+      List<UserModel> listRegisterUser = [];
+      for (var user in data.values) {
+        user = UserModel.fromJson(user as Map<String, UserModel>);
+        listRegisterUser.add(user);
+      }
+      return listRegisterUser;
+    } else {
+      throw 'Não foi possível verificar os usuários cadastrados.';
+    }
+  }
+
+  Future loginUser(UserModel user) async {
+    Map dict = user.toJson();
+
     final dioResponse = await postRequest(
       '/login.json',
-      body: user,
+      body: dict,
     );
     if (dioResponse.statusMessage == 'OK') {
       return 'Conta logada com sucesso!';
@@ -28,9 +47,11 @@ class RequestUserProvider extends RequestService {
   }
 
   Future logoutUser(UserModel user) async {
+    Map dict = user.toJson();
+
     final dioResponse = await deleteRequest(
       '/login.json',
-      body: user.toJson(),
+      body: dict,
     );
     if (dioResponse.statusMessage == 'OK') {
       return 'Conta deslogada com sucesso!';
@@ -40,9 +61,11 @@ class RequestUserProvider extends RequestService {
   }
 
   Future registerUser(UserModel user) async {
+    Map dict = user.toJson();
+
     final dioResponse = await postRequest(
       '/register.json',
-      body: user.toJson(),
+      body: dict,
     );
     if (dioResponse.statusMessage == 'OK') {
       return 'Usuário cadastrado com sucesso!';
@@ -52,9 +75,11 @@ class RequestUserProvider extends RequestService {
   }
 
   Future deleteUser(UserModel user) async {
+    Map dict = user.toJson();
+
     final dioResponse = await deleteRequest(
       '/register.json',
-      body: user.toJson(),
+      body: dict,
     );
     if (dioResponse.statusMessage == 'OK') {
       return 'Usuário deletado com sucesso!';

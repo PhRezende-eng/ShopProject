@@ -52,6 +52,7 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
               );
             },
           ),
+          Divider(),
           Spacer(),
           Divider(),
           ListTile(

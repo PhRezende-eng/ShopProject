@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:shop/components/app_drawer_widget.dart';
+import 'package:shop/components/text_buttom_widget.dart';
 import 'package:shop/utils/app_routes.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -24,22 +25,24 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(
-                onPressed: () {
+              TextButtonWidget(
+                onPress: () {
                   Navigator.of(context).pushNamed(AppRooutes.LOGIN);
                   // Navigator.of(context).push(
                   //     MaterialPageRoute(builder: (contexto) => LoginWidget()));
                 },
-                child: Text('Fazer Login'),
+                text: 'Fazer Login',
               ),
               SizedBox(
                 height: 16,
               ),
-              TextButton(
-                onPressed: () {
+              TextButtonWidget(
+                onPress: () {
                   Navigator.of(context).pushNamed(AppRooutes.REGISTER);
+                  // Navigator.of(context).push(
+                  //     MaterialPageRoute(builder: (contexto) => RegisterWidget()));
                 },
-                child: Text('Cadastre-se'),
+                text: 'Cadastre-se',
               ),
             ],
           ),
