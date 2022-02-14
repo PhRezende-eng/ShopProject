@@ -13,11 +13,15 @@ class UserProvider with ChangeNotifier {
   List<UserModel> _usersRegister = [];
 
   Future getUsersFromDB(BuildContext context) async {
-    _usersRegister =
-        await Provider.of<RequestUserProvider>(context, listen: false)
-            .getRegisterUser();
-    _usersLogin = await Provider.of<RequestUserProvider>(context, listen: false)
-        .getLoginUser();
+    await Provider.of<RequestUserProvider>(context, listen: false)
+        .getRegisterUser()
+        .then((usersRegister) => _usersRegister = usersRegister)
+        .catchError((error) => _usersRegister = []);
+
+    await Provider.of<RequestUserProvider>(context, listen: false)
+        .getLoginUser()
+        .then((usersLogin) => _usersLogin = usersLogin)
+        .catchError((error) => _usersLogin = []);
   }
 
   bool addRegisterUser(UserModel userRegister) {

@@ -24,17 +24,11 @@ void main() {
   runApp(const MyApp());
 }
 
-Future getUser(BuildContext context) async {
-  await Provider.of<UserProvider>(context, listen: false)
-      .getUsersFromDB(context);
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    getUser(context);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: RequestProductProvider()),

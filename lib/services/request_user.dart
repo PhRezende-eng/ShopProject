@@ -4,7 +4,8 @@ import 'package:shop/services/request.dart';
 class RequestUserProvider extends RequestService {
   Future getLoginUser() async {
     final dioResponse = await getRequest('/login.json');
-    Map<String, UserModel> data = dioResponse.data;
+    Map<String, dynamic> data = dioResponse.data;
+
     if (dioResponse.statusMessage == 'OK') {
       List<UserModel> listLoginUser = [];
       for (var user in data.values) {
@@ -19,7 +20,8 @@ class RequestUserProvider extends RequestService {
 
   Future getRegisterUser() async {
     final dioResponse = await getRequest('/register.json');
-    Map<String, UserModel> data = dioResponse.data;
+    Map<String, dynamic> data = dioResponse.data;
+
     if (dioResponse.statusMessage == 'OK') {
       List<UserModel> listRegisterUser = [];
       for (var user in data.values) {
