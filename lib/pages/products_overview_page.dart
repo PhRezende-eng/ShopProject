@@ -9,9 +9,9 @@ import 'package:shop/components/product_grid_item_widget.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/pages/cart_page.dart';
-import 'package:shop/providers/cart_map.dart';
-import 'package:shop/providers/product_list.dart';
-import 'package:shop/providers/user.dart';
+import 'package:shop/controller/cart_map.dart';
+import 'package:shop/controller/product_list.dart';
+import 'package:shop/controller/user.dart';
 import 'package:shop/services/request_product.dart';
 import 'package:shop/utils/app_routes.dart';
 

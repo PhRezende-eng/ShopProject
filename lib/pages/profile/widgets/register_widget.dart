@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/text_buttom_widget.dart';
+import 'package:shop/controller/user.dart';
 import 'package:shop/models/user.dart';
-import 'package:shop/providers/user.dart';
 import 'package:shop/services/request_user.dart';
 
 class RegisterWidget extends StatefulWidget {
@@ -17,11 +17,11 @@ class RegisterWidget extends StatefulWidget {
 class _RegideterPageState extends State<RegisterWidget> {
   late RequestUserProvider userRequestProvider;
   late UserProvider userProvider;
+  late UserModel user;
 
   TextEditingController cpfController = TextEditingController(),
       emailController = TextEditingController(),
       passwordController = TextEditingController();
-  late UserModel user;
   bool autoValidateForm = false;
   bool isLoading = false;
   final _key = GlobalKey<FormState>();
@@ -51,7 +51,7 @@ class _RegideterPageState extends State<RegisterWidget> {
           hintText: '123.456.789-01',
         ),
         validator: (cpf) {
-          if (cpf!.length < 14) {
+          if (cpf!.length != 14) {
             return 'CPF inválido.';
           } else {
             return null;

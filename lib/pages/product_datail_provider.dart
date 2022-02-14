@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/providers/counter.dart';
+import 'package:shop/controller/counter.dart';
 
 class ProductExampProvider extends StatefulWidget {
   const ProductExampProvider({Key? key}) : super(key: key);

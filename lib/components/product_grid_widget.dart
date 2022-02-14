@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/product_grid_item_widget.dart';
-import 'package:shop/providers/product_list.dart';
+import 'package:shop/controller/product_list.dart';
 
 class ProductGridWidget extends StatelessWidget {
   final bool filterFavorite;
