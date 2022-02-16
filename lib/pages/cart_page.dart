@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/cart_item_widget.dart';
 import 'package:shop/components/empty_list_widget.dart';
+import 'package:shop/controller/cart_map.dart';
+import 'package:shop/controller/order_list.dart';
 import 'package:shop/models/cart_item.dart';
-import 'package:shop/providers/cart_map.dart';
-import 'package:shop/providers/order_list.dart';
+
 import 'package:shop/services/request_order.dart';
 import 'package:shop/utils/util_functions.dart';
 
@@ -31,7 +32,7 @@ class _CartPageState extends State<CartPage> {
     cart = Provider.of<CartProvider>(context);
     size = MediaQuery.of(context).size;
     total = Utils.formatPrice(cart.totalPrice);
-    items = cart.items.values.toList();
+    items = cart.valuesList();
   }
 
   @override

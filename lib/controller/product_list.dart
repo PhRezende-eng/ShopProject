@@ -13,6 +13,8 @@ class ProductListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  int get productLitCount => items.length;
+
   Future getProduct() async {
     final items = await RequestProductProvider().getProducts();
     _items = items;

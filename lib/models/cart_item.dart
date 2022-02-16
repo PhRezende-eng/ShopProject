@@ -1,3 +1,5 @@
+import 'package:shop/utils/util_functions.dart';
+
 class CartItemModel {
   final String id;
   final String productId;
@@ -12,6 +14,18 @@ class CartItemModel {
     required this.price,
     required this.quantity,
   });
+
+  String productPriceWithouR$() {
+    return Utils.formatPriceWithoutR$(price.toDouble());
+  }
+
+  String totalPrice() {
+    return Utils.formatPrice((price * quantity).toDouble());
+  }
+
+  String productPrice() {
+    return Utils.formatPrice(price.toDouble());
+  }
 
   Map<String, dynamic> toJson() => {
         'id': id,

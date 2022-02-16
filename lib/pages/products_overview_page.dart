@@ -9,8 +9,9 @@ import 'package:shop/components/product_grid_item_widget.dart';
 import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/pages/cart_page.dart';
-import 'package:shop/providers/cart_map.dart';
-import 'package:shop/providers/product_list.dart';
+import 'package:shop/controller/cart_map.dart';
+import 'package:shop/controller/product_list.dart';
+import 'package:shop/controller/user.dart';
 import 'package:shop/services/request_product.dart';
 import 'package:shop/utils/app_routes.dart';
 
@@ -39,6 +40,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
     listProvider = Provider.of<ProductListProvider>(context, listen: false);
     cart = Provider.of<CartProvider>(context);
     getItems();
+    getUser(context);
   }
 
   @override
@@ -107,6 +109,11 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       ),
       drawer: AppDrawerWidget(),
     );
+  }
+
+  Future getUser(BuildContext context) async {
+    await Provider.of<UserProvider>(context, listen: false)
+        .getUsersFromDB(context);
   }
 
   Future getItems() async {
