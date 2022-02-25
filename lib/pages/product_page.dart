@@ -18,7 +18,7 @@ class ProductPage extends StatelessWidget {
         title: Text('$title'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(8),
         child: ListView.builder(
           itemCount: products.length,
           itemBuilder: (context, index) => ListTile(
@@ -27,7 +27,7 @@ class ProductPage extends StatelessWidget {
             ),
             title: Text(products[index].name),
             trailing: Container(
-              width: double.infinity,
+              width: 100,
               child: Row(
                 children: [
                   IconButton(
