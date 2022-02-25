@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
+// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,27 @@ class ProductPage extends StatelessWidget {
         padding: EdgeInsets.all(12),
         child: ListView.builder(
           itemCount: products.length,
-          itemBuilder: (context, index) => Text('${products[index].name}'),
+          itemBuilder: (context, index) => ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(products[index].imageUrl),
+            ),
+            title: Text(products[index].name),
+            trailing: Container(
+              width: double.infinity,
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.edit),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.remove),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
       drawer: AppDrawerWidget(),
