@@ -55,6 +55,7 @@ class DarkTheme extends ColorScheme {
           onSecondary: backgroundColor,
         );
 }
+
 //  ThemeData(
 //           colorScheme: ColorScheme.fromSwatch(
 //             primarySwatch: Colors.green,
@@ -67,3 +68,8 @@ class DarkTheme extends ColorScheme {
 //           ),
 //           fontFamily: 'Poppins',
 //         )
+class MyThemeData {
+  static get ligthTheme => LightTheme();
+
+  static get darkTheme => DarkTheme();
+}
