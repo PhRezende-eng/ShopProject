@@ -13,7 +13,6 @@ import 'package:shop/pages/products_overview_page.dart';
 import 'package:shop/services/request_order.dart';
 import 'package:shop/services/request_product.dart';
 import 'package:shop/utils/app_routes.dart';
-import 'package:shop/utils/text_color.dart';
 import 'package:shop/utils/theme.dart';
 
 void main() {
@@ -35,11 +34,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Shop',
-        theme: ThemeData(
-          fontFamily: 'Poppins',
-          colorScheme: LightTheme(),
-          textTheme: LightTextTheme(),
-        ),
+        theme: MyThemeData.ligthTheme,
+        darkTheme: MyThemeData.darkTheme,
         // Exemplo de sem ou com navegação por rotas
         // home: const ProductsOverviewPage(title: 'Shop'),
         // initialRoute: AppRooutes.Home,

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'text_color.dart';
+
 class LightTheme extends ColorScheme {
   static Color primaryColor = Color(0xFF40A828);
   static Color secondaryColor = Color(0xFF2D2E2F);
@@ -56,20 +58,32 @@ class DarkTheme extends ColorScheme {
         );
 }
 
-//  ThemeData(
-//           colorScheme: ColorScheme.fromSwatch(
-//             primarySwatch: Colors.green,
-//           ).copyWith(
-//             primary: Colors.purple[400],
-//             secondary: Colors.deepOrangeAccent,
-//             background: Colors.orange[200],
-//             primaryVariant: Colors.grey[100],
-//             secondaryVariant: Colors.grey[400],
-//           ),
-//           fontFamily: 'Poppins',
-//         )
 class MyThemeData {
-  static get ligthTheme => LightTheme();
+  static get ligthTheme => ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.green,
+        ).copyWith(
+          primary: Colors.purple[400],
+          secondary: Colors.deepOrangeAccent,
+          background: Colors.orange[200],
+          primaryContainer: Colors.grey[100],
+          secondaryContainer: Colors.grey[400],
+        ),
+        fontFamily: 'Poppins',
+        textTheme: LightTextTheme(),
+      );
 
-  static get darkTheme => DarkTheme();
+  static get darkTheme => ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.green,
+        ).copyWith(
+          primary: Colors.purple[400],
+          secondary: Colors.deepOrangeAccent,
+          background: Colors.orange[200],
+          primaryContainer: Colors.grey[100],
+          secondaryContainer: Colors.grey[400],
+        ),
+        fontFamily: 'Poppins',
+        textTheme: LightTextTheme(),
+      );
 }
