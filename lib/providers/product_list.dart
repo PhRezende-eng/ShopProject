@@ -13,6 +13,13 @@ class ProductListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future deleteItemFromList(ProductModal product) async {
+    await RequestProductProvider().deleteItemFromDB(product);
+    _items.remove(product);
+    // _items.removeWhere((productFromList) => productFromList.id == product.id);
+    notifyListeners();
+  }
+
   int get productLitCount => items.length;
 
   Future getProduct() async {

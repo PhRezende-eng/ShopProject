@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer_widget.dart';
+import 'package:shop/components/product_item.dart';
 import 'package:shop/providers/product_list.dart';
 
 class ProductPage extends StatelessWidget {
@@ -21,27 +22,18 @@ class ProductPage extends StatelessWidget {
         padding: EdgeInsets.all(8),
         child: ListView.builder(
           itemCount: products.length,
-          itemBuilder: (context, index) => ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(products[index].imageUrl),
-            ),
-            title: Text(products[index].name),
-            trailing: Container(
-              width: 100,
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.edit),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.remove),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                SizedBox(height: 16),
+                ProductItemWidget(
+                  product: products[index],
+                ),
+                SizedBox(height: 16),
+                Divider()
+              ],
+            );
+          },
         ),
       ),
       drawer: AppDrawerWidget(),
