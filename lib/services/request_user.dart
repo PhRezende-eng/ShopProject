@@ -1,0 +1,92 @@
+import 'package:shop/models/user.dart';
+import 'package:shop/services/request.dart';
+
+class RequestUserProvider extends RequestService {
+  Future getLoginUser() async {
+    final dioResponse = await getRequest('/login.json');
+    Map<String, dynamic> data = dioResponse.data;
+
+    if (dioResponse.statusMessage == 'OK') {
+      List<UserModel> listLoginUser = [];
+      for (var user in data.values) {
+        user = UserModel.fromJson(user as Map<String, UserModel>);
+        listLoginUser.add(user);
+      }
+      return listLoginUser;
+    } else {
+      throw 'Não foi possível verificar se o usuário já está logado.';
+    }
+  }
+
+  Future getRegisterUser() async {
+    final dioResponse = await getRequest('/register.json');
+    Map<String, dynamic> data = dioResponse.data;
+
+    if (dioResponse.statusMessage == 'OK') {
+      List<UserModel> listRegisterUser = [];
+      for (var user in data.values) {
+        user = UserModel.fromJson(user as Map<String, UserModel>);
+        listRegisterUser.add(user);
+      }
+      return listRegisterUser;
+    } else {
+      throw 'Não foi possível verificar os usuários cadastrados.';
+    }
+  }
+
+  Future loginUser(UserModel user) async {
+    Map dict = user.toJson();
+
+    final dioResponse = await postRequest(
+      '/login.json',
+      body: dict,
+    );
+    if (dioResponse.statusMessage == 'OK') {
+      return 'Conta logada com sucesso!';
+    } else {
+      throw 'Não foi possível fazer login, tente novamente mais tarde.';
+    }
+  }
+
+  Future logoutUser(UserModel user) async {
+    Map dict = user.toJson();
+
+    final dioResponse = await deleteRequest(
+      '/login.json',
+      body: dict,
+    );
+    if (dioResponse.statusMessage == 'OK') {
+      return 'Conta deslogada com sucesso!';
+    } else {
+      throw 'Não foi possível fazer logout, tente novamente mais tarde.';
+    }
+  }
+
+  Future registerUser(UserModel user) async {
+    Map dict = user.toJson();
+
+    final dioResponse = await postRequest(
+      '/register.json',
+      body: dict,
+    );
+    if (dioResponse.statusMessage == 'OK') {
+      return 'Usuário cadastrado com sucesso!';
+    } else {
+      throw 'Não foi possível cadastrar o usuário, tente novamente mais tarde.';
+    }
+  }
+
+  Future deleteUser(UserModel user) async {
+    Map dict = user.toJson();
+
+    final dioResponse = await deleteRequest(
+      '/register.json',
+      body: dict,
+    );
+    if (dioResponse.statusMessage == 'OK') {
+      return 'Usuário deletado com sucesso!';
+    } else {
+      throw 'Não foi possível deletar o usuário, tente novamente mais tarde.';
+    }
+  }
+}

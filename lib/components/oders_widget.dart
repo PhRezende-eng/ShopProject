@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations, sized_box_for_whitespace, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:shop/models/order.dart';
-import 'package:shop/utils/util_functions.dart';
 
 class OrderWidget extends StatefulWidget {
   final OrderModel order;
@@ -28,15 +26,13 @@ class _OrderWidgetState extends State<OrderWidget> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String data = DateFormat('dd/MM/yyyy hh:mm').format(widget.order.date);
-    String total = Utils.formatPrice(widget.order.total.toDouble());
 
     return Card(
       child: Column(
         children: [
           ListTile(
-            title: Text('$total'),
-            subtitle: Text('$data'),
+            title: Text('${widget.order.totalPrice()}'),
+            subtitle: Text('${widget.order.getStringData()}'),
             trailing: IconButton(
               onPressed: () {
                 setState(() {
@@ -54,9 +50,9 @@ class _OrderWidgetState extends State<OrderWidget> {
                 horizontal: 15,
               ),
               margin: EdgeInsets.only(
-                bottom: widget.order.products.length * 2,
+                bottom: widget.order.orderLength() * 2,
               ),
-              height: widget.order.products.length * 26,
+              height: widget.order.orderLength() * 26,
               child: Scrollbar(
                 child: ListView(
                   children: widget.order.products
@@ -72,7 +68,7 @@ class _OrderWidgetState extends State<OrderWidget> {
                               ),
                             ),
                             Text(
-                              '${product.quantity}x ${Utils.formatPrice(product.price.toDouble())}',
+                              '${product.quantity}x ${product.productPrice()}',
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.grey,

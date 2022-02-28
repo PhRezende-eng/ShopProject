@@ -3,8 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/cart_item.dart';
-import 'package:shop/providers/cart_map.dart';
-import 'package:shop/utils/util_functions.dart';
+import 'package:shop/controller/cart_map.dart';
 
 class CartItemWidget extends StatelessWidget {
   final CartItemModel cartItem;
@@ -15,10 +14,6 @@ class CartItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String total =
-        Utils.formatPrice((cartItem.price * cartItem.quantity).toDouble());
-    String price = Utils.formatPriceWithoutR$(cartItem.price.toDouble());
-
     return Dismissible(
       key: ValueKey(cartItem.id),
       direction: DismissDirection.endToStart,
@@ -51,7 +46,7 @@ class CartItemWidget extends StatelessWidget {
               padding: EdgeInsets.all(3),
               child: FittedBox(
                 child: Text(
-                  price,
+                  cartItem.productPrice(),
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -60,7 +55,7 @@ class CartItemWidget extends StatelessWidget {
             ),
           ),
           title: Text(cartItem.name),
-          subtitle: Text('Total: $total'),
+          subtitle: Text('Total: ${cartItem.totalPrice()}'),
           trailing: Text('${cartItem.quantity}x'),
         ),
       ),

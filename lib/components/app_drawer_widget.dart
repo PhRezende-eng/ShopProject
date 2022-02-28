@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+
 import 'package:shop/utils/app_routes.dart';
 
 class AppDrawerWidget extends StatefulWidget {
@@ -52,6 +53,17 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
             },
           ),
           Divider(),
+          Spacer(),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Perfil'),
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                AppRooutes.PROFILE,
+              );
+            },
+          ),
         ],
       ),
     );

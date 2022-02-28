@@ -1,4 +1,6 @@
+import 'package:intl/intl.dart';
 import 'package:shop/models/cart_item.dart';
+import 'package:shop/utils/util_functions.dart';
 
 class OrderModel {
   final String id;
@@ -12,6 +14,18 @@ class OrderModel {
     required this.products,
     required this.date,
   });
+
+  String getStringData() {
+    return DateFormat('dd/MM/yyyy hh:mm').format(date);
+  }
+
+  String totalPrice() {
+    return Utils.formatPrice(total.toDouble());
+  }
+
+  double orderLength() {
+    return products.length.toDouble();
+  }
 
   Map<String, dynamic> toJson() => {
         'id': id,
