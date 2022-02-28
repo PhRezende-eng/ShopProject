@@ -37,15 +37,6 @@ class UserProvider with ChangeNotifier {
     } else {
       return false;
     }
-    // var user =
-    //     _usersRegister.firstWhere((user) => user.email == userRegister.email);
-
-    // if (user == null) {
-    //   _usersRegister.insert(0, userRegister);
-    //   return true;
-    // } else {
-    //   return false;
-    // }
   }
 
   bool canLogin(UserModel userLogin) {
@@ -61,18 +52,5 @@ class UserProvider with ChangeNotifier {
     } else {
       return false;
     }
-
-    // var hasUserRegister =
-    //     _usersRegister.firstWhere((user) => user.email == userLogin.email);
-
-    // var hasUserLogin =
-    //     _usersLogin.firstWhere((user) => user.email == userLogin.email);
-
-    // if (hasUserRegister == null && hasUserLogin == null) {
-    //   _usersLogin.insert(0, userLogin);
-    //   return true;
-    // } else {
-    //   return false;
-    // }
   }
 }
