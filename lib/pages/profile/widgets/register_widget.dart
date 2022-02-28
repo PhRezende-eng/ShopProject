@@ -36,6 +36,7 @@ class _RegideterPageState extends State<RegisterWidget> {
     user = UserModel(
       email: '',
       password: '',
+      cpf: '',
     );
   }
 
@@ -114,24 +115,25 @@ class _RegideterPageState extends State<RegisterWidget> {
               password: passwordController.text,
               id: user.generateId(),
             );
-            if (userProvider.addRegisterUser(user)) {
+
+            if (userProvider.canRegister(user)) {
               userRequestProvider.registerUser(user).then((response) {
+                returnScaffoldMassage(response, context);
+                Navigator.of(context).pop();
                 setState(() {
                   isLoading = false;
                 });
-                returnScaffoldMassage(response, context);
               }).catchError((error) {
                 setState(() {
                   isLoading = false;
                 });
                 returnScaffoldMassage(error, context);
-                //TODO: navigator to home
               });
             } else {
               setState(() {
                 isLoading = false;
               });
-              returnScaffoldMassage('Usuário já cadastrado!', context);
+              returnScaffoldMassage('Conta já cadastrado!', context);
             }
           }
         },
@@ -177,5 +179,13 @@ class _RegideterPageState extends State<RegisterWidget> {
         content: Text(message),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    cpfController.dispose();
+    passwordController.dispose();
+    emailController.dispose();
   }
 }

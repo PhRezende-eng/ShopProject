@@ -8,6 +8,9 @@ import 'package:shop/services/request_user.dart';
 class UserProvider with ChangeNotifier {
   UserModel? _user;
   UserModel? get user => _user;
+  void _saveUser(UserModel? user) {
+    _user = user;
+  }
 
   List<UserModel> _usersLogin = [];
   List<UserModel> _usersRegister = [];
@@ -24,7 +27,7 @@ class UserProvider with ChangeNotifier {
         .catchError((error) => _usersLogin = []);
   }
 
-  bool addRegisterUser(UserModel userRegister) {
+  bool canRegister(UserModel userRegister) {
     var hasUserRegister =
         _usersRegister.any((user) => user.email == userRegister.email);
 
@@ -45,7 +48,7 @@ class UserProvider with ChangeNotifier {
     // }
   }
 
-  bool addLoginUser(UserModel userLogin) {
+  bool canLogin(UserModel userLogin) {
     var hasUserRegister =
         _usersRegister.any((user) => user.email == userLogin.email);
 
@@ -53,6 +56,7 @@ class UserProvider with ChangeNotifier {
 
     if (!hasUserRegister && !hasUserLogin) {
       _usersLogin.insert(0, userLogin);
+      _saveUser(userLogin);
       return true;
     } else {
       return false;
