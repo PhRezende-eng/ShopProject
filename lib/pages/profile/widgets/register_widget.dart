@@ -18,26 +18,20 @@ class _RegideterPageState extends State<RegisterWidget> {
   late RequestUserProvider userRequestProvider;
   late UserProvider userProvider;
   late UserModel user;
+  final _key = GlobalKey<FormState>();
 
   TextEditingController cpfController = TextEditingController(),
       emailController = TextEditingController(),
       passwordController = TextEditingController();
   bool autoValidateForm = false;
   bool isLoading = false;
-  final _key = GlobalKey<FormState>();
 
   @override
   void initState() {
-    super.initState();
     userRequestProvider =
         Provider.of<RequestUserProvider>(context, listen: false);
     userProvider = Provider.of<UserProvider>(context, listen: false);
-
-    user = UserModel(
-      email: '',
-      password: '',
-      cpf: '',
-    );
+    super.initState();
   }
 
   @override
