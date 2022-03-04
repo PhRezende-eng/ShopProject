@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop/components/text_buttom_widget.dart';
 import 'package:shop/models/user.dart';
 import 'package:shop/controller/user.dart';
@@ -19,7 +20,9 @@ class _LoginWidgetState extends State<LoginWidget> {
   late RequestUserProvider userRequestProvider;
   late UserProvider userProvider;
   late UserModel user;
+
   final _key = GlobalKey<FormState>();
+
   late TextEditingController emailController = TextEditingController(),
       passwordController = TextEditingController();
   late FocusNode emailFocusNode = FocusNode(), passwordFocusNode = FocusNode();
@@ -149,6 +152,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             isLoading = false;
           });
           returnScaffoldMassage(response, context);
+          setInMemory(emailController.text);
           Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
         }).catchError((error) {
           setState(() {
@@ -163,6 +167,11 @@ class _LoginWidgetState extends State<LoginWidget> {
         returnScaffoldMassage('Conta não registrada', context);
       }
     }
+  }
+
+  void setInMemory(String email) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('_user', email);
   }
 
   Widget returnSizedBox(double height) {
