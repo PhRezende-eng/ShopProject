@@ -19,10 +19,12 @@ class _LoginWidgetState extends State<LoginWidget> {
   late RequestUserProvider userRequestProvider;
   late UserProvider userProvider;
   late UserModel user;
+
   final _key = GlobalKey<FormState>();
-  late TextEditingController emailController = TextEditingController(),
+
+  final FocusNode emailFocusNode = FocusNode(), passwordFocusNode = FocusNode();
+  final TextEditingController emailController = TextEditingController(),
       passwordController = TextEditingController();
-  late FocusNode emailFocusNode = FocusNode(), passwordFocusNode = FocusNode();
 
   bool isLoading = false;
   bool validate = false;
@@ -68,15 +70,15 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     forms.add(
       TextFormField(
+        obscureText: true,
+        controller: passwordController,
+        focusNode: passwordFocusNode,
+        textInputAction: TextInputAction.go,
+        onFieldSubmitted: (_) => makeLoginIfCan(),
         decoration: InputDecoration(
           labelText: 'Senha',
           hintText: '*******',
         ),
-        obscureText: true,
-        focusNode: passwordFocusNode,
-        controller: passwordController,
-        textInputAction: TextInputAction.go,
-        onFieldSubmitted: (_) => makeLoginIfCan(),
         validator: (password) {
           if (password!.length < 6) {
             return 'A está muito curta.';
@@ -149,6 +151,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             isLoading = false;
           });
           returnScaffoldMassage(response, context);
+
           Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
         }).catchError((error) {
           setState(() {
