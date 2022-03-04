@@ -20,14 +20,9 @@ class _RegideterPageState extends State<RegisterWidget> {
   late UserModel user;
   final _key = GlobalKey<FormState>();
 
-  FocusNode cpfFocusNode = FocusNode(),
-      emailFocusNode = FocusNode(),
-      passwordFocusNode = FocusNode();
-
   TextEditingController cpfController = TextEditingController(),
       emailController = TextEditingController(),
       passwordController = TextEditingController();
-
   bool autoValidateForm = false;
   bool isLoading = false;
 
@@ -46,7 +41,6 @@ class _RegideterPageState extends State<RegisterWidget> {
     forms.add(
       TextFormField(
         controller: cpfController,
-        focusNode: cpfFocusNode,
         decoration: InputDecoration(
           labelText: 'CPF',
           hintText: '123.456.789-01',
@@ -65,7 +59,6 @@ class _RegideterPageState extends State<RegisterWidget> {
     forms.add(
       TextFormField(
         controller: emailController,
-        focusNode: cpfFocusNode,
         decoration: InputDecoration(
           labelText: 'Email',
           hintText: 'email@exemplo.com',
@@ -83,9 +76,7 @@ class _RegideterPageState extends State<RegisterWidget> {
 
     forms.add(
       TextFormField(
-        obscureText: true,
         controller: passwordController,
-        focusNode: passwordFocusNode,
         decoration: InputDecoration(
           labelText: 'Senha',
           hintText: '*******',
@@ -190,9 +181,5 @@ class _RegideterPageState extends State<RegisterWidget> {
     cpfController.dispose();
     passwordController.dispose();
     emailController.dispose();
-
-    cpfFocusNode.dispose();
-    passwordFocusNode.dispose();
-    emailFocusNode.dispose();
   }
 }
