@@ -65,7 +65,7 @@ class _RegideterPageState extends State<RegisterWidget> {
     forms.add(
       TextFormField(
         controller: emailController,
-        focusNode: cpfFocusNode,
+        focusNode: emailFocusNode,
         decoration: InputDecoration(
           labelText: 'Email',
           hintText: 'email@exemplo.com',
