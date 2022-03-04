@@ -16,15 +16,14 @@ class UserProvider with ChangeNotifier {
   List<UserModel> _usersRegister = [];
 
   Future getUsersFromDB(BuildContext context) async {
-    await Provider.of<RequestUserProvider>(context, listen: false)
-        .getRegisterUser()
-        .then((usersRegister) => _usersRegister = usersRegister)
-        .catchError((error) => _usersRegister = []);
-
-    await Provider.of<RequestUserProvider>(context, listen: false)
-        .getLoginUser()
-        .then((usersLogin) => _usersLogin = usersLogin)
-        .catchError((error) => _usersLogin = []);
+    final requestUser =
+        Provider.of<RequestUserProvider>(context, listen: false);
+    try {
+      _usersRegister = await requestUser.getRegisterUser();
+      _usersLogin = await requestUser.getLoginUser();
+    } catch (error) {
+      print(error);
+    }
   }
 
   bool canRegister(UserModel userRegister) {
@@ -45,7 +44,7 @@ class UserProvider with ChangeNotifier {
 
     var hasUserLogin = _usersLogin.any((user) => user.email == userLogin.email);
 
-    if (!hasUserRegister && !hasUserLogin) {
+    if (hasUserRegister && !hasUserLogin) {
       _usersLogin.insert(0, userLogin);
       _saveUser(userLogin);
       return true;

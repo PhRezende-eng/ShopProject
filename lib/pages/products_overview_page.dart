@@ -40,7 +40,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
     listProvider = Provider.of<ProductListProvider>(context, listen: false);
     cart = Provider.of<CartProvider>(context);
     getItems();
-    getUser(context);
   }
 
   @override
@@ -109,11 +108,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       ),
       drawer: AppDrawerWidget(),
     );
-  }
-
-  Future getUser(BuildContext context) async {
-    await Provider.of<UserProvider>(context, listen: false)
-        .getUsersFromDB(context);
   }
 
   Future getItems() async {
