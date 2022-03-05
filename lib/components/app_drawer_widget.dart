@@ -19,7 +19,7 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
         children: [
           AppBar(
             automaticallyImplyLeading: false,
-            title: Text('Bem vindo, usuário!'),
+            title: Text('Bem vindo!'),
           ),
           Divider(),
           ListTile(

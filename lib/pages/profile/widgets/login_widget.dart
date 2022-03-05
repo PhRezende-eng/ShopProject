@@ -44,14 +44,14 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     forms.add(
       TextFormField(
+        focusNode: emailFocusNode,
+        controller: emailController,
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           labelText: 'Email',
           hintText: 'email@exemplo.com',
         ),
-        obscureText: false,
-        focusNode: emailFocusNode,
-        controller: emailController,
-        textInputAction: TextInputAction.next,
         onFieldSubmitted: (_) {
           emailFocusNode.unfocus();
           passwordFocusNode.requestFocus();
@@ -71,15 +71,16 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     forms.add(
       TextFormField(
+        obscureText: true,
+        focusNode: passwordFocusNode,
+        controller: passwordController,
+        keyboardType: TextInputType.visiblePassword,
+        textInputAction: TextInputAction.go,
+        onFieldSubmitted: (_) => makeLoginIfCan(),
         decoration: InputDecoration(
           labelText: 'Senha',
           hintText: '*******',
         ),
-        obscureText: true,
-        focusNode: passwordFocusNode,
-        controller: passwordController,
-        textInputAction: TextInputAction.go,
-        onFieldSubmitted: (_) => makeLoginIfCan(),
         validator: (password) {
           if (password!.length < 6) {
             return 'A está muito curta.';
@@ -97,22 +98,21 @@ class _LoginWidgetState extends State<LoginWidget> {
       TextButtonWidget(
         onPress: () {
           validate = true;
-
           makeLoginIfCan();
         },
         text: 'Acessar conta',
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: GestureDetector(
-        onTap: () {
-          Utils.hideKeyBoard();
-        },
-        child: Padding(
+    return GestureDetector(
+      onTap: () {
+        Utils.hideKeyBoard();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Login'),
+        ),
+        body: Padding(
           padding: EdgeInsets.all(16),
           child: Center(
             child: isLoading
@@ -195,6 +195,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
+
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
   }

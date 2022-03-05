@@ -3,7 +3,7 @@ import 'dart:math';
 class UserModel {
   final String email;
   final String? cpf;
-  final String? id;
+  String? id;
   final String password;
 
   UserModel({

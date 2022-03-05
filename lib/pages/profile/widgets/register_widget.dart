@@ -6,6 +6,7 @@ import 'package:shop/components/text_buttom_widget.dart';
 import 'package:shop/controller/user.dart';
 import 'package:shop/models/user.dart';
 import 'package:shop/services/request_user.dart';
+import 'package:shop/utils/util_functions.dart';
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({Key? key}) : super(key: key);
@@ -45,27 +46,14 @@ class _RegideterPageState extends State<RegisterWidget> {
 
     forms.add(
       TextFormField(
-        controller: cpfController,
-        focusNode: cpfFocusNode,
-        decoration: InputDecoration(
-          labelText: 'CPF',
-          hintText: '123.456.789-01',
-        ),
-        validator: (cpf) {
-          if (cpf!.length != 14) {
-            return 'CPF inválido.';
-          } else {
-            return null;
-          }
-        },
-      ),
-    );
-    forms.add(returnSizedBox(8));
-
-    forms.add(
-      TextFormField(
         controller: emailController,
         focusNode: emailFocusNode,
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (_) {
+          emailFocusNode.unfocus();
+          passwordFocusNode.requestFocus();
+        },
         decoration: InputDecoration(
           labelText: 'Email',
           hintText: 'email@exemplo.com',
@@ -86,6 +74,12 @@ class _RegideterPageState extends State<RegisterWidget> {
         obscureText: true,
         controller: passwordController,
         focusNode: passwordFocusNode,
+        keyboardType: TextInputType.visiblePassword,
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (_) {
+          passwordFocusNode.unfocus();
+          cpfFocusNode.requestFocus();
+        },
         decoration: InputDecoration(
           labelText: 'Senha',
           hintText: '*******',
@@ -99,73 +93,109 @@ class _RegideterPageState extends State<RegisterWidget> {
         },
       ),
     );
+    forms.add(returnSizedBox(8));
+
+    forms.add(
+      TextFormField(
+        controller: cpfController,
+        focusNode: cpfFocusNode,
+        keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.done,
+        onFieldSubmitted: (_) {
+          cpfFocusNode.unfocus();
+          makeRegister();
+        },
+        decoration: InputDecoration(
+          labelText: 'CPF',
+          hintText: '123.456.789-01',
+        ),
+        validator: (cpf) {
+          if (cpf!.length != 14) {
+            return 'CPF inválido.';
+          } else {
+            return null;
+          }
+        },
+      ),
+    );
     forms.add(returnSizedBox(16));
 
     forms.add(
       TextButtonWidget(
         onPress: () {
           autoValidateForm = true;
-          if (_key.currentState!.validate()) {
-            setState(() {
-              isLoading = true;
-            });
-
-            _key.currentState!.save();
-
-            user = UserModel(
-              cpf: cpfController.text,
-              email: emailController.text,
-              password: passwordController.text,
-              id: user.generateId(),
-            );
-
-            if (userProvider.canRegister(user)) {
-              userRequestProvider.registerUser(user).then((response) {
-                returnScaffoldMassage(response, context);
-                Navigator.of(context).pop();
-                setState(() {
-                  isLoading = false;
-                });
-              }).catchError((error) {
-                setState(() {
-                  isLoading = false;
-                });
-                returnScaffoldMassage(error, context);
-              });
-            } else {
-              setState(() {
-                isLoading = false;
-              });
-              returnScaffoldMassage('Conta já cadastrado!', context);
-            }
-          }
+          makeRegister();
         },
         text: 'Criar conta',
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Registre-se'),
-      ),
-      body: Center(
-        child: isLoading
-            ? CircularProgressIndicator()
-            : Padding(
-                padding: EdgeInsets.all(16),
-                child: Form(
-                  key: _key,
-                  autovalidateMode: autoValidateForm
-                      ? AutovalidateMode.always
-                      : AutovalidateMode.disabled,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: forms,
+    return GestureDetector(
+      onTap: () {
+        Utils.hideKeyBoard();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Registre-se'),
+        ),
+        body: Center(
+          child: isLoading
+              ? CircularProgressIndicator()
+              : Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Form(
+                    key: _key,
+                    autovalidateMode: autoValidateForm
+                        ? AutovalidateMode.always
+                        : AutovalidateMode.disabled,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: forms,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
+  }
+
+  void makeRegister() {
+    if (_key.currentState?.validate() ?? false) {
+      setState(() {
+        isLoading = true;
+      });
+
+      _key.currentState!.save();
+
+      user = UserModel(
+        cpf: cpfController.text,
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      user.id = user.generateId();
+
+      if (userProvider.canRegister(user)) {
+        userRequestProvider.registerUser(user).then((response) {
+          returnScaffoldMassage(response, context);
+          Navigator.of(context).pop();
+          setState(() {
+            isLoading = false;
+          });
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          returnScaffoldMassage(error, context);
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        returnScaffoldMassage('Conta já cadastrado!', context);
+      }
+    }
   }
 
   Widget returnSizedBox(double height) {

@@ -9,9 +9,7 @@ import 'package:shop/services/request_user.dart';
 class UserProvider with ChangeNotifier {
   UserModel? _user;
   UserModel? get user => _user;
-  void _saveUser(UserModel? user) {
-    _user = user;
-  }
+  set setUser(UserModel? user) => _user = user;
 
   List<UserModel> _usersLogin = [];
   List<UserModel> _usersRegister = [];
@@ -24,16 +22,22 @@ class UserProvider with ChangeNotifier {
       _usersRegister = await requestUser.getRegisterUser();
       _usersLogin = await requestUser.getLoginUser();
     } catch (error) {
-      print(error);
+      // print(error);
     }
 
     try {
       final prefs = await SharedPreferences.getInstance();
       final result = prefs.getString('_user');
-      _saveUser(_usersLogin.firstWhere((user) => user.email == result));
+      _user = _usersLogin.firstWhere((user) => user.email == result);
     } catch (e) {
-      _saveUser(null);
+      _user = null;
     }
+  }
+
+  void removeUserFromListUser(UserModel user) {
+    _usersLogin.remove(user);
+    _user = null;
+    notifyListeners();
   }
 
   bool canRegister(UserModel userRegister) {
@@ -56,7 +60,7 @@ class UserProvider with ChangeNotifier {
 
     if (hasUserRegister && !hasUserLogin) {
       _usersLogin.insert(0, userLogin);
-      _saveUser(userLogin);
+      _user = userLogin;
       return true;
     } else {
       return false;
