@@ -52,18 +52,33 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  bool canLogin(UserModel userLogin) {
+  String canLogin(UserModel userLogin) {
     var hasUserRegister =
         _usersRegister.any((user) => user.email == userLogin.email);
 
     var hasUserLogin = _usersLogin.any((user) => user.email == userLogin.email);
 
-    if (hasUserRegister && !hasUserLogin) {
+    try {
+      _user =
+          _usersRegister.firstWhere((user) => user.email == userLogin.email);
+    } catch (e) {
+      _user = null;
+    }
+
+    bool matchUser = false;
+    if (userLogin.email == _user?.email &&
+        userLogin.password == _user?.password) {
+      matchUser = true;
+    }
+
+    if (hasUserRegister && !hasUserLogin && matchUser) {
       _usersLogin.insert(0, userLogin);
       _user = userLogin;
-      return true;
+      return 'Conta logada com sucesso!';
+    } else if (hasUserRegister && !hasUserLogin && !matchUser) {
+      return 'Credencias erradas!';
     } else {
-      return false;
+      return 'Conta não está registrada!';
     }
   }
 }

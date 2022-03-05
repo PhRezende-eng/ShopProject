@@ -145,12 +145,9 @@ class _LoginWidgetState extends State<LoginWidget> {
         email: emailController.text,
         password: passwordController.text,
       );
-
-      if (userProvider.canLogin(user)) {
+      final stringConditionToLogin = userProvider.canLogin(user);
+      if (stringConditionToLogin == 'Conta logada com sucesso!') {
         userRequestProvider.loginUser(user).then((response) {
-          setState(() {
-            isLoading = false;
-          });
           returnScaffoldMassage(response, context);
           setInMemory(emailController.text);
           Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
@@ -164,7 +161,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         setState(() {
           isLoading = false;
         });
-        returnScaffoldMassage('Conta não registrada', context);
+        returnScaffoldMassage(stringConditionToLogin, context);
       }
     }
   }
