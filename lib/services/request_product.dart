@@ -20,6 +20,17 @@ class RequestProductProvider extends RequestService {
     }
   }
 
+  Future deleteItemFromDB(ProductModal productModal) async {
+    final dioResponse = await deleteRequest(
+      'products/${productModal.name}.json',
+      // body: productModal.toJson(),
+    );
+    if (dioResponse.statusMessage == 'OK') {
+    } else {
+      throw 'Erro ao tentar deletar item do banco\nTente novamente mais tarde.';
+    }
+  }
+
   Future<bool> patchFavoriteRequest(ProductModal product,
       {required bool isFavorite}) async {
     final dict = {

@@ -54,7 +54,7 @@ class RequestService with ChangeNotifier {
   Future<Response> deleteRequest(String endpoint,
       {String? args, int timeSeconds = 10, dynamic body}) async {
     try {
-      return await dio.post(
+      return await dio.delete(
         _createUrl(endpoint, args),
         data: body,
         options: Options(
@@ -67,11 +67,11 @@ class RequestService with ChangeNotifier {
     }
   }
 
-  //PUT faz com que altere algum atributo, porém precisa ser passado todos os outros dados do objeto
+  //PUT faz com que altere algum atributo, porém precisa ser passado todos os atrivutos do objeto
   Future<Response> putRequest(String endpoint,
       {String? args, int timeSeconds = 10, dynamic body}) async {
     try {
-      return await dio.post(
+      return await dio.put(
         _createUrl(endpoint, args),
         data: body,
         options: Options(

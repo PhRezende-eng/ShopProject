@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop/components/text_buttom_widget.dart';
 import 'package:shop/models/user.dart';
 import 'package:shop/controller/user.dart';
 import 'package:shop/services/request_user.dart';
+import 'package:shop/utils/util_functions.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -18,9 +20,12 @@ class _LoginWidgetState extends State<LoginWidget> {
   late RequestUserProvider userRequestProvider;
   late UserProvider userProvider;
   late UserModel user;
+
   final _key = GlobalKey<FormState>();
+
   late TextEditingController emailController = TextEditingController(),
       passwordController = TextEditingController();
+  late FocusNode emailFocusNode = FocusNode(), passwordFocusNode = FocusNode();
 
   bool isLoading = false;
   bool validate = false;
@@ -39,14 +44,23 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     forms.add(
       TextFormField(
+        focusNode: emailFocusNode,
+        controller: emailController,
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           labelText: 'Email',
           hintText: 'email@exemplo.com',
         ),
-        controller: emailController,
+        onFieldSubmitted: (_) {
+          emailFocusNode.unfocus();
+          passwordFocusNode.requestFocus();
+        },
         validator: (email) {
-          if (!email!.contains('@') && !email.contains('.com')) {
+          if (!email!.contains('@') || !email.contains('.com')) {
             return 'Email inválido.';
+          } else if (email == '') {
+            return 'Você presicar colocar um email.';
           }
           return null;
         },
@@ -57,14 +71,21 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     forms.add(
       TextFormField(
+        obscureText: true,
+        focusNode: passwordFocusNode,
+        controller: passwordController,
+        keyboardType: TextInputType.visiblePassword,
+        textInputAction: TextInputAction.go,
+        onFieldSubmitted: (_) => makeLoginIfCan(),
         decoration: InputDecoration(
           labelText: 'Senha',
           hintText: '*******',
         ),
-        controller: passwordController,
         validator: (password) {
           if (password!.length < 6) {
             return 'A está muito curta.';
+          } else if (password == '') {
+            return 'Você presicar colocar uma senha.';
           }
           return null;
         },
@@ -77,64 +98,80 @@ class _LoginWidgetState extends State<LoginWidget> {
       TextButtonWidget(
         onPress: () {
           validate = true;
-          if (_key.currentState?.validate() ?? false) {
-            setState(() {
-              isLoading = true;
-            });
-
-            _key.currentState!.save();
-
-            user = UserModel(
-              email: emailController.text,
-              password: passwordController.text,
-            );
-            if (userProvider.addLoginUser(user)) {
-              userRequestProvider.loginUser(user).then((response) {
-                setState(() {
-                  isLoading = false;
-                });
-                returnScaffoldMassage(response, context);
-              }).catchError((error) {
-                setState(() {
-                  isLoading = false;
-                });
-                returnScaffoldMassage(error, context);
-                //TODO: navigator to home
-              });
-            } else {
-              setState(() {
-                isLoading = false;
-              });
-              returnScaffoldMassage('Você já está logado!', context);
-            }
-          }
+          makeLoginIfCan();
         },
         text: 'Acessar conta',
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Center(
-          child: isLoading
-              ? CircularProgressIndicator()
-              : Form(
-                  key: _key,
-                  autovalidateMode: validate
-                      ? AutovalidateMode.always
-                      : AutovalidateMode.disabled,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: forms,
+    return GestureDetector(
+      onTap: () {
+        Utils.hideKeyBoard();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Login'),
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(16),
+          child: Center(
+            child: isLoading
+                ? CircularProgressIndicator()
+                : Form(
+                    key: _key,
+                    autovalidateMode: validate
+                        ? AutovalidateMode.always
+                        : AutovalidateMode.disabled,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: forms,
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );
+  }
+
+  void makeLoginIfCan() {
+    if (_key.currentState?.validate() ?? false) {
+      setState(() {
+        isLoading = true;
+      });
+
+      _key.currentState!.save();
+
+      user = UserModel(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      if (userProvider.canLogin(user)) {
+        userRequestProvider.loginUser(user).then((response) {
+          setState(() {
+            isLoading = false;
+          });
+          returnScaffoldMassage(response, context);
+          setInMemory(emailController.text);
+          Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          returnScaffoldMassage(error, context);
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        returnScaffoldMassage('Conta não registrada', context);
+      }
+    }
+  }
+
+  void setInMemory(String email) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('_user', email);
   }
 
   Widget returnSizedBox(double height) {
@@ -151,5 +188,15 @@ class _LoginWidgetState extends State<LoginWidget> {
         content: Text(message),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
   }
 }

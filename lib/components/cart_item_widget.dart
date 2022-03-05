@@ -34,6 +34,7 @@ class CartItemWidget extends StatelessWidget {
           Provider.of<CartProvider>(context, listen: false)
               .removeItem(cartItem.productId);
         }
+        return null;
       },
       child: Card(
         margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -75,7 +76,7 @@ class CartItemWidget extends StatelessWidget {
             child: Text(
               'Cancelar',
               style: TextStyle(
-                color: Theme.of(context).colorScheme.secondaryVariant,
+                color: Theme.of(context).colorScheme.secondaryContainer,
               ),
             ),
           ),

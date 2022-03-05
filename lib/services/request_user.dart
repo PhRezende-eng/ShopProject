@@ -2,14 +2,14 @@ import 'package:shop/models/user.dart';
 import 'package:shop/services/request.dart';
 
 class RequestUserProvider extends RequestService {
-  Future getLoginUser() async {
+  Future<List<UserModel>> getLoginUser() async {
     final dioResponse = await getRequest('/login.json');
-    Map<String, dynamic> data = dioResponse.data;
+    final data = dioResponse.data;
 
     if (dioResponse.statusMessage == 'OK') {
       List<UserModel> listLoginUser = [];
-      for (var user in data.values) {
-        user = UserModel.fromJson(user as Map<String, UserModel>);
+      for (var user in data.values.toList()) {
+        user = UserModel.fromJson(user);
         listLoginUser.add(user);
       }
       return listLoginUser;
@@ -18,14 +18,14 @@ class RequestUserProvider extends RequestService {
     }
   }
 
-  Future getRegisterUser() async {
+  Future<List<UserModel>> getRegisterUser() async {
     final dioResponse = await getRequest('/register.json');
-    Map<String, dynamic> data = dioResponse.data;
+    final data = dioResponse.data;
 
     if (dioResponse.statusMessage == 'OK') {
       List<UserModel> listRegisterUser = [];
-      for (var user in data.values) {
-        user = UserModel.fromJson(user as Map<String, UserModel>);
+      for (var user in data.values.toList()) {
+        user = UserModel.fromJson(user);
         listRegisterUser.add(user);
       }
       return listRegisterUser;

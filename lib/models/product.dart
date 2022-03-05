@@ -24,10 +24,19 @@ class ProductModal with ChangeNotifier {
     notifyListeners();
   }
 
+  Map toJson() => {
+        'id': id,
+        'title': name,
+        'description': description,
+        'price': price,
+        'imageUrl': imageUrl,
+        'isFavorite': isFavorite,
+      };
+
   factory ProductModal.fromJson(Map<String, dynamic> json) {
     return ProductModal(
       id: json['id'],
-      name: json['title'],
+      name: json['name'],
       description: json['description'],
       price: json['price'],
       imageUrl: json['imageUrl'],
