@@ -32,6 +32,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   void initState() {
+    user = UserModel();
     userRequestProvider =
         Provider.of<RequestUserProvider>(context, listen: false);
     userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -48,14 +49,15 @@ class _LoginWidgetState extends State<LoginWidget> {
         controller: emailController,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          labelText: 'Email',
-          hintText: 'email@exemplo.com',
-        ),
+        onSaved: (email) => user.email = email!,
         onFieldSubmitted: (_) {
           emailFocusNode.unfocus();
           passwordFocusNode.requestFocus();
         },
+        decoration: InputDecoration(
+          labelText: 'Email',
+          hintText: 'email@exemplo.com',
+        ),
         validator: (email) {
           if (!email!.contains('@') || !email.contains('.com')) {
             return 'Email inválido.';
@@ -76,6 +78,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         controller: passwordController,
         keyboardType: TextInputType.visiblePassword,
         textInputAction: TextInputAction.go,
+        onSaved: (password) => user.password = password!,
         onFieldSubmitted: (_) => makeLoginIfCan(),
         decoration: InputDecoration(
           labelText: 'Senha',
@@ -141,10 +144,6 @@ class _LoginWidgetState extends State<LoginWidget> {
 
       _key.currentState!.save();
 
-      user = UserModel(
-        email: emailController.text,
-        password: passwordController.text,
-      );
       final stringConditionToLogin = userProvider.canLogin(user);
       if (stringConditionToLogin == 'Conta logada com sucesso!') {
         userRequestProvider.loginUser(user).then((response) {

@@ -1,14 +1,14 @@
 import 'dart:math';
 
 class UserModel {
-  final String email;
-  final String? cpf;
+  String email;
+  String password;
+  String? cpf;
   String? id;
-  final String password;
 
   UserModel({
-    required this.email,
-    required this.password,
+    this.email = '',
+    this.password = '',
     this.cpf,
     this.id,
   });

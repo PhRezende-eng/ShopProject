@@ -34,6 +34,7 @@ class _RegideterPageState extends State<RegisterWidget> {
 
   @override
   void initState() {
+    user = UserModel();
     userRequestProvider =
         Provider.of<RequestUserProvider>(context, listen: false);
     userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -50,6 +51,7 @@ class _RegideterPageState extends State<RegisterWidget> {
         focusNode: emailFocusNode,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
+        onSaved: (email) => user.email = email!,
         onFieldSubmitted: (_) {
           emailFocusNode.unfocus();
           passwordFocusNode.requestFocus();
@@ -76,6 +78,7 @@ class _RegideterPageState extends State<RegisterWidget> {
         focusNode: passwordFocusNode,
         keyboardType: TextInputType.visiblePassword,
         textInputAction: TextInputAction.next,
+        onSaved: (password) => user.password = password!,
         onFieldSubmitted: (_) {
           passwordFocusNode.unfocus();
           cpfFocusNode.requestFocus();
@@ -101,6 +104,7 @@ class _RegideterPageState extends State<RegisterWidget> {
         focusNode: cpfFocusNode,
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
+        onSaved: (cpf) => user.cpf = cpf!,
         onFieldSubmitted: (_) {
           cpfFocusNode.unfocus();
           makeRegister();
@@ -169,11 +173,6 @@ class _RegideterPageState extends State<RegisterWidget> {
 
       _key.currentState!.save();
 
-      user = UserModel(
-        cpf: cpfController.text,
-        email: emailController.text,
-        password: passwordController.text,
-      );
       user.id = user.generateId();
 
       if (userProvider.canRegister(user)) {
