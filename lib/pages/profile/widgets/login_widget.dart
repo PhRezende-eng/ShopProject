@@ -41,70 +41,50 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var forms = <Widget>[];
-
-    forms.add(
-      TextFormField(
-        focusNode: emailFocusNode,
-        controller: emailController,
-        keyboardType: TextInputType.emailAddress,
-        textInputAction: TextInputAction.next,
-        onSaved: (email) => user.email = email!,
-        onFieldSubmitted: (_) {
-          emailFocusNode.unfocus();
-          passwordFocusNode.requestFocus();
-        },
-        decoration: InputDecoration(
-          labelText: 'Email',
-          hintText: 'email@exemplo.com',
-        ),
-        validator: (email) {
-          if (!email!.contains('@') || !email.contains('.com')) {
-            return 'Email inválido.';
-          } else if (email == '') {
-            return 'Você presicar colocar um email.';
-          }
-          return null;
-        },
+    TextFormField emailInput = TextFormField(
+      focusNode: emailFocusNode,
+      controller: emailController,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      onSaved: (email) => user.email = email!,
+      onFieldSubmitted: (_) {
+        emailFocusNode.unfocus();
+        passwordFocusNode.requestFocus();
+      },
+      decoration: InputDecoration(
+        labelText: 'Email',
+        hintText: 'email@exemplo.com',
       ),
+      validator: (email) {
+        if (!email!.contains('@') || !email.contains('.com')) {
+          return 'Email inválido.';
+        } else if (email == '') {
+          return 'Você presicar colocar um email.';
+        }
+        return null;
+      },
     );
 
-    forms.add(returnSizedBox(8));
-
-    forms.add(
-      TextFormField(
-        obscureText: true,
-        focusNode: passwordFocusNode,
-        controller: passwordController,
-        keyboardType: TextInputType.visiblePassword,
-        textInputAction: TextInputAction.go,
-        onSaved: (password) => user.password = password!,
-        onFieldSubmitted: (_) => makeLoginIfCan(),
-        decoration: InputDecoration(
-          labelText: 'Senha',
-          hintText: '*******',
-        ),
-        validator: (password) {
-          if (password!.length < 6) {
-            return 'A está muito curta.';
-          } else if (password == '') {
-            return 'Você presicar colocar uma senha.';
-          }
-          return null;
-        },
+    TextFormField passwordInput = TextFormField(
+      obscureText: true,
+      focusNode: passwordFocusNode,
+      controller: passwordController,
+      keyboardType: TextInputType.visiblePassword,
+      textInputAction: TextInputAction.go,
+      onSaved: (password) => user.password = password!,
+      onFieldSubmitted: (_) => makeLoginIfCan(),
+      decoration: InputDecoration(
+        labelText: 'Senha',
+        hintText: '*******',
       ),
-    );
-
-    forms.add(returnSizedBox(16));
-
-    forms.add(
-      TextButtonWidget(
-        onPress: () {
-          validate = true;
-          makeLoginIfCan();
-        },
-        text: 'Acessar conta',
-      ),
+      validator: (password) {
+        if (password!.length < 6) {
+          return 'A está muito curta.';
+        } else if (password == '') {
+          return 'Você presicar colocar uma senha.';
+        }
+        return null;
+      },
     );
 
     return GestureDetector(
@@ -127,7 +107,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                         : AutovalidateMode.disabled,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: forms,
+                      children: [
+                        emailInput,
+                        SizedBox(height: 16),
+                        passwordInput,
+                        SizedBox(height: 16),
+                        TextButtonWidget(
+                          onPress: () => makeLoginIfCan(),
+                          text: 'Acessar conta',
+                        ),
+                        SizedBox(height: 16),
+                      ],
                     ),
                   ),
           ),
@@ -136,30 +126,30 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
   }
 
-  void makeLoginIfCan() {
+  Future makeLoginIfCan() async {
+    validate = true;
+    setState(() {});
     if (_key.currentState?.validate() ?? false) {
-      setState(() {
-        isLoading = true;
-      });
+      isLoading = true;
+      setState(() {});
 
       _key.currentState!.save();
 
       final stringConditionToLogin = userProvider.canLogin(user);
       if (stringConditionToLogin == 'Conta logada com sucesso!') {
-        userRequestProvider.loginUser(user).then((response) {
+        try {
+          final response = await userRequestProvider.loginUser(user);
           returnScaffoldMassage(response, context);
           setInMemory(emailController.text);
           Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
-        }).catchError((error) {
-          setState(() {
-            isLoading = false;
-          });
-          returnScaffoldMassage(error, context);
-        });
-      } else {
-        setState(() {
+        } catch (error) {
           isLoading = false;
-        });
+          setState(() {});
+          returnScaffoldMassage(error.toString(), context);
+        }
+      } else {
+        isLoading = false;
+        setState(() {});
         returnScaffoldMassage(stringConditionToLogin, context);
       }
     }
@@ -170,16 +160,9 @@ class _LoginWidgetState extends State<LoginWidget> {
     prefs.setString('_user', email);
   }
 
-  Widget returnSizedBox(double height) {
-    return SizedBox(
-      height: height,
-    );
-  }
-
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
-      returnScaffoldMassage(String message, BuildContext context) {
+  void returnScaffoldMassage(String message, BuildContext context) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    return ScaffoldMessenger.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
       ),

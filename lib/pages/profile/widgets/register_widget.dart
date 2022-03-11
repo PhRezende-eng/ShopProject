@@ -43,101 +43,78 @@ class _RegideterPageState extends State<RegisterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final forms = <Widget>[];
-
-    forms.add(
-      TextFormField(
-        controller: emailController,
-        focusNode: emailFocusNode,
-        keyboardType: TextInputType.emailAddress,
-        textInputAction: TextInputAction.next,
-        onSaved: (email) => user.email = email!,
-        onFieldSubmitted: (_) {
-          emailFocusNode.unfocus();
-          passwordFocusNode.requestFocus();
-        },
-        decoration: InputDecoration(
-          labelText: 'Email',
-          hintText: 'email@exemplo.com',
-        ),
-        validator: (email) {
-          if (!email!.contains('@') || !email.contains('.com')) {
-            return 'Email inválido.';
-          } else {
-            return null;
-          }
-        },
+    TextFormField emailInput = TextFormField(
+      controller: emailController,
+      focusNode: emailFocusNode,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      onSaved: (email) => user.email = email!,
+      onFieldSubmitted: (_) {
+        emailFocusNode.unfocus();
+        passwordFocusNode.requestFocus();
+      },
+      decoration: InputDecoration(
+        labelText: 'Email',
+        hintText: 'email@exemplo.com',
       ),
+      validator: (email) {
+        if (!email!.contains('@') || !email.contains('.com')) {
+          return 'Email inválido.';
+        } else {
+          return null;
+        }
+      },
     );
-    forms.add(returnSizedBox(8));
 
-    forms.add(
-      TextFormField(
-        obscureText: true,
-        controller: passwordController,
-        focusNode: passwordFocusNode,
-        keyboardType: TextInputType.visiblePassword,
-        textInputAction: TextInputAction.next,
-        onSaved: (password) => user.password = password!,
-        onFieldSubmitted: (_) {
-          passwordFocusNode.unfocus();
-          cpfFocusNode.requestFocus();
-        },
-        decoration: InputDecoration(
-          labelText: 'Senha',
-          hintText: '*******',
-        ),
-        validator: (password) {
-          if (password!.length < 6) {
-            return 'A está muito curta.';
-          } else {
-            return null;
-          }
-        },
+    TextFormField passwordInput = TextFormField(
+      obscureText: true,
+      controller: passwordController,
+      focusNode: passwordFocusNode,
+      keyboardType: TextInputType.visiblePassword,
+      textInputAction: TextInputAction.next,
+      onSaved: (password) => user.password = password!,
+      onFieldSubmitted: (_) {
+        passwordFocusNode.unfocus();
+        cpfFocusNode.requestFocus();
+      },
+      decoration: InputDecoration(
+        labelText: 'Senha',
+        hintText: '*******',
       ),
+      validator: (password) {
+        if (password!.length < 6) {
+          return 'A está muito curta.';
+        } else {
+          return null;
+        }
+      },
     );
-    forms.add(returnSizedBox(8));
 
-    forms.add(
-      TextFormField(
-        controller: cpfController,
-        focusNode: cpfFocusNode,
-        keyboardType: TextInputType.number,
-        textInputAction: TextInputAction.done,
-        onSaved: (cpf) => user.cpf = cpf!,
-        onFieldSubmitted: (_) {
-          cpfFocusNode.unfocus();
-          makeRegister();
-        },
-        decoration: InputDecoration(
-          labelText: 'CPF',
-          hintText: '123.456.789-01',
-        ),
-        validator: (cpf) {
-          if (cpf!.length != 14) {
-            return 'CPF inválido.';
-          } else {
-            return null;
-          }
-        },
+    TextFormField cpfInput = TextFormField(
+      controller: cpfController,
+      focusNode: cpfFocusNode,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.done,
+      onSaved: (cpf) => user.cpf = cpf!,
+      onFieldSubmitted: (_) {
+        cpfFocusNode.unfocus();
+        makeRegister();
+      },
+      decoration: InputDecoration(
+        labelText: 'CPF',
+        hintText: '123.456.789-01',
       ),
-    );
-    forms.add(returnSizedBox(16));
-
-    forms.add(
-      TextButtonWidget(
-        onPress: () {
-          autoValidateForm = true;
-          makeRegister();
-        },
-        text: 'Criar conta',
-      ),
+      validator: (cpf) {
+        if (cpf!.length != 14) {
+          return 'CPF inválido.';
+        } else {
+          return null;
+        }
+      },
     );
 
     return GestureDetector(
-      onTap: () {
-        Utils.hideKeyBoard();
-      },
+      onTap: () => Utils.hideKeyBoard(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('Registre-se'),
@@ -155,7 +132,19 @@ class _RegideterPageState extends State<RegisterWidget> {
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: forms,
+                        children: [
+                          emailInput,
+                          SizedBox(height: 16),
+                          passwordInput,
+                          SizedBox(height: 16),
+                          cpfInput,
+                          SizedBox(height: 16),
+                          TextButtonWidget(
+                            onPress: () => makeRegister(),
+                            text: 'Criar conta',
+                          ),
+                          SizedBox(height: 16),
+                        ],
                       ),
                     ),
                   ),
@@ -165,48 +154,38 @@ class _RegideterPageState extends State<RegisterWidget> {
     );
   }
 
-  void makeRegister() {
+  Future makeRegister() async {
+    autoValidateForm = true;
+    setState(() {});
     if (_key.currentState?.validate() ?? false) {
-      setState(() {
-        isLoading = true;
-      });
+      isLoading = true;
+      setState(() {});
 
       _key.currentState!.save();
 
       user.id = user.generateId();
 
       if (userProvider.canRegister(user)) {
-        userRequestProvider.registerUser(user).then((response) {
+        try {
+          final response = await userRequestProvider.registerUser(user);
           returnScaffoldMassage(response, context);
           Navigator.of(context).pop();
-          setState(() {
-            isLoading = false;
-          });
-        }).catchError((error) {
-          setState(() {
-            isLoading = false;
-          });
-          returnScaffoldMassage(error, context);
-        });
-      } else {
-        setState(() {
+        } catch (error) {
           isLoading = false;
-        });
-        returnScaffoldMassage('Conta já cadastrado!', context);
+          setState(() {});
+          returnScaffoldMassage(error.toString(), context);
+        }
+      } else {
+        isLoading = false;
+        setState(() {});
+        returnScaffoldMassage('Conta já cadastrada!', context);
       }
     }
   }
 
-  Widget returnSizedBox(double height) {
-    return SizedBox(
-      height: height,
-    );
-  }
-
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
-      returnScaffoldMassage(String message, BuildContext context) {
+  void returnScaffoldMassage(String message, BuildContext context) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    return ScaffoldMessenger.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
       ),
