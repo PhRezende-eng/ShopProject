@@ -19,7 +19,7 @@ class ProductGridWidget extends StatelessWidget {
     return GridView.builder(
       itemCount: loadedProductProvider.length,
       itemBuilder: (context, index) => ChangeNotifierProvider.value(
-        //quando há um um Provider já criado, no caso tem na main.
+        //serve para restringir o nível de classes que poderão escutar o NotfierListnners da Modal
         value: loadedProductProvider[index],
         child: const ProductGridItemWidget(),
       ),

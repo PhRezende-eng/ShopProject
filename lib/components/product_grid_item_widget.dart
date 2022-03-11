@@ -13,7 +13,7 @@ class ProductGridItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // com o listen false, ele não escutará a mudança de estado
-    final requestPRoduct = Provider.of<RequestProductProvider>(context);
+    final requestProduct = Provider.of<RequestProductProvider>(context);
     final product = Provider.of<ProductModal>(context);
     final cart = Provider.of<CartProvider>(context);
     return ClipRRect(
@@ -45,7 +45,7 @@ class ProductGridItemWidget extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             onPressed: () async {
               product.toggleFavorite();
-              await requestPRoduct.patchFavoriteRequest(product,
+              await requestProduct.patchFavoriteRequest(product,
                   isFavorite: product.isFavorite);
             },
           ),
