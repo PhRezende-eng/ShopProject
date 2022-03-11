@@ -22,7 +22,8 @@ class UserProvider with ChangeNotifier {
       _usersRegister = await requestUser.getRegisterUser();
       _usersLogin = await requestUser.getLoginUser();
     } catch (error) {
-      // print(error);
+      _usersLogin = [];
+      _usersRegister = [];
     }
 
     try {

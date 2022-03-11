@@ -37,7 +37,7 @@ class ProductGridItemWidget extends StatelessWidget {
             icon: Consumer<ProductModal>(
               //O consumer tem a mesma função do Provider.of<Product>(context )
               builder: (context, product, child) => Icon(
-                product.isFavorite //caso seja true
+                product.isFavorite //caso seja true, ele mudará pois o estará escutando pela provider
                     ? Icons.favorite
                     : Icons.favorite_border_outlined,
               ),

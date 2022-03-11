@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:shop/models/cart_item.dart';
 import 'package:shop/utils/util_functions.dart';
 
-class OrderModel {
+class OrderModel extends ChangeNotifier {
   final String id;
   final num total;
   final List<CartItemModel> products;
