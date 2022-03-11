@@ -11,8 +11,8 @@ class UserProvider with ChangeNotifier {
   UserModel? get user => _user;
   set setUser(UserModel? user) => _user = user;
 
-  List<UserModel> _usersLogin = [];
-  List<UserModel> _usersRegister = [];
+  List<UserModel>? _usersLogin;
+  List<UserModel>? _usersRegister;
 
   Future getUsersFromDB(BuildContext context) async {
     final requestUser =
@@ -22,31 +22,31 @@ class UserProvider with ChangeNotifier {
       _usersRegister = await requestUser.getRegisterUser();
       _usersLogin = await requestUser.getLoginUser();
     } catch (error) {
-      _usersLogin = [];
-      _usersRegister = [];
+      _usersRegister ??= [];
+      _usersLogin ??= [];
     }
 
     try {
       final prefs = await SharedPreferences.getInstance();
       final result = prefs.getString('_user');
-      _user = _usersLogin.firstWhere((user) => user.email == result);
+      _user = _usersLogin!.firstWhere((user) => user.email == result);
     } catch (e) {
       _user = null;
     }
   }
 
   void removeUserFromListUser(UserModel user) {
-    _usersLogin.remove(user);
+    _usersLogin!.remove(user);
     _user = null;
     notifyListeners();
   }
 
   bool canRegister(UserModel userRegister) {
     var hasUserRegister =
-        _usersRegister.any((user) => user.email == userRegister.email);
+        _usersRegister!.any((user) => user.email == userRegister.email);
 
     if (!hasUserRegister) {
-      _usersRegister.insert(0, userRegister);
+      _usersRegister!.insert(0, userRegister);
       return true;
     } else {
       return false;
@@ -55,13 +55,14 @@ class UserProvider with ChangeNotifier {
 
   String canLogin(UserModel userLogin) {
     var hasUserRegister =
-        _usersRegister.any((user) => user.email == userLogin.email);
+        _usersRegister!.any((user) => user.email == userLogin.email);
 
-    var hasUserLogin = _usersLogin.any((user) => user.email == userLogin.email);
+    var hasUserLogin =
+        _usersLogin!.any((user) => user.email == userLogin.email);
 
     try {
       _user =
-          _usersRegister.firstWhere((user) => user.email == userLogin.email);
+          _usersRegister!.firstWhere((user) => user.email == userLogin.email);
     } catch (e) {
       _user = null;
     }
@@ -73,7 +74,7 @@ class UserProvider with ChangeNotifier {
     }
 
     if (hasUserRegister && !hasUserLogin && matchUser) {
-      _usersLogin.insert(0, userLogin);
+      _usersLogin!.insert(0, userLogin);
       _user = userLogin;
       return 'Conta logada com sucesso!';
     } else if (hasUserRegister && !hasUserLogin && !matchUser) {

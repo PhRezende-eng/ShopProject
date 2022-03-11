@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class TextButtonWidget extends StatelessWidget {
   final String text;
-  final Function() onPress;
+  final Function()? onPress;
   const TextButtonWidget({
     required this.text,
     required this.onPress,
@@ -16,7 +16,7 @@ class TextButtonWidget extends StatelessWidget {
     return SizedBox(
       height: 60,
       width: double.infinity,
-      child: TextButton(
+      child: ElevatedButton(
         onPressed: onPress,
         child: Text(text),
       ),
