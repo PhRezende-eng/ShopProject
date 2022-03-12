@@ -22,7 +22,7 @@ class _CartPageState extends State<CartPage> {
   late OrderListProvider order;
   late CartProvider cart;
   late String total;
-  late List<CartItemModel> items;
+  late List<CartItemModel> cartItems;
   late Size size;
 
   @override
@@ -32,7 +32,7 @@ class _CartPageState extends State<CartPage> {
     cart = Provider.of<CartProvider>(context);
     size = MediaQuery.of(context).size;
     total = Utils.formatPrice(cart.totalPrice);
-    items = cart.valuesList();
+    cartItems = cart.valuesList();
   }
 
   @override
@@ -78,7 +78,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                       onPressed: () {
                         order.addOrder(cart);
-                        saveOrder();
+                        order.saveOrder(context, cartItems);
                         cart.clearItems();
                       },
                     ),
@@ -96,19 +96,14 @@ class _CartPageState extends State<CartPage> {
                 )
               : Expanded(
                   child: ListView.builder(
-                    itemCount: items.length,
+                    itemCount: cartItems.length,
                     itemBuilder: (ctx, i) {
-                      return CartItemWidget(items[i]);
+                      return CartItemWidget(cartItems[i]);
                     },
                   ),
                 ),
         ],
       ),
     );
-  }
-
-  void saveOrder() async {
-    await Provider.of<RequestOrderProvider>(context, listen: false)
-        .postOrder(order.items[0], items);
   }
 }

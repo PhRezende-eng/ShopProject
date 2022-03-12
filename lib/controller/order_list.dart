@@ -1,8 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/models/cart_item.dart';
 import 'package:shop/models/order.dart';
 import 'package:shop/controller/cart_map.dart';
+import 'package:shop/services/request_order.dart';
 
 class OrderListProvider with ChangeNotifier {
   final List<OrderModel> _item = [];
@@ -10,6 +14,11 @@ class OrderListProvider with ChangeNotifier {
   List<OrderModel> get items => [..._item];
 
   int get itemsCountOrder => _item.length;
+
+  void saveOrder(BuildContext context, List<CartItemModel> cartItems) async {
+    await Provider.of<RequestOrderProvider>(context, listen: false)
+        .postOrder(items[0], cartItems);
+  }
 
   void addOrder(CartProvider cart) {
     _item.insert(
