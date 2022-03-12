@@ -11,7 +11,6 @@ class UserProvider with ChangeNotifier {
   UserModel? get user => _user;
   set setUser(UserModel? user) => _user = user;
 
-  List<UserModel>? _usersLogin;
   List<UserModel>? _usersRegister;
 
   Future getUsersFromDB(BuildContext context) async {
@@ -20,23 +19,30 @@ class UserProvider with ChangeNotifier {
 
     try {
       _usersRegister = await requestUser.getRegisterUser();
-      _usersLogin = await requestUser.getLoginUser();
     } catch (error) {
       _usersRegister ??= [];
-      _usersLogin ??= [];
     }
 
     try {
       final prefs = await SharedPreferences.getInstance();
-      final result = prefs.getString('_user');
-      _user = _usersLogin!.firstWhere((user) => user.email == result);
+      final result = prefs.getString('_userId');
+      _user = _usersRegister!.firstWhere((user) => user.id == result);
     } catch (e) {
       _user = null;
     }
   }
 
+  void setInMemory() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('_userId', _user!.id!);
+  }
+
+  void removeUserLoginFromDevice() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('_userId');
+  }
+
   void removeUserFromListUser(UserModel user) {
-    _usersLogin!.remove(user);
     _user = null;
     notifyListeners();
   }
@@ -57,15 +63,7 @@ class UserProvider with ChangeNotifier {
     var hasUserRegister =
         _usersRegister!.any((user) => user.email == userLogin.email);
 
-    var hasUserLogin =
-        _usersLogin!.any((user) => user.email == userLogin.email);
-
-    try {
-      _user =
-          _usersRegister!.firstWhere((user) => user.email == userLogin.email);
-    } catch (e) {
-      _user = null;
-    }
+    _user = _usersRegister!.firstWhere((user) => user.email == userLogin.email);
 
     bool matchUser = false;
     if (userLogin.email == _user?.email &&
@@ -73,11 +71,9 @@ class UserProvider with ChangeNotifier {
       matchUser = true;
     }
 
-    if (hasUserRegister && !hasUserLogin && matchUser) {
-      _usersLogin!.insert(0, userLogin);
-      _user = userLogin;
+    if (hasUserRegister && matchUser) {
       return 'Conta logada com sucesso!';
-    } else if (hasUserRegister && !hasUserLogin && !matchUser) {
+    } else if (hasUserRegister && !matchUser) {
       return 'Credencias erradas!';
     } else {
       return 'Conta não está registrada!';

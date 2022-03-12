@@ -2,9 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop/components/app_drawer_widget.dart';
-import 'package:shop/components/text_buttom_widget.dart';
+import 'package:shop/components/confirm_buttom_widget.dart';
 import 'package:shop/controller/user.dart';
 import 'package:shop/services/request_user.dart';
 import 'package:shop/utils/app_routes.dart';
@@ -29,50 +28,55 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
-        child: Center(
-          child: userProvider.user != null
-              ? TextButtonWidget(
-                  onPress: () {
-                    requestUserProvider.logoutUser(userProvider.user!);
-                    userProvider.removeUserFromListUser(userProvider.user!);
-                    removeUserLoginFromDevice();
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/', (route) => false);
-                  },
-                  text: 'Fazer logout',
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButtonWidget(
-                      onPress: () {
-                        Navigator.of(context).pushNamed(AppRooutes.LOGIN);
-                        // Navigator.of(context).push(
-                        //     MaterialPageRoute(builder: (contexto) => LoginWidget()));
-                      },
-                      text: 'Fazer Login',
+        child: userProvider.user != null
+            ? Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text('Email: ${userProvider.user!.email}'),
+                        Text('Cpf: ${userProvider.user!.cpf}'),
+                      ],
                     ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    TextButtonWidget(
-                      onPress: () {
-                        Navigator.of(context).pushNamed(AppRooutes.REGISTER);
-                        // Navigator.of(context).push(
-                        //     MaterialPageRoute(builder: (contexto) => RegisterWidget()));
-                      },
-                      text: 'Cadastre-se',
-                    ),
-                  ],
-                ),
-        ),
+                  ),
+                  TextButtonWidget(
+                    onPress: () {
+                      requestUserProvider.logoutUser(userProvider.user!);
+                      userProvider.removeUserFromListUser(userProvider.user!);
+                      userProvider.removeUserLoginFromDevice();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/', (route) => false);
+                    },
+                    text: 'Fazer logout',
+                  )
+                ],
+              )
+            : Column(
+                children: [
+                  Spacer(),
+                  TextButtonWidget(
+                    onPress: () {
+                      Navigator.of(context).pushNamed(AppRooutes.LOGIN);
+                      // Navigator.of(context).push(
+                      //     MaterialPageRoute(builder: (contexto) => LoginWidget()));
+                    },
+                    text: 'Fazer Login',
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  TextButtonWidget(
+                    onPress: () {
+                      Navigator.of(context).pushNamed(AppRooutes.REGISTER);
+                      // Navigator.of(context).push(
+                      //     MaterialPageRoute(builder: (contexto) => RegisterWidget()));
+                    },
+                    text: 'Cadastre-se',
+                  ),
+                ],
+              ),
       ),
       drawer: AppDrawerWidget(),
     );
-  }
-
-  void removeUserLoginFromDevice() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove('_user');
   }
 }

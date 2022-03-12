@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shop/components/text_buttom_widget.dart';
+import 'package:shop/components/confirm_buttom_widget.dart';
 import 'package:shop/models/user.dart';
 import 'package:shop/controller/user.dart';
 import 'package:shop/services/request_user.dart';
@@ -140,7 +139,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         try {
           final response = await userRequestProvider.loginUser(user);
           returnScaffoldMassage(response, context);
-          setInMemory(emailController.text);
+          userProvider.setInMemory();
           Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
         } catch (error) {
           isLoading = false;
@@ -153,11 +152,6 @@ class _LoginWidgetState extends State<LoginWidget> {
         returnScaffoldMassage(stringConditionToLogin, context);
       }
     }
-  }
-
-  void setInMemory(String email) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('_user', email);
   }
 
   void returnScaffoldMassage(String message, BuildContext context) {

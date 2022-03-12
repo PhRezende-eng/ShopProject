@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/components/dialog_confirm_button_widget.dart';
 import 'package:shop/controller/product_list.dart';
 import 'package:shop/models/product.dart';
 
@@ -50,13 +51,13 @@ class ProductItemWidget extends StatelessWidget {
             },
             child: Text('Cancelar'),
           ),
-          MaterialButton(
-            onPressed: () async {
+          ConfirmDialogButtomWidget(
+            onPress: () async {
               await productProvider.deleteItemFromList(product);
               Navigator.of(context).pop();
             },
-            child: Text('Deletar'),
-          )
+            text: 'Deletar',
+          ),
         ],
       ),
     );

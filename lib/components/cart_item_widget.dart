@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/components/dialog_confirm_button_widget.dart';
 import 'package:shop/models/cart_item.dart';
 import 'package:shop/controller/cart_map.dart';
 
@@ -70,21 +71,17 @@ class CartItemWidget extends StatelessWidget {
         content: Text('Você remover este produto do seu pedido?'),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
+            onPressed: () => Navigator.of(context).pop(false),
             child: Text(
               'Cancelar',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondaryContainer,
-              ),
+              // style: TextStyle(
+              //   color: Theme.of(context).colorScheme.secondaryContainer,
+              // ),
             ),
           ),
-          MaterialButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: Text('Remover'),
+          ConfirmDialogButtomWidget(
+            onPress: () => Navigator.of(context).pop(true),
+            text: 'Remover',
           ),
         ],
       ),

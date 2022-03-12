@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/components/text_buttom_widget.dart';
+import 'package:shop/components/confirm_buttom_widget.dart';
 import 'package:shop/controller/user.dart';
 import 'package:shop/models/user.dart';
 import 'package:shop/services/request_user.dart';
