@@ -80,7 +80,7 @@ class CartItemWidget extends StatelessWidget {
               ),
             ),
           ),
-          TextButton(
+          MaterialButton(
             onPressed: () {
               Navigator.of(context).pop(true);
             },

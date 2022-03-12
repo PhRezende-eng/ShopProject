@@ -26,9 +26,7 @@ class ProductItemWidget extends StatelessWidget {
               icon: Icon(Icons.edit),
             ),
             IconButton(
-              onPressed: () {
-                showDialogToDelete(context);
-              },
+              onPressed: () => showDialogToDelete(context),
               icon: Icon(Icons.delete),
             ),
           ],
@@ -52,7 +50,7 @@ class ProductItemWidget extends StatelessWidget {
             },
             child: Text('Cancelar'),
           ),
-          TextButton(
+          MaterialButton(
             onPressed: () async {
               await productProvider.deleteItemFromList(product);
               Navigator.of(context).pop();
