@@ -15,7 +15,7 @@ class CartItemModel {
     required this.quantity,
   });
 
-  String productPriceWithouR$() {
+  String productPriceWithoutR$() {
     return Utils.formatPriceWithoutR$(price.toDouble());
   }
 
