@@ -36,6 +36,10 @@ class UserModel {
     return Random().nextDouble().toString();
   }
 
+  String getFullName() {
+    return '$name $lastName';
+  }
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
