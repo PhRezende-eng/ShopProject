@@ -28,7 +28,9 @@ class ProfilePage extends StatelessWidget {
             ? Column(
                 children: [
                   Expanded(
-                    child: ProfileInfoWidget(),
+                    child: SizedBox(
+                      child: ProfileInfoWidget(),
+                    ),
                   ),
                   TextButtonWidget(
                     onPress: () {
