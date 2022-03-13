@@ -2,6 +2,7 @@
 
 import 'package:shop/models/cart_item.dart';
 import 'package:shop/models/order.dart';
+import 'package:shop/models/user.dart';
 import 'package:shop/services/request.dart';
 
 class RequestOrderProvider extends RequestService {
@@ -27,7 +28,11 @@ class RequestOrderProvider extends RequestService {
     }
   }
 
-  Future postOrder(OrderModel order, List<CartItemModel> cartItems) async {
+  Future postOrder(
+    OrderModel order,
+    List<CartItemModel> cartItems,
+    UserModel user,
+  ) async {
     Map dict = order.toJson(); // metódo me retorna um map
     // Map dict = {};
     // print('$newOrder ToJson');
@@ -36,8 +41,8 @@ class RequestOrderProvider extends RequestService {
     // dict['products'] = cartItems;
     // dict['date'] = order.date.millisecondsSinceEpoch;
     // print('$dict Map');
-    final dioResponse = await postRequest(
-      'orders.json',
+    final dioResponse = await patchRequest(
+      'register/${user.id}/orders.json',
       body: dict,
     );
     if (dioResponse.statusMessage == 'OK') {

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer_widget.dart';
 import 'package:shop/components/empty_list_widget.dart';
 import 'package:shop/components/oders_widget.dart';
+import 'package:shop/controller/user.dart';
 import 'package:shop/models/order.dart';
 import 'package:shop/services/request_order.dart';
 
@@ -53,6 +54,8 @@ class _OrdersPageState extends State<OrdersPage> {
 
   Future getItems() async {
     items = await Provider.of<RequestOrderProvider>(context).getOrder();
+    items =
+        Provider.of<UserProvider>(context, listen: false).user?.orders ?? [];
     setState(() {
       isLoaded = true;
     });

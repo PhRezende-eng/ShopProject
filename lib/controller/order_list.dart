@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/controller/user.dart';
 import 'package:shop/models/cart_item.dart';
 import 'package:shop/models/order.dart';
 import 'package:shop/controller/cart_map.dart';
@@ -15,8 +16,9 @@ class OrderListProvider with ChangeNotifier {
   int get itemsCountOrder => _item.length;
 
   void saveOrder(BuildContext context, List<CartItemModel> cartItems) async {
+    final user = Provider.of<UserProvider>(context).user!;
     await Provider.of<RequestOrderProvider>(context, listen: false)
-        .postOrder(items[0], cartItems);
+        .postOrder(items[0], cartItems, user);
   }
 
   void addOrder(CartProvider cart) {

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:shop/models/order.dart';
+
 class UserModel {
   String email;
   String password;
@@ -9,6 +11,7 @@ class UserModel {
   String? lastName;
   String? urlPhoto;
   String? number;
+  List<OrderModel>? orders;
 
   UserModel({
     this.email = '',
@@ -19,21 +22,36 @@ class UserModel {
     this.lastName,
     this.urlPhoto,
     this.number,
+    this.orders,
   });
 
   Map<String, dynamic> toJson() => {
         'email': email,
         'password': password,
-        'id': generateId(),
+        'id': id,
         'cpf': cpf,
         'name': name,
         'lastName': lastName,
         'urlPhoto': urlPhoto,
         'number': number,
+        'orders': orders,
+      };
+
+  Object toJsonObject() => {
+        'email': email,
+        'password': password,
+        'id': id,
+        'cpf': cpf,
+        'name': name,
+        'lastName': lastName,
+        'urlPhoto': urlPhoto,
+        'number': number,
+        'orders': orders,
       };
 
   String generateId() {
-    return Random().nextDouble().toString();
+    final id = Random().nextDouble().toString();
+    return id.replaceAll('.', '');
   }
 
   String getFullName() {
@@ -41,6 +59,11 @@ class UserModel {
   }
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
+    List<OrderModel> modelOrders = [];
+    for (var oder in json['orders']) {
+      modelOrders.add(oder);
+    }
+
     return UserModel(
       id: json['id'],
       cpf: json['cpf'],
@@ -50,6 +73,7 @@ class UserModel {
       lastName: json['lastName'],
       urlPhoto: json['urlPhoto'],
       number: json['number'],
+      orders: modelOrders,
     );
   }
 }

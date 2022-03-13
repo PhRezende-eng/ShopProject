@@ -20,9 +20,9 @@ class RequestProductProvider extends RequestService {
     }
   }
 
-  Future deleteItemFromDB(ProductModal productModal) async {
+  Future deleteItemFromDB(ProductModal product) async {
     final dioResponse = await deleteRequest(
-      'products/${productModal.name}.json',
+      'products/${product.name}.json',
       // body: productModal.toJson(),
     );
     if (dioResponse.statusMessage == 'OK') {

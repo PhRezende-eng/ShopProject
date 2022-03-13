@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:shop/models/user.dart';
 import 'package:shop/services/request.dart';
 
@@ -65,8 +66,13 @@ class RequestUserProvider extends RequestService {
   Future registerUser(UserModel user) async {
     Map dict = user.toJson();
 
+    DatabaseReference starCountRef =
+        FirebaseDatabase.instance.ref('posts/$user.id/starCount');
+    starCountRef.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+    });
     final dioResponse = await postRequest(
-      '/register.json',
+      'register.json',
       body: dict,
     );
     if (dioResponse.statusMessage == 'OK') {
@@ -77,11 +83,11 @@ class RequestUserProvider extends RequestService {
   }
 
   Future deleteUser(UserModel user) async {
-    Map dict = user.toJson();
+    // Map dict = user.toJson();
 
     final dioResponse = await deleteRequest(
-      '/register.json',
-      body: dict,
+      '/register/${user.id}.json',
+      // body: dict,
     );
     if (dioResponse.statusMessage == 'OK') {
       return 'Usuário deletado com sucesso!';

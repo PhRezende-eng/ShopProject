@@ -59,7 +59,7 @@ class _RegideterPageState extends State<RegisterWidget> {
       onSaved: (email) => user.email = email!,
       onFieldSubmitted: (_) {
         emailFocusNode.unfocus();
-        nameFocusNode.requestFocus();
+        numberFocusNode.requestFocus();
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(),
@@ -125,7 +125,7 @@ class _RegideterPageState extends State<RegisterWidget> {
       onSaved: (urlPhoto) => user.urlPhoto = urlPhoto!,
       onFieldSubmitted: (_) {
         urlPhotoFocusNode.unfocus();
-        numberFocusNode.requestFocus();
+        passwordFocusNode.requestFocus();
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(),
@@ -146,7 +146,7 @@ class _RegideterPageState extends State<RegisterWidget> {
       onSaved: (number) => user.number = number!,
       onFieldSubmitted: (_) {
         numberFocusNode.unfocus();
-        passwordFocusNode.requestFocus();
+        cpfFocusNode.requestFocus();
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(),
@@ -166,11 +166,11 @@ class _RegideterPageState extends State<RegisterWidget> {
       controller: passwordController,
       focusNode: passwordFocusNode,
       keyboardType: TextInputType.visiblePassword,
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.go,
       onSaved: (password) => user.password = password!,
       onFieldSubmitted: (_) {
         passwordFocusNode.unfocus();
-        cpfFocusNode.requestFocus();
+        makeRegister();
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(),
@@ -190,11 +190,11 @@ class _RegideterPageState extends State<RegisterWidget> {
       controller: cpfController,
       focusNode: cpfFocusNode,
       keyboardType: TextInputType.number,
-      textInputAction: TextInputAction.done,
+      textInputAction: TextInputAction.next,
       onSaved: (cpf) => user.cpf = cpf!,
       onFieldSubmitted: (_) {
         cpfFocusNode.unfocus();
-        makeRegister();
+        nameFocusNode.requestFocus();
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(),
