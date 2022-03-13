@@ -17,7 +17,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(product.name),
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Scrollbar(

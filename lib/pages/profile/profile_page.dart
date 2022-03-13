@@ -5,17 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer_widget.dart';
 import 'package:shop/components/confirm_buttom_widget.dart';
 import 'package:shop/controller/user.dart';
+import 'package:shop/pages/profile/widgets/profile_info_widget.dart';
 import 'package:shop/services/request_user.dart';
 import 'package:shop/utils/app_routes.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
-  @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -32,12 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ? Column(
                 children: [
                   Expanded(
-                    child: Column(
-                      children: [
-                        Text('Email: ${userProvider.user!.email}'),
-                        Text('Cpf: ${userProvider.user!.cpf}'),
-                      ],
-                    ),
+                    child: ProfileInfoWidget(),
                   ),
                   TextButtonWidget(
                     onPress: () {

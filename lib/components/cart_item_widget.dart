@@ -80,6 +80,7 @@ class CartItemWidget extends StatelessWidget {
             ),
           ),
           ConfirmDialogButtomWidget(
+            color: Theme.of(context).colorScheme.copyWith().error,
             onPress: () => Navigator.of(context).pop(true),
             text: 'Remover',
           ),

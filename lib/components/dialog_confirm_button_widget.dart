@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 
 class ConfirmDialogButtomWidget extends StatelessWidget {
+  final Color? color;
   final Function()? onPress;
   final String text;
   const ConfirmDialogButtomWidget({
+    this.color,
     required this.onPress,
     required this.text,
     Key? key,
@@ -14,6 +16,7 @@ class ConfirmDialogButtomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(primary: color),
       onPressed: onPress,
       child: Text(text),
     );

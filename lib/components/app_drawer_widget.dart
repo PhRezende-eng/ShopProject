@@ -25,11 +25,9 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
           ListTile(
             leading: Icon(Icons.shop),
             title: Text('Shop'),
-            onTap: () {
-              Navigator.of(context).pushReplacementNamed(
-                AppRooutes.Home,
-              );
-            },
+            onTap: () => Navigator.of(context).pushReplacementNamed(
+              AppRooutes.Home,
+            ),
           ),
           Divider(),
           ListTile(
@@ -45,12 +43,10 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
           ListTile(
             leading: Icon(Icons.edit),
             title: Text('Gerenciar produtos'),
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                AppRooutes.PRODUCT_PAGE,
-                arguments: 'Gerenciar produtos',
-              );
-            },
+            onTap: () => Navigator.of(context).pushNamed(
+              AppRooutes.PRODUCT_PAGE,
+              arguments: 'Gerenciar produtos',
+            ),
           ),
           Divider(),
           Spacer(),
@@ -58,11 +54,9 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
           ListTile(
             leading: Icon(Icons.person),
             title: Text('Perfil'),
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                AppRooutes.PROFILE,
-              );
-            },
+            onTap: () => Navigator.of(context).pushNamed(
+              AppRooutes.PROFILE,
+            ),
           ),
         ],
       ),

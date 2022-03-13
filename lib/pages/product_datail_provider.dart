@@ -15,7 +15,6 @@ class _ProductExampProviderState extends State<ProductExampProvider> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Exemplo Providers'),
-        centerTitle: true,
       ),
       body: Center(
         child: Column(

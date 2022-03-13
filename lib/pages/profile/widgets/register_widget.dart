@@ -66,6 +66,9 @@ class _RegideterPageState extends State<RegisterWidget> {
       },
     );
 
+    TextFormField nameInput = TextFormField();
+    TextFormField lastNameInput = TextFormField();
+
     TextFormField passwordInput = TextFormField(
       obscureText: true,
       controller: passwordController,
@@ -78,6 +81,7 @@ class _RegideterPageState extends State<RegisterWidget> {
         cpfFocusNode.requestFocus();
       },
       decoration: InputDecoration(
+        // border: OutlineInputBorder(),
         labelText: 'Senha',
         hintText: '*******',
       ),

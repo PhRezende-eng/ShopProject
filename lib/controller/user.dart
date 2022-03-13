@@ -63,7 +63,12 @@ class UserProvider with ChangeNotifier {
     var hasUserRegister =
         _usersRegister!.any((user) => user.email == userLogin.email);
 
-    _user = _usersRegister!.firstWhere((user) => user.email == userLogin.email);
+    try {
+      _user =
+          _usersRegister!.firstWhere((user) => user.email == userLogin.email);
+    } catch (e) {
+      _user = null;
+    }
 
     bool matchUser = false;
     if (userLogin.email == _user?.email &&

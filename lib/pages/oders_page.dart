@@ -29,7 +29,6 @@ class _OrdersPageState extends State<OrdersPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Meus pedidos'),
-        centerTitle: true,
       ),
       body: isLoaded
           ? Center(

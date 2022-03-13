@@ -23,10 +23,12 @@ class ProductItemWidget extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
+              color: Theme.of(context).colorScheme.copyWith().primary,
               onPressed: () {},
               icon: Icon(Icons.edit),
             ),
             IconButton(
+              color: Theme.of(context).colorScheme.copyWith().error,
               onPressed: () => showDialogToDelete(context),
               icon: Icon(Icons.delete),
             ),
@@ -52,6 +54,7 @@ class ProductItemWidget extends StatelessWidget {
             child: Text('Cancelar'),
           ),
           ConfirmDialogButtomWidget(
+            color: Theme.of(context).colorScheme.copyWith().error,
             onPress: () async {
               await productProvider.deleteItemFromList(product);
               Navigator.of(context).pop();

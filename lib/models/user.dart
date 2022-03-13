@@ -3,21 +3,33 @@ import 'dart:math';
 class UserModel {
   String email;
   String password;
-  String? cpf;
   String? id;
+  String? cpf;
+  String? name;
+  String? lastName;
+  String? urlPhoto;
+  String? number;
 
   UserModel({
     this.email = '',
     this.password = '',
-    this.cpf,
     this.id,
+    this.cpf,
+    this.name,
+    this.lastName,
+    this.urlPhoto,
+    this.number,
   });
 
   Map<String, dynamic> toJson() => {
-        'id': generateId(),
-        'cpf': cpf,
         'email': email,
         'password': password,
+        'id': generateId(),
+        'cpf': cpf,
+        'name': name,
+        'lastName': lastName,
+        'urlPhoto': urlPhoto,
+        'number': number,
       };
 
   String generateId() {
@@ -30,6 +42,10 @@ class UserModel {
       cpf: json['cpf'],
       email: json['email'],
       password: json['password'],
+      name: json['name'],
+      lastName: json['lastName'],
+      urlPhoto: json['urlPhoto'],
+      number: json['number'],
     );
   }
 }

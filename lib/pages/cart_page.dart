@@ -40,7 +40,6 @@ class _CartPageState extends State<CartPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Carrinho'),
-        centerTitle: true,
       ),
       body: Column(
         children: [
