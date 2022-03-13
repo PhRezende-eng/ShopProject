@@ -66,11 +66,7 @@ class RequestUserProvider extends RequestService {
   Future registerUser(UserModel user) async {
     Map dict = user.toJson();
 
-    DatabaseReference starCountRef =
-        FirebaseDatabase.instance.ref('posts/$user.id/starCount');
-    starCountRef.onValue.listen((DatabaseEvent event) {
-      final data = event.snapshot.value;
-    });
+    FirebaseDatabase.instance.ref().update(user.toJson());
     final dioResponse = await postRequest(
       'register.json',
       body: dict,
