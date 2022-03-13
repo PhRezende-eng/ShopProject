@@ -42,7 +42,8 @@ class UserProvider with ChangeNotifier {
     prefs.remove('_userId');
   }
 
-  void removeUserFromListUser(UserModel user) {
+  void removeUserFromDevice() {
+    removeUserLoginFromDevice();
     _user = null;
     notifyListeners();
   }

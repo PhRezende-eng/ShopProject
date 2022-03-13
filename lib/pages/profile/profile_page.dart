@@ -27,16 +27,12 @@ class ProfilePage extends StatelessWidget {
         child: userProvider.user != null
             ? Column(
                 children: [
-                  Expanded(
-                    child: SizedBox(
-                      child: ProfileInfoWidget(),
-                    ),
-                  ),
+                  ProfileInfoWidget(),
+                  Spacer(),
                   TextButtonWidget(
                     onPress: () {
                       requestUserProvider.logoutUser(userProvider.user!);
-                      userProvider.removeUserFromListUser(userProvider.user!);
-                      userProvider.removeUserLoginFromDevice();
+                      userProvider.removeUserFromDevice();
                       Navigator.pushNamedAndRemoveUntil(
                           context, '/', (route) => false);
                     },

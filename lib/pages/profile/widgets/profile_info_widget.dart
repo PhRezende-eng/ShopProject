@@ -5,8 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:shop/controller/user.dart';
 import 'package:shop/pages/profile/widgets/retang_pic_widget.dart';
 
-import 'circle_pic_profile_widget.dart';
-
 class ProfileInfoWidget extends StatelessWidget {
   const ProfileInfoWidget({Key? key}) : super(key: key);
 
@@ -25,7 +23,7 @@ class ProfileInfoWidget extends StatelessWidget {
           SizedBox(height: 4),
           Text('Nome: ${user.getFullName()}'),
           SizedBox(height: 4),
-          Text('Numero: ${user.number}'),
+          Text('Número: ${user.number}'),
           SizedBox(height: 4),
           Text('CPF: ${user.cpf}'),
         ],

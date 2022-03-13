@@ -11,14 +11,28 @@ class RetangPicProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
     return Container(
-      height: 140,
-      width: 140,
+      height: 240,
+      width: 240,
+      child: user?.urlPhoto == '' || user?.urlPhoto == null
+          ? null
+          : ClipRRect(
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+              child: Image(
+                image: NetworkImage(
+                  '${user!.urlPhoto}',
+                ),
+              ),
+            ),
       decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.copyWith().primaryContainer,
         borderRadius: BorderRadius.all(
           Radius.circular(8),
         ),
         image: DecorationImage(
-          image: NetworkImage(user?.urlPhoto ?? ''),
+          fit: BoxFit.cover,
+          image: AssetImage('assets/images/without_profile_pic.png'),
         ),
       ),
     );
