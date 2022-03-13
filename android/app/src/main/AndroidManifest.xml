@@ -22,7 +22,7 @@
     </queries>
       <!-- All permissions and access -->
    <application
-        android:label="shop"
+        android:label="Shop"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
