@@ -7,8 +7,6 @@ import 'package:shop/components/empty_list_widget.dart';
 import 'package:shop/controller/cart_map.dart';
 import 'package:shop/controller/order_list.dart';
 import 'package:shop/models/cart_item.dart';
-
-import 'package:shop/services/request_order.dart';
 import 'package:shop/utils/util_functions.dart';
 
 class CartPage extends StatefulWidget {

@@ -51,6 +51,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         passwordFocusNode.requestFocus();
       },
       decoration: InputDecoration(
+        border: OutlineInputBorder(),
         labelText: 'Email',
         hintText: 'email@exemplo.com',
       ),
@@ -73,6 +74,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       onSaved: (password) => user.password = password!,
       onFieldSubmitted: (_) => makeLoginIfCan(),
       decoration: InputDecoration(
+        border: OutlineInputBorder(),
         labelText: 'Senha',
         hintText: '*******',
       ),

@@ -23,11 +23,19 @@ class _RegideterPageState extends State<RegisterWidget> {
 
   FocusNode cpfFocusNode = FocusNode(),
       emailFocusNode = FocusNode(),
-      passwordFocusNode = FocusNode();
+      passwordFocusNode = FocusNode(),
+      nameFocusNode = FocusNode(),
+      lastNameFocusNode = FocusNode(),
+      urlPhotoFocusNode = FocusNode(),
+      numberFocusNode = FocusNode();
 
   TextEditingController cpfController = TextEditingController(),
       emailController = TextEditingController(),
-      passwordController = TextEditingController();
+      passwordController = TextEditingController(),
+      nameController = TextEditingController(),
+      lastNameController = TextEditingController(),
+      urlPhotoController = TextEditingController(),
+      numberController = TextEditingController();
 
   bool autoValidateForm = false;
   bool isLoading = false;
@@ -51,9 +59,10 @@ class _RegideterPageState extends State<RegisterWidget> {
       onSaved: (email) => user.email = email!,
       onFieldSubmitted: (_) {
         emailFocusNode.unfocus();
-        passwordFocusNode.requestFocus();
+        nameFocusNode.requestFocus();
       },
       decoration: InputDecoration(
+        border: OutlineInputBorder(),
         labelText: 'Email',
         hintText: 'email@exemplo.com',
       ),
@@ -66,8 +75,91 @@ class _RegideterPageState extends State<RegisterWidget> {
       },
     );
 
-    TextFormField nameInput = TextFormField();
-    TextFormField lastNameInput = TextFormField();
+    TextFormField nameInput = TextFormField(
+      controller: nameController,
+      focusNode: nameFocusNode,
+      keyboardType: TextInputType.name,
+      textInputAction: TextInputAction.next,
+      textCapitalization: TextCapitalization.sentences,
+      onSaved: (name) => user.name = name!,
+      onFieldSubmitted: (_) {
+        nameFocusNode.unfocus();
+        lastNameFocusNode.requestFocus();
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Nome',
+        hintText: 'João',
+      ),
+      validator: (name) {
+        return null;
+      },
+    );
+
+    TextFormField lastNameInput = TextFormField(
+      controller: lastNameController,
+      focusNode: lastNameFocusNode,
+      keyboardType: TextInputType.name,
+      textInputAction: TextInputAction.next,
+      textCapitalization: TextCapitalization.words,
+      onSaved: (lastName) => user.lastName = lastName!,
+      onFieldSubmitted: (_) {
+        lastNameFocusNode.unfocus();
+        urlPhotoFocusNode.requestFocus();
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Sobrenome',
+        hintText: 'Pedro',
+      ),
+      validator: (lastName) {
+        return null;
+      },
+    );
+
+    TextFormField urlPhotoInput = TextFormField(
+      controller: urlPhotoController,
+      focusNode: urlPhotoFocusNode,
+      keyboardType: TextInputType.url,
+      textInputAction: TextInputAction.next,
+      onSaved: (urlPhoto) => user.urlPhoto = urlPhoto!,
+      onFieldSubmitted: (_) {
+        urlPhotoFocusNode.unfocus();
+        numberFocusNode.requestFocus();
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Foto de Perfil',
+        hintText:
+            'https://storage.googleapis.com/cms-storage-bucket/70760bf1e88b184bb1bc.png',
+      ),
+      validator: (urlPhoto) {
+        return null;
+      },
+    );
+
+    TextFormField numberInput = TextFormField(
+      controller: numberController,
+      focusNode: numberFocusNode,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.next,
+      onSaved: (number) => user.number = number!,
+      onFieldSubmitted: (_) {
+        numberFocusNode.unfocus();
+        passwordFocusNode.requestFocus();
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Número',
+        hintText: '61-982347819',
+      ),
+      validator: (number) {
+        if (number!.length < 11 && number.length > 12) {
+          return 'Quantidade de números errada!';
+        }
+        return null;
+      },
+    );
 
     TextFormField passwordInput = TextFormField(
       obscureText: true,
@@ -81,7 +173,7 @@ class _RegideterPageState extends State<RegisterWidget> {
         cpfFocusNode.requestFocus();
       },
       decoration: InputDecoration(
-        // border: OutlineInputBorder(),
+        border: OutlineInputBorder(),
         labelText: 'Senha',
         hintText: '*******',
       ),
@@ -105,6 +197,7 @@ class _RegideterPageState extends State<RegisterWidget> {
         makeRegister();
       },
       decoration: InputDecoration(
+        border: OutlineInputBorder(),
         labelText: 'CPF',
         hintText: '123.456.789-01',
       ),
@@ -133,23 +226,55 @@ class _RegideterPageState extends State<RegisterWidget> {
                     autovalidateMode: autoValidateForm
                         ? AutovalidateMode.always
                         : AutovalidateMode.disabled,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          emailInput,
-                          SizedBox(height: 16),
-                          passwordInput,
-                          SizedBox(height: 16),
-                          cpfInput,
-                          SizedBox(height: 16),
-                          TextButtonWidget(
-                            onPress: () => makeRegister(),
-                            text: 'Criar conta',
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 8),
+                                emailInput,
+                                SizedBox(height: 16),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: numberInput,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: cpfInput,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: nameInput,
+                                      flex: 3,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: lastNameInput,
+                                      flex: 4,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16),
+                                urlPhotoInput,
+                                SizedBox(height: 16),
+                                passwordInput,
+                              ],
+                            ),
                           ),
-                          SizedBox(height: 16),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 16),
+                        TextButtonWidget(
+                          onPress: () => makeRegister(),
+                          text: 'Criar conta',
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -199,12 +324,20 @@ class _RegideterPageState extends State<RegisterWidget> {
   @override
   void dispose() {
     super.dispose();
-    cpfController.dispose();
-    passwordController.dispose();
     emailController.dispose();
+    passwordController.dispose();
+    cpfController.dispose();
+    nameController.dispose();
+    lastNameController.dispose();
+    urlPhotoController.dispose();
+    numberController.dispose();
 
-    cpfFocusNode.dispose();
-    passwordFocusNode.dispose();
     emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+    cpfFocusNode.dispose();
+    nameFocusNode.dispose();
+    lastNameFocusNode.dispose();
+    urlPhotoFocusNode.dispose();
+    numberFocusNode.dispose();
   }
 }
