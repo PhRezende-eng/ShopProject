@@ -14,6 +14,7 @@ import 'package:shop/controller/product_list.dart';
 import 'package:shop/controller/user.dart';
 import 'package:shop/services/request_product.dart';
 import 'package:shop/utils/app_routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProductsOverviewPage extends StatefulWidget {
   final String title;
@@ -100,8 +101,17 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : ProductGridWidget(
-                  filterFavorite: filterFavorite,
+              : Column(
+                  children: [
+                    myProfile(),
+                    SizedBox(height: 8),
+                    Divider(height: 0),
+                    Expanded(
+                      child: ProductGridWidget(
+                        filterFavorite: filterFavorite,
+                      ),
+                    ),
+                  ],
                 ),
         ),
       ),
@@ -120,5 +130,64 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
     Navigator.of(context).pushNamed(AppRooutes.CART);
     // Navigator.of(context).push(
     //     MaterialPageRoute(builder: (context) => const CartPage()));
+  }
+
+  Widget myProfile() {
+    return SizedBox(
+      height: 80,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GestureDetector(
+            onTap: () async {
+              const url = 'https://github.com/PhRezende-eng';
+              try {
+                await canLaunch(url);
+                launch(
+                  url,
+                  enableJavaScript: true,
+                  forceSafariVC: true,
+                  forceWebView: true,
+                );
+              } catch (error) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Não foi possível abrir o link'),
+                  ),
+                );
+              }
+            },
+            child: Image(
+              image: AssetImage('assets/images/github.png'),
+              fit: BoxFit.contain,
+            ),
+          ),
+          GestureDetector(
+            onTap: () async {
+              const url = 'https://www.instagram.com/ph_rezende_/?hl=en_US';
+              try {
+                await canLaunch(url);
+                launch(
+                  url,
+                  enableJavaScript: true,
+                  forceSafariVC: true,
+                  forceWebView: true,
+                );
+              } catch (error) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Não foi possível abrir o link'),
+                  ),
+                );
+              }
+            },
+            child: Image(
+              image: AssetImage('assets/images/insta.png'),
+              fit: BoxFit.contain,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
