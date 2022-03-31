@@ -1,5 +1,6 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/product_grid_item_widget.dart';
@@ -18,9 +19,9 @@ class ProductGridWidget extends StatelessWidget {
 
     return GridView.builder(
       itemCount: loadedProductProvider.length,
-      itemBuilder: (context, index) => ChangeNotifierProvider.value(
+      itemBuilder: (context, i) => ChangeNotifierProvider.value(
         //serve para restringir o nível de classes que poderão escutar o NotfierListnners da Modal
-        value: loadedProductProvider[index],
+        value: loadedProductProvider[i],
         child: const ProductGridItemWidget(),
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -32,3 +33,51 @@ class ProductGridWidget extends StatelessWidget {
     );
   }
 }
+// SizedBox(
+//             height: 80,
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//               children: [
+//                 GestureDetector(
+//                   onTap: () async {
+//                     const url = 'https://github.com/PhRezende-eng';
+//                     try {
+//                       await canLaunch(url);
+//                       launch(url);
+//                     } catch (error) {
+//                       ScaffoldMessenger.of(context).showSnackBar(
+//                         SnackBar(
+//                           content: Text('Não foi possível abrir o link'),
+//                         ),
+//                       );
+//                     }
+//                   },
+//                   child: Image(
+//                     image: AssetImage('assets/images/github.png'),
+//                     fit: BoxFit.contain,
+//                   ),
+//                 ),
+//                 SizedBox(width: 24),
+//                 GestureDetector(
+//                   onTap: () async {
+//                     const url =
+//                         'https://www.instagram.com/ph_rezende_/?hl=en_US';
+//                     try {
+//                       await canLaunch(url);
+//                       launch(url);
+//                     } catch (error) {
+//                       ScaffoldMessenger.of(context).showSnackBar(
+//                         SnackBar(
+//                           content: Text('Não foi possível abrir o link'),
+//                         ),
+//                       );
+//                     }
+//                   },
+//                   child: Image(
+//                     image: AssetImage('assets/images/insta.png'),
+//                     fit: BoxFit.contain,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           );

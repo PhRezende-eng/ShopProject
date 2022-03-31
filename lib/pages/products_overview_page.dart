@@ -87,12 +87,12 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () {
+        onRefresh: () async {
           listProvider.clearListItems();
           setState(() {
             isLoading = true;
           });
-          return getItems();
+          await getItems();
         },
         child: Padding(
           padding: EdgeInsets.all(10),
