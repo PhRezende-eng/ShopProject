@@ -12,7 +12,7 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var title = ModalRoute.of(context)?.settings.arguments ?? 'Erro';
-    final products = Provider.of<ProductListProvider>(context).items;
+    final items = Provider.of<ProductListProvider>(context).items;
 
     return Scaffold(
       appBar: AppBar(
@@ -21,14 +21,12 @@ class ProductPage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(8),
         child: ListView.builder(
-          itemCount: products.length,
+          itemCount: items.length,
           itemBuilder: (context, index) {
             return Column(
               children: [
                 SizedBox(height: 16),
-                ProductItemWidget(
-                  product: products[index],
-                ),
+                ProductItemWidget(items[index]),
                 SizedBox(height: 16),
                 Divider()
               ],

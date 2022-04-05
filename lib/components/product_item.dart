@@ -5,10 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/dialog_confirm_button_widget.dart';
 import 'package:shop/controller/product_list.dart';
 import 'package:shop/models/product.dart';
+import 'package:shop/utils/app_routes.dart';
 
 class ProductItemWidget extends StatelessWidget {
   final ProductModal product;
-  const ProductItemWidget({required this.product, Key? key}) : super(key: key);
+  const ProductItemWidget(this.product, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,8 @@ class ProductItemWidget extends StatelessWidget {
           children: [
             IconButton(
               color: Theme.of(context).colorScheme.copyWith().primary,
-              onPressed: () {},
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(AppRooutes.EDIT_PRODUCT),
               icon: Icon(Icons.edit),
             ),
             IconButton(

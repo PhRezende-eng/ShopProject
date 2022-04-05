@@ -6,7 +6,7 @@ import 'package:shop/controller/user.dart';
 import 'package:shop/pages/cart_page.dart';
 import 'package:shop/pages/profile/widgets/login_widget.dart';
 import 'package:shop/pages/oders_page.dart';
-import 'package:shop/pages/product_page.dart';
+import 'package:shop/pages/products_page.dart';
 import 'package:shop/pages/profile/widgets/register_widget.dart';
 import 'package:shop/controller/cart_map.dart';
 import 'package:shop/controller/order_list.dart';
@@ -18,6 +18,7 @@ import 'package:shop/services/request_product.dart';
 import 'package:shop/services/request_user.dart';
 import 'package:shop/utils/app_routes.dart';
 
+import 'pages/product_form_page.dart';
 import 'pages/profile/profile_page.dart';
 
 void main() async {
@@ -80,13 +81,14 @@ class _MyAppState extends State<MyApp> {
       // initialRoute: AppRooutes.Home,
       //
       routes: {
+        AppRooutes.Home: (context) => ProductsOverviewPage(title: 'Shop'),
         AppRooutes.PRODUCT_DETAIL: (context) => ProductDetailPage(),
         AppRooutes.PRODUCT_PAGE: (context) => ProductPage(),
         AppRooutes.REGISTER: (context) => RegisterWidget(),
         AppRooutes.PROFILE: (context) => ProfilePage(),
         AppRooutes.LOGIN: (context) => LoginWidget(),
         AppRooutes.ORDERS: (context) => OrdersPage(),
-        AppRooutes.Home: (context) => ProductsOverviewPage(title: 'Shop'),
+        AppRooutes.EDIT_PRODUCT: (context) => ProductFormPage(),
         AppRooutes.CART: (context) => CartPage(),
       },
       debugShowCheckedModeBanner: false,
