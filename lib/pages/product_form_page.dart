@@ -129,7 +129,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
       textInputAction: TextInputAction.go,
       onFieldSubmitted: (_) {
         focusImage.unfocus();
-        confirmEdit();
+        confirmForm();
       },
       decoration: const InputDecoration(
         labelText: 'Link da imagem',
@@ -204,7 +204,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 TextButtonWidget(
                   text:
                       product == null ? 'Confirmar adição' : 'Confirmar edição',
-                  onPress: confirmEdit,
+                  onPress: confirmForm,
                 ),
             ],
           ),
@@ -219,7 +219,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
     }
   }
 
-  void confirmEdit() {
+  void confirmForm() {
     autoValidate = true;
     setState(() {});
     if (_formKey.currentState?.validate() ?? false) {
