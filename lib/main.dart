@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.green,
         ).copyWith(
-          primary: Colors.purple[400],
+          primary: Color.fromARGB(255, 145, 56, 193),
           secondary: Colors.deepOrangeAccent,
           background: Colors.orange[200],
           primaryContainer: Colors.grey[100],

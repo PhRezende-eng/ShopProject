@@ -14,4 +14,8 @@ class Utils {
   static hideKeyBoard() {
     FocusManager.instance.primaryFocus?.unfocus();
   }
+
+  static bool hideButtonWithKeyBoard(BuildContext context) {
+    return FocusScope.of(context).hasPrimaryFocus;
+  }
 }

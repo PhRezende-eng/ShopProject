@@ -25,8 +25,10 @@ class ProductItemWidget extends StatelessWidget {
           children: [
             IconButton(
               color: Theme.of(context).colorScheme.copyWith().primary,
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(AppRooutes.EDIT_PRODUCT),
+              onPressed: () => Navigator.of(context).pushNamed(
+                AppRooutes.EDIT_PRODUCT,
+                arguments: product,
+              ),
               icon: Icon(Icons.edit),
             ),
             IconButton(

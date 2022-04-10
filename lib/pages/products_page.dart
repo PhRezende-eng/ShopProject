@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shop/components/app_drawer_widget.dart';
 import 'package:shop/components/product_item.dart';
 import 'package:shop/controller/product_list.dart';
+import 'package:shop/utils/app_routes.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({Key? key}) : super(key: key);
@@ -17,6 +18,14 @@ class ProductPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('$title'),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context).pushNamed(
+              AppRooutes.EDIT_PRODUCT,
+            ),
+            icon: Icon(Icons.add),
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(8),
