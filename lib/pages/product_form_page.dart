@@ -86,14 +86,20 @@ class _ProductFormPageState extends State<ProductFormPage> {
       controller: controllerName,
       textInputAction: TextInputAction.next,
       onSaved: (name) => formData['name'] = name ?? '',
+      validator: (name) {
+        name = name ?? '';
+        //trim remove blank space
+        if (name.trim() == '') {
+          return 'Você precisa preencher o nome';
+        }
+        return null;
+      },
       onFieldSubmitted: (text) {
         FocusScope.of(context).unfocus();
         FocusScope.of(context).requestFocus(focusPrice);
-        // focusName.unfocus();
-        // focusPrice.requestFocus();
       },
       decoration: const InputDecoration(
-        labelText: 'Name',
+        labelText: 'Nome',
         hintText: 'Fone de ouvido Razer',
         border: OutlineInputBorder(),
       ),
@@ -105,7 +111,16 @@ class _ProductFormPageState extends State<ProductFormPage> {
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       textInputAction: TextInputAction.next,
       onSaved: (price) => formData['price'] =
-          double.parse(price == '' || price == null ? '0' : price),
+          num.parse(price == '' || price == null ? '0' : price),
+      validator: (price) {
+        price = price ?? '';
+        if (price.trim() == '') {
+          return 'Você precisa preencher o preço';
+        } else if (!price.trim().contains('.')) {
+          return 'Preencha com ponto flutuante usando "."';
+        }
+        return null;
+      },
       onFieldSubmitted: (text) {
         focusPrice.unfocus();
         focusDescription.requestFocus();
@@ -123,7 +138,15 @@ class _ProductFormPageState extends State<ProductFormPage> {
       keyboardType: TextInputType.multiline,
       textInputAction: TextInputAction.newline,
       maxLines: 3,
-      onSaved: (description) => formData['description'] = description ?? '',
+      onSaved: (description) =>
+          formData['description'] = description?.trim() ?? '',
+      validator: (description) {
+        description = description ?? '';
+        if (description.trim() == '') {
+          return 'Você precisa preencher a descrição';
+        }
+        return null;
+      },
       decoration: const InputDecoration(
         labelText: 'Descrição',
         hintText: 'Fone de ouvido Razer com Led, 7.1 surround real',
@@ -137,6 +160,14 @@ class _ProductFormPageState extends State<ProductFormPage> {
       keyboardType: TextInputType.url,
       textInputAction: TextInputAction.go,
       onSaved: (urlImage) => formData['imageUrl'] = urlImage ?? '',
+      validator: (urlImage) {
+        urlImage = urlImage ?? '';
+        if (!urlImage.trim().contains('http') ||
+            !urlImage.trim().contains('/')) {
+          return 'Preencha uma url válida';
+        }
+        return null;
+      },
       onFieldSubmitted: (_) {
         focusImage.unfocus();
         submittedForm();
