@@ -14,7 +14,9 @@ class ProductFormPage extends StatefulWidget {
 class _ProductFormPageState extends State<ProductFormPage> {
   final _formKey = GlobalKey<FormState>();
 
+  final formData = <String, Object>{};
   bool autoValidate = false;
+  bool initValues = false;
 
   ProductModal? product;
 
@@ -38,7 +40,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
   void didChangeDependencies() {
     product = ModalRoute.of(context)?.settings.arguments as ProductModal?;
 
-    if (product != null) {
+    if (product != null && !initValues) {
       controllerName.text = product!.name;
       controllerName.selection =
           TextSelection.collapsed(offset: controllerName.text.length);
@@ -54,6 +56,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
       controllerImage.text = product!.imageUrl;
       controllerImage.selection =
           TextSelection.collapsed(offset: controllerImage.text.length);
+
+      formData['id'] = product!.id;
+
+      initValues = true;
     }
 
     super.didChangeDependencies();
@@ -79,10 +85,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
       focusNode: focusName,
       controller: controllerName,
       textInputAction: TextInputAction.next,
+      onSaved: (name) => formData['name'] = name ?? '',
       onFieldSubmitted: (text) {
         FocusScope.of(context).unfocus();
         FocusScope.of(context).requestFocus(focusPrice);
-
         // focusName.unfocus();
         // focusPrice.requestFocus();
       },
@@ -98,6 +104,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
       controller: controllerPrice,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       textInputAction: TextInputAction.next,
+      onSaved: (price) => formData['price'] =
+          double.parse(price == '' || price == null ? '0' : price),
       onFieldSubmitted: (text) {
         focusPrice.unfocus();
         focusDescription.requestFocus();
@@ -109,12 +117,13 @@ class _ProductFormPageState extends State<ProductFormPage> {
       ),
     );
 
-    final description = TextField(
+    final description = TextFormField(
       focusNode: focusDescription,
       controller: controllerDescription,
       keyboardType: TextInputType.multiline,
       textInputAction: TextInputAction.newline,
       maxLines: 3,
+      onSaved: (description) => formData['description'] = description ?? '',
       decoration: const InputDecoration(
         labelText: 'Descrição',
         hintText: 'Fone de ouvido Razer com Led, 7.1 surround real',
@@ -127,9 +136,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
       controller: controllerImage,
       keyboardType: TextInputType.url,
       textInputAction: TextInputAction.go,
+      onSaved: (urlImage) => formData['imageUrl'] = urlImage ?? '',
       onFieldSubmitted: (_) {
         focusImage.unfocus();
-        confirmForm();
+        submittedForm();
       },
       decoration: const InputDecoration(
         labelText: 'Link da imagem',
@@ -146,7 +156,12 @@ class _ProductFormPageState extends State<ProductFormPage> {
           title: Text(
             product == null ? 'Adicionar produto' : 'Edição de produto',
           ),
-          actions: const [],
+          actions: [
+            IconButton(
+              onPressed: submittedForm,
+              icon: const Icon(Icons.save),
+            ),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -204,7 +219,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 TextButtonWidget(
                   text:
                       product == null ? 'Confirmar adição' : 'Confirmar edição',
-                  onPress: confirmForm,
+                  onPress: submittedForm,
                 ),
             ],
           ),
@@ -219,11 +234,13 @@ class _ProductFormPageState extends State<ProductFormPage> {
     }
   }
 
-  void confirmForm() {
+  void submittedForm() {
     autoValidate = true;
     setState(() {});
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState!.save();
+
+      final newProduct = ProductModal.fromJson(formData);
     }
   }
 }

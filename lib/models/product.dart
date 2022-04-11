@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 
 class ProductModal with ChangeNotifier {
@@ -35,7 +37,7 @@ class ProductModal with ChangeNotifier {
 
   factory ProductModal.fromJson(Map<String, dynamic> json) {
     return ProductModal(
-      id: json['id'],
+      id: json['id'] ?? Random().nextDouble().toString(),
       name: json['name'],
       description: json['description'],
       price: json['price'],
