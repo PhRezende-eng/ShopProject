@@ -271,7 +271,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState!.save();
 
-      final newProduct = ProductModal.fromJson(formData);
+      // final newProduct = ProductModal.fromJson(formData);
     }
   }
 }
