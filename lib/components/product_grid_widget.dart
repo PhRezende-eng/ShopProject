@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/components/my_profile_widget.dart';
 import 'package:shop/components/product_grid_item_widget.dart';
 import 'package:shop/controller/product_list.dart';
 
@@ -17,19 +18,35 @@ class ProductGridWidget extends StatelessWidget {
     final loadedProductProvider =
         filterFavorite ? productList.favoriteItem : productList.items;
 
-    return GridView.builder(
-      itemCount: loadedProductProvider.length,
-      itemBuilder: (context, i) => ChangeNotifierProvider.value(
-        //serve para restringir o nível de classes que poderão escutar o NotfierListnners da Modal
-        value: loadedProductProvider[i],
-        child: const ProductGridItemWidget(),
-      ),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, //quantidade de itens por linha
-        childAspectRatio: 1.2, //dimensão do item
-        crossAxisSpacing: 10, //espaçamento vertical
-        mainAxisSpacing: 10, //espaçamento horizontal
-      ),
+    return CustomScrollView(
+      slivers: [
+        SliverFixedExtentList(
+          itemExtent: 90,
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => Align(
+              alignment: Alignment.topCenter,
+              child: MyProfileWidget(),
+            ),
+            childCount: 1,
+          ),
+        ),
+        SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, //quantidade de itens por linha
+            childAspectRatio: 1.2, //dimensão do item
+            crossAxisSpacing: 10, //espaçamento vertical
+            mainAxisSpacing: 10, //espaçamento horizontal
+          ),
+          delegate: SliverChildBuilderDelegate(
+            //serve para restringir o nível de classes que poderão escutar o NotfierListnners da Modal
+            (context, index) => ChangeNotifierProvider.value(
+              value: loadedProductProvider[index],
+              child: const ProductGridItemWidget(),
+            ),
+            childCount: loadedProductProvider.length,
+          ),
+        ),
+      ],
     );
   }
 }
